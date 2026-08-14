@@ -352,12 +352,11 @@ include "header.php" ;
 
 
                             <h5 class="fw-bold">
-                                Graphic Design for Beginners
+                                Digital Marketing
                             </h5>
 
                             <p class="text-muted small fw-medium">
-                                Discover the fundamentals of graphic design,
-                                including typography, color theory and layout design.
+                               Learn how to build effective digital marketing strategies and grow your online presence.
                             </p>
 
 
