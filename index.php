@@ -376,6 +376,175 @@ include "header.php" ;
 
     </section>
 
+    <!-- Pricing Section -->
+    <section class="py-5 bg-light">
+
+        <div class="container">
+
+            <!-- Heading -->
+            <div class="d-flex justify-content-between align-items-end mb-4">
+
+                <div>
+                    <h2 class="fw-bold mb-2">Our Pricing</h2>
+
+                    <p class="text-secondary mb-0">
+                         Choose the right plan for your learning journey and get access to
+                        courses, resources, instructor support, and certificates.
+                    </p>
+                </div>
+
+                <!-- Monthly / Yearly -->
+                <div class="bg-white rounded-2 p-1 shadow-sm">
+                    <button class="btn btn-warning text-white px-3">
+                        Monthly
+                    </button>
+
+                    <button class="btn btn-light px-3">
+                        Yearly
+                    </button>
+                </div>
+
+            </div>
+
+
+            <!-- Pricing Box -->
+            <div class="bg-white rounded-3 p-4">
+
+                <div class="row g-4">
+
+                    <!-- Free Plan -->
+                    <div class="col-md-6">
+
+                        <div class="border rounded-3 p-3 h-100">
+
+                            <!-- Plan Name -->
+                            <div class="bg-light border rounded-2 text-center py-2 mb-3">
+                                <span class="fw-semibold">Free Plan</span>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="text-center mb-4">
+                                <span class="display-5 fw-bold">$0</span>
+                                <small class="text-secondary">/month</small>
+                            </div>
+
+                            <!-- Features -->
+                            <div class="border rounded-3 p-3">
+
+                                <h6 class="text-center fw-bold mb-4">
+                                    Available Features
+                                </h6>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Access to selected free courses.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Limited course materials and resources.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Basic community support.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; No certification upon completion.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Ad-supported platform.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small text-secondary">
+                                    ✕ &nbsp; Access to exclusive Pro Plan community forums.
+                                </div>
+
+                                <div class="border rounded-2 p-2 small text-secondary">
+                                    ✕ &nbsp; Early access to new courses and updates.
+                                </div>
+
+                            </div>
+
+                            <!-- Button -->
+                            <a href="register.php?plan=free" class="btn btn-warning text-white w-100">
+                                Get Started
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Pro Plan -->
+                    <div class="col-md-6">
+
+                        <div class="border rounded-3 p-3 h-100">
+
+                            <!-- Plan Name -->
+                            <div class="bg-light border rounded-2 text-center py-2 mb-3">
+                                <span class="fw-semibold">Pro Plan</span>
+                            </div>
+
+                            <!-- Price -->
+                            <div class="text-center mb-4">
+                                <span class="display-5 fw-bold">$79</span>
+                                <small class="text-secondary">/month</small>
+                            </div>
+
+                            <!-- Features -->
+                            <div class="border rounded-3 p-3">
+
+                                <h6 class="text-center fw-bold mb-4">
+                                    Available Features
+                                </h6>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Unlimited access to all courses.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Unlimited course materials and resources.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Priority support from instructors.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Course completion certificates.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Ad-free experience.
+                                </div>
+
+                                <div class="border rounded-2 p-2 mb-2 small">
+                                    ✓ &nbsp; Access to exclusive Pro Plan community forums.
+                                </div>
+
+                                <div class="border rounded-2 p-2 small">
+                                    ✓ &nbsp; Early access to new courses and updates.
+                                </div>
+
+                            </div>
+
+                            <!-- Button -->
+                            <a href="register.php?plan=pro" class="btn btn-warning text-white w-100">
+                                Get Started
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
 
 <?php
 include "footer.php" ;

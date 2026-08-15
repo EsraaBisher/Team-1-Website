@@ -56,11 +56,11 @@
                 </ul>
 
                 <div>
-                    <a href="#" class="btn fw-medium fs-5 me-2" style="color: #262626;">
+                    <a href="login.php" class="btn fw-medium fs-5 me-2" style="color: #262626;">
                         Login
                     </a>
 
-                    <a href="#" class="btn text-white fs-5 fw-medium" style="background-color: #FF9500;">
+                    <a href="register.php" class="btn text-white fs-5 fw-medium" style="background-color: #FF9500;">
                         Register
                     </a>
                 </div>
