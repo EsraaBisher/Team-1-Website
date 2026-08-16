@@ -98,8 +98,8 @@ $courses = [
                                 </div>
                             </div>
 
-                            <!-- Changed from <a> to <button> to trigger the modal -->
-                            <button type="button" class="btn btn-outline-warning w-100 fw-semibold rounded-3 py-2 text-dark" data-bs-toggle="modal" data-bs-target="#courseModal-<?= $course['id'] ?>">
+                            <!-- Button that triggers the modal -->
+                            <button type="button" class="btn btn-outline-warning w-100 fw-semibold rounded-3 py-2 text-dark" data-bs-toggle="modal" data-bs-target="#modal-<?= $course['id'] ?>">
                                 Course details
                             </button>
                         </div>
@@ -108,20 +108,20 @@ $courses = [
             </div>
 
             <!-- Modal for this specific course -->
-            <div class="modal fade" id="courseModal-<?= $course['id'] ?>" tabindex="-1" aria-labelledby="courseModalLabel-<?= $course['id'] ?>" aria-hidden="true">
+            <div class="modal fade" id="modal-<?= $course['id'] ?>" tabindex="-1" aria-labelledby="modalLabel-<?= $course['id'] ?>" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content rounded-4 border-0 shadow">
                         <div class="modal-header border-bottom-0 pb-0">
-                            <h5 class="modal-title fw-bold fs-4" id="courseModalLabel-<?= $course['id'] ?>"><?= $course['title'] ?></h5>
+                            <h5 class="modal-title fw-bold fs-4" id="modalLabel-<?= $course['id'] ?>"><?= $course['title'] ?></h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body pt-4">
                             <div class="row g-4">
-                                <!-- Image Section in Modal -->
+                                <!-- Image Section inside Modal -->
                                 <div class="col-md-5">
                                     <img src="<?= $course['image'] ?>" class="img-fluid rounded-4 shadow-sm" alt="<?= $course['title'] ?>" style="object-fit: cover; width: 100%; height: auto;">
                                 </div>
-                                <!-- Details Section in Modal -->
+                                <!-- Text Details inside Modal -->
                                 <div class="col-md-7">
                                     <h6 class="fw-bold text-muted mb-3">About this course</h6>
                                     <p class="mb-4"><?= $course['description'] ?></p>
@@ -151,12 +151,10 @@ $courses = [
                         </div>
                         <div class="modal-footer border-top-0 pt-0">
                             <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-warning rounded-3 px-4 fw-bold text-dark">Enroll Now</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- End Modal -->
 
         <?php endforeach; ?>
         
