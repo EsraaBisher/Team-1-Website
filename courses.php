@@ -99,7 +99,7 @@ $courses = [
                                 </div>
                             </div>
 
-                            <a href="course_details.php?id=<?= $course['id'] ?>" class="btn btn-outline-success w-100 fw-semibold rounded-3 py-2">
+                            <a href="course_details.php?id=<?= $course['id'] ?>" class="btn btn-outline-warning w-100 fw-semibold rounded-3 py-2 text-dark">
                                 Course details
                             </a>
                         </div>
