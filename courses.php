@@ -2,7 +2,6 @@
 
 include_once "header.php";
 
-
 $courses = [
     [
         "id" => "web-design",
@@ -99,13 +98,66 @@ $courses = [
                                 </div>
                             </div>
 
-                            <a href="course_details.php?id=<?= $course['id'] ?>" class="btn btn-outline-warning w-100 fw-semibold rounded-3 py-2 text-dark">
+                            <!-- Changed from <a> to <button> to trigger the modal -->
+                            <button type="button" class="btn btn-outline-warning w-100 fw-semibold rounded-3 py-2 text-dark" data-bs-toggle="modal" data-bs-target="#courseModal-<?= $course['id'] ?>">
                                 Course details
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Modal for this specific course -->
+            <div class="modal fade" id="courseModal-<?= $course['id'] ?>" tabindex="-1" aria-labelledby="courseModalLabel-<?= $course['id'] ?>" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content rounded-4 border-0 shadow">
+                        <div class="modal-header border-bottom-0 pb-0">
+                            <h5 class="modal-title fw-bold fs-4" id="courseModalLabel-<?= $course['id'] ?>"><?= $course['title'] ?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body pt-4">
+                            <div class="row g-4">
+                                <!-- Image Section in Modal -->
+                                <div class="col-md-5">
+                                    <img src="<?= $course['image'] ?>" class="img-fluid rounded-4 shadow-sm" alt="<?= $course['title'] ?>" style="object-fit: cover; width: 100%; height: auto;">
+                                </div>
+                                <!-- Details Section in Modal -->
+                                <div class="col-md-7">
+                                    <h6 class="fw-bold text-muted mb-3">About this course</h6>
+                                    <p class="mb-4"><?= $course['description'] ?></p>
+                                    
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="<?= $course['avatar'] ?>" class="rounded-circle border me-3" width="50" height="50" alt="Avatar">
+                                        <div>
+                                            <p class="mb-0 fw-bold">Instructor</p>
+                                            <p class="mb-0 text-muted"><?= $course['instructor'] ?></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="bg-light rounded-circle p-2 me-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-clock text-warning" viewBox="0 0 16 16">
+                                                <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 fw-bold">Duration</p>
+                                            <p class="mb-0 text-muted"><?= $course['duration'] ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer border-top-0 pt-0">
+                            <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-warning rounded-3 px-4 fw-bold text-dark">Enroll Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Modal -->
+
         <?php endforeach; ?>
         
     </div>
