@@ -1,73 +1,369 @@
-<?php 
-include "header.php"; 
+<?php
+include "header.php";
 ?>
 
 <style>
+
+    /* ================= GLOBAL ================= */
+
     body {
-        color: #000000;
+        background-color: #ffffff;
+        color: #222222;
     }
 
-    h1, h2, h3, h4, h5, h6,
-    p, span {
-        color: #000000;
+    h1, h2, h3, h4, h5, h6 {
+        color: #222222;
     }
 
-    .text-primary {
-        color: #000000 !important;
+    p {
+        color: #666666;
+        line-height: 1.7;
     }
 
-    .btn-primary {
-        background-color: #FF9500 !important;
-        border-color: #FF9500 !important;
-        color: #ffffff !important;
+    .orange {
+        color: #FF9500 !important;
     }
 
-    .btn-primary:hover {
-        background-color: #e68600 !important;
-        border-color: #e68600 !important;
-        color: #ffffff !important;
+    .btn-orange {
+        background-color: #FF9500;
+        border: 1px solid #FF9500;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 6px;
+        font-weight: 600;
     }
 
-    .bg-primary {
-        background-color: #000000 !important;
+    .btn-orange:hover {
+        background-color: #e68600;
+        border-color: #e68600;
+        color: white;
     }
 
-    .border-primary {
-        border-color: #000000 !important;
+
+    /* ================= TOP BANNER ================= */
+
+    .about-banner {
+        background-color: #FF9500;
+        color: white;
+        padding: 9px 20px;
+        text-align: center;
+        font-size: 13px;
+        font-weight: 500;
     }
+
+
+    /* ================= HERO ================= */
+
+    .about-hero {
+        background-color: #f8f8f8;
+        padding: 75px 0;
+    }
+
+    .hero-label {
+        color: #FF9500;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    .hero-title {
+        font-size: 48px;
+        font-weight: 800;
+        line-height: 1.15;
+        margin-top: 15px;
+    }
+
+    .hero-title span {
+        color: #FF9500;
+    }
+
+    .hero-text {
+        max-width: 600px;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+
+    /* ================= HERO BOX ================= */
+
+    .learning-box {
+        background: white;
+        border-radius: 12px;
+        padding: 35px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        position: relative;
+    }
+
+    .learning-box::before {
+        content: "";
+        position: absolute;
+        width: 70px;
+        height: 70px;
+        background: #FF9500;
+        border-radius: 10px;
+        top: -20px;
+        right: -20px;
+        opacity: 0.15;
+    }
+
+    .learning-icon {
+        width: 65px;
+        height: 65px;
+        background: #fff3e3;
+        color: #FF9500;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .course-progress {
+        background: #eeeeee;
+        height: 8px;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 15px;
+    }
+
+    .course-progress span {
+        display: block;
+        width: 78%;
+        height: 100%;
+        background: #FF9500;
+    }
+
+
+    /* ================= SECTION TITLE ================= */
+
+    .section-label {
+        color: #FF9500;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 13px;
+        letter-spacing: 1px;
+    }
+
+    .section-title {
+        font-size: 36px;
+        font-weight: 800;
+        margin-top: 10px;
+    }
+
+
+    /* ================= ACHIEVEMENTS ================= */
+
+    .achievement-section {
+        padding: 80px 0;
+    }
+
+    .achievement-card {
+        background: white;
+        border: 1px solid #eeeeee;
+        border-radius: 10px;
+        padding: 28px;
+        height: 100%;
+        transition: 0.3s;
+    }
+
+    .achievement-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+    .achievement-icon {
+        width: 45px;
+        height: 45px;
+        background: #fff3e3;
+        color: #FF9500;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 18px;
+    }
+
+    .achievement-card h4 {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .achievement-card p {
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+
+
+    /* ================= GOALS ================= */
+
+    .goals-section {
+        background: #f8f8f8;
+        padding: 80px 0;
+    }
+
+    .goal-card {
+        background: white;
+        border-radius: 10px;
+        padding: 28px;
+        height: 100%;
+        border: 1px solid #eeeeee;
+    }
+
+    .goal-number {
+        color: #FF9500;
+        font-size: 28px;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .goal-card h4 {
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    .goal-card p {
+        font-size: 14px;
+    }
+
+
+    /* ================= STATISTICS ================= */
+
+    .stats-section {
+        background: #222222;
+        padding: 65px 0;
+    }
+
+    .stat-number {
+        color: #FF9500 !important;
+        font-size: 38px;
+        font-weight: 800;
+    }
+
+    .stat-title {
+        color: white !important;
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .stat-item {
+        border-right: 1px solid #444444;
+    }
+
+    .stat-item:last-child {
+        border-right: none;
+    }
+
+
+    /* ================= CTA ================= */
+
+    .cta-section {
+        padding: 80px 0;
+    }
+
+    .cta-box {
+        background: #f8f8f8;
+        border-radius: 12px;
+        padding: 50px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .cta-box::after {
+        content: "";
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        border: 35px solid #FF9500;
+        border-radius: 50%;
+        right: -80px;
+        bottom: -100px;
+        opacity: 0.12;
+    }
+
+    .cta-title {
+        font-size: 32px;
+        font-weight: 800;
+    }
+
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 768px) {
+
+        .hero-title {
+            font-size: 36px;
+        }
+
+        .section-title {
+            font-size: 29px;
+        }
+
+        .stat-item {
+            border-right: none;
+            border-bottom: 1px solid #444444;
+            padding-bottom: 20px;
+        }
+
+        .cta-box {
+            padding: 35px 25px;
+        }
+
+    }
+
 </style>
+
+
+<!-- ================= TOP ORANGE BANNER ================= -->
+
+<div class="about-banner">
+
+    Learn something new today — Explore our courses and grow your skills.
+
+</div>
 
 
 <!-- ================= HERO ================= -->
 
-<section class="py-5 bg-light">
+<section class="about-hero">
 
-    <div class="container py-5">
+    <div class="container">
 
         <div class="row align-items-center g-5">
 
-            <div class="col-lg-6">
+            <!-- LEFT -->
 
-                <span class="fw-bold text-uppercase">
+            <div class="col-lg-7">
+
+                <div class="hero-label">
                     About Our Platform
-                </span>
+                </div>
 
-                <h1 class="display-4 fw-bold mt-3">
-                    Empowering Learning.
+                <h1 class="hero-title">
+
+                    Learning Made
                     <br>
-                    <span>
-                        Building Futures.
-                    </span>
+
+                    <span>Simple. Smart. Better.</span>
+
                 </h1>
 
-                <p class="lead mt-4">
-                    Welcome to EduLearn, a modern course management
-                    platform designed to make learning simple,
-                    accessible and enjoyable.
+                <p class="hero-text">
+
+                    Welcome to EduLearn, an online learning platform
+                    created to make education easier, more flexible
+                    and accessible for everyone.
+
+                    <br><br>
+
+                    We connect students with useful courses,
+                    professional instructors and practical knowledge
+                    that can help them build real skills for the future.
+
                 </p>
 
-                <a href="courses.php"
-                   class="btn btn-primary btn-lg mt-3">
+                <a href="courses.php" class="btn btn-orange mt-3">
 
                     Explore Courses
 
@@ -78,66 +374,80 @@ include "header.php";
             </div>
 
 
-        </div>
+            <!-- RIGHT -->
 
-    </div>
+            <div class="col-lg-5">
 
-</section>
+                <div class="learning-box">
 
+                    <div class="learning-icon">
 
-<!-- ================= WHO WE ARE ================= -->
+                        <i class="fa-solid fa-graduation-cap"></i>
 
-<section class="py-5">
+                    </div>
 
-    <div class="container py-5">
-
-        <div class="row align-items-center g-5">
-
-
-
-
-            <div class="col-lg-6">
-
-                <span class="fw-bold text-uppercase">
-                    Who We Are
-                </span>
-
-                <h2 class="display-6 fw-bold mt-3">
-                    Learn More.
-                    <span>
-                        Grow More.
-                    </span>
-                </h2>
-
-                <p class="mt-4">
-                    EduLearn is a course management system that
-                    connects students with professional instructors
-                    and high-quality educational content.
-                </p>
-
-                <p>
-                    Students can discover courses, register for
-                    classes and track their learning progress
-                    through an easy-to-use dashboard.
-                </p>
-
-
-                <div class="mt-4">
+                    <h3 class="fw-bold">
+                        Your Learning Journey
+                    </h3>
 
                     <p>
-                        <i class="fa-solid fa-circle-check me-2"></i>
-                        Easy learning experience
+                        Choose a course, learn at your own pace
+                        and track your progress step by step.
                     </p>
 
-                    <p>
-                        <i class="fa-solid fa-circle-check me-2"></i>
-                        Professional instructors
-                    </p>
 
-                    <p>
-                        <i class="fa-solid fa-circle-check me-2"></i>
-                        Modern responsive platform
-                    </p>
+                    <div class="d-flex justify-content-between mt-4">
+
+                        <span class="fw-bold">
+                            Course Progress
+                        </span>
+
+                        <span class="orange fw-bold">
+                            78%
+                        </span>
+
+                    </div>
+
+                    <div class="course-progress">
+
+                        <span></span>
+
+                    </div>
+
+
+                    <div class="row mt-4 text-center">
+
+                        <div class="col-4">
+
+                            <i class="fa-solid fa-book orange fs-4"></i>
+
+                            <small class="d-block mt-2">
+                                Courses
+                            </small>
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <i class="fa-solid fa-video orange fs-4"></i>
+
+                            <small class="d-block mt-2">
+                                Lessons
+                            </small>
+
+                        </div>
+
+                        <div class="col-4">
+
+                            <i class="fa-solid fa-award orange fs-4"></i>
+
+                            <small class="d-block mt-2">
+                                Skills
+                            </small>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -150,25 +460,28 @@ include "header.php";
 </section>
 
 
-<!-- ================= FEATURES ================= -->
+<!-- ================= ACHIEVEMENTS ================= -->
 
-<section class="py-5 bg-light">
+<section class="achievement-section">
 
-    <div class="container py-5">
+    <div class="container">
 
         <div class="text-center mb-5">
 
-            <span class="fw-bold text-uppercase">
-                What We Offer
-            </span>
+            <div class="section-label">
+                Our Achievements
+            </div>
 
-            <h2 class="display-6 fw-bold mt-2">
-                Everything You Need to Learn
+            <h2 class="section-title">
+                Helping Learners Move Forward
             </h2>
 
-            <p>
-                Powerful features for students,
-                instructors and administrators.
+            <p class="mx-auto" style="max-width: 650px;">
+
+                Our platform is designed around one simple idea:
+                give learners the tools and knowledge they need
+                to improve themselves.
+
             </p>
 
         </div>
@@ -177,26 +490,28 @@ include "header.php";
         <div class="row g-4">
 
 
-            <!-- CARD 1 -->
+            <!-- 1 -->
 
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6">
 
-                <div class="card h-100 border-0 shadow-sm
-                            rounded-4 p-4 text-center">
+                <div class="achievement-card">
 
-                    <div class="mb-3">
+                    <div class="achievement-icon">
 
-                        <i class="fa-solid fa-graduation-cap fs-1"></i>
+                        <i class="fa-solid fa-users"></i>
 
                     </div>
 
-                    <h3 class="h5 fw-bold">
-                        Quality Courses
-                    </h3>
+                    <h4>
+                        Trusted by Learners
+                    </h4>
 
-                    <p class="small">
-                        Explore a wide range of courses
-                        created to help you develop your skills.
+                    <p>
+
+                        Students can discover educational content
+                        and develop new skills through a simple
+                        and organized learning experience.
+
                     </p>
 
                 </div>
@@ -204,26 +519,28 @@ include "header.php";
             </div>
 
 
-            <!-- CARD 2 -->
+            <!-- 2 -->
 
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6">
 
-                <div class="card h-100 border-0 shadow-sm
-                            rounded-4 p-4 text-center">
+                <div class="achievement-card">
 
-                    <div class="mb-3">
+                    <div class="achievement-icon">
 
-                        <i class="fa-solid fa-chalkboard-user fs-1"></i>
+                        <i class="fa-solid fa-star"></i>
 
                     </div>
 
-                    <h3 class="h5 fw-bold">
-                        Expert Instructors
-                    </h3>
+                    <h4>
+                        Quality Learning
+                    </h4>
 
-                    <p class="small">
-                        Learn from experienced instructors
-                        who are passionate about teaching.
+                    <p>
+
+                        We focus on providing useful courses
+                        that combine clear explanations with
+                        practical knowledge.
+
                     </p>
 
                 </div>
@@ -231,26 +548,28 @@ include "header.php";
             </div>
 
 
-            <!-- CARD 3 -->
+            <!-- 3 -->
 
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6">
 
-                <div class="card h-100 border-0 shadow-sm
-                            rounded-4 p-4 text-center">
+                <div class="achievement-card">
 
-                    <div class="mb-3">
+                    <div class="achievement-icon">
 
-                        <i class="fa-solid fa-magnifying-glass fs-1"></i>
+                        <i class="fa-solid fa-clock"></i>
 
                     </div>
 
-                    <h3 class="h5 fw-bold">
-                        Smart Search
-                    </h3>
+                    <h4>
+                        Learn Anytime
+                    </h4>
 
-                    <p class="small">
-                        Quickly find the perfect course
-                        using search and filtering.
+                    <p>
+
+                        Learning should fit your lifestyle.
+                        Students can access their courses
+                        whenever they are ready to learn.
+
                     </p>
 
                 </div>
@@ -258,26 +577,28 @@ include "header.php";
             </div>
 
 
-            <!-- CARD 4 -->
+            <!-- 4 -->
 
-            <div class="col-md-6 col-lg-3">
+            <div class="col-md-6">
 
-                <div class="card h-100 border-0 shadow-sm
-                            rounded-4 p-4 text-center">
+                <div class="achievement-card">
 
-                    <div class="mb-3">
+                    <div class="achievement-icon">
 
-                        <i class="fa-solid fa-chart-line fs-1"></i>
+                        <i class="fa-solid fa-chart-line"></i>
 
                     </div>
 
-                    <h3 class="h5 fw-bold">
-                        Track Progress
-                    </h3>
+                    <h4>
+                        Track Your Progress
+                    </h4>
 
-                    <p class="small">
-                        Follow your courses and monitor
-                        your learning progress.
+                    <p>
+
+                        Follow your learning journey and see
+                        how far you have come as you complete
+                        your courses.
+
                     </p>
 
                 </div>
@@ -291,42 +612,69 @@ include "header.php";
 </section>
 
 
-<!-- ================= MISSION ================= -->
+<!-- ================= GOALS ================= -->
 
-<section class="py-5">
+<section class="goals-section">
 
-    <div class="container py-5">
+    <div class="container">
 
-        <div class="row align-items-center g-5">
+        <div class="row align-items-center mb-5">
 
-            <div class="col-lg-6">
+            <div class="col-lg-7">
 
-                <span class="fw-bold text-uppercase">
-                    Our Mission
-                </span>
+                <div class="section-label">
+                    Our Goals
+                </div>
 
-                <h2 class="display-6 fw-bold mt-3">
-                    Making Education
-                    <br>
-                    <span>
-                        Accessible to Everyone.
+                <h2 class="section-title">
+
+                    Building a Better
+                    <span class="orange">
+                        Learning Experience
                     </span>
+
                 </h2>
 
-                <p class="mt-4">
-                    We believe education has the power to change
-                    lives. Our mission is to create an environment
-                    where everyone can learn new skills and build
-                    a better future.
+            </div>
+
+            <div class="col-lg-5">
+
+                <p class="mb-0">
+
+                    We want to make online education more
+                    practical, organized and enjoyable for
+                    students of different backgrounds and levels.
+
                 </p>
 
+            </div>
 
-                <div class="border-start border-4 ps-4 mt-4">
+        </div>
 
-                    <i class="fa-solid fa-quote-left fs-4"></i>
 
-                    <p class="fst-italic mt-2 mb-0">
-                        Learning is a journey, not a destination.
+        <div class="row g-4">
+
+
+            <!-- GOAL 1 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="goal-card">
+
+                    <div class="goal-number">
+                        01
+                    </div>
+
+                    <h4>
+                        Practical Skills
+                    </h4>
+
+                    <p>
+
+                        Focus on knowledge that students
+                        can actually use in their academic
+                        and professional lives.
+
                     </p>
 
                 </div>
@@ -334,6 +682,85 @@ include "header.php";
             </div>
 
 
+            <!-- GOAL 2 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="goal-card">
+
+                    <div class="goal-number">
+                        02
+                    </div>
+
+                    <h4>
+                        Easy Learning
+                    </h4>
+
+                    <p>
+
+                        Keep the platform simple so students
+                        can focus on learning instead of
+                        complicated navigation.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- GOAL 3 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="goal-card">
+
+                    <div class="goal-number">
+                        03
+                    </div>
+
+                    <h4>
+                        Better Opportunities
+                    </h4>
+
+                    <p>
+
+                        Help learners develop skills that
+                        can open new academic and career
+                        opportunities.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- GOAL 4 -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <div class="goal-card">
+
+                    <div class="goal-number">
+                        04
+                    </div>
+
+                    <h4>
+                        Keep Growing
+                    </h4>
+
+                    <p>
+
+                        Continue improving our platform
+                        and adding useful educational
+                        content.
+
+                    </p>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -344,67 +771,60 @@ include "header.php";
 
 <!-- ================= STATISTICS ================= -->
 
-<section class="py-5 bg-dark">
+<section class="stats-section">
 
     <div class="container">
 
         <div class="row text-center g-4">
 
-            <div class="col-6 col-lg-3">
 
-                <i class="fa-solid fa-book fs-1 mb-3 text-white"></i>
+            <div class="col-6 col-lg-3 stat-item">
 
-                <h2 class="fw-bold text-white">
+                <div class="stat-number">
                     150+
-                </h2>
+                </div>
 
-                <p class="mb-0 text-white">
-                    Courses
+                <p class="stat-title">
+                    Online Courses
                 </p>
 
             </div>
 
 
-            <div class="col-6 col-lg-3">
+            <div class="col-6 col-lg-3 stat-item">
 
-                <i class="fa-solid fa-user-tie fs-1 mb-3 text-white"></i>
-
-                <h2 class="fw-bold text-white">
+                <div class="stat-number">
                     50+
-                </h2>
+                </div>
 
-                <p class="mb-0 text-white">
-                    Instructors
+                <p class="stat-title">
+                    Expert Instructors
                 </p>
 
             </div>
 
 
-            <div class="col-6 col-lg-3">
+            <div class="col-6 col-lg-3 stat-item">
 
-                <i class="fa-solid fa-users fs-1 mb-3 text-white"></i>
-
-                <h2 class="fw-bold text-white">
+                <div class="stat-number">
                     5K+
-                </h2>
+                </div>
 
-                <p class="mb-0 text-white">
-                    Students
+                <p class="stat-title">
+                    Active Students
                 </p>
 
             </div>
 
 
-            <div class="col-6 col-lg-3">
+            <div class="col-6 col-lg-3 stat-item">
 
-                <i class="fa-solid fa-award fs-1 mb-3 text-white"></i>
-
-                <h2 class="fw-bold text-white">
+                <div class="stat-number">
                     20+
-                </h2>
+                </div>
 
-                <p class="mb-0 text-white">
-                    Categories
+                <p class="stat-title">
+                    Course Categories
                 </p>
 
             </div>
@@ -418,27 +838,35 @@ include "header.php";
 
 <!-- ================= CTA ================= -->
 
-<section class="py-5">
+<section class="cta-section">
 
-    <div class="container py-5">
+    <div class="container">
 
-        <div class="bg-dark text-white rounded-4 p-5">
+        <div class="cta-box">
 
             <div class="row align-items-center g-4">
 
                 <div class="col-lg-8">
 
-                    <span class="fw-bold text-uppercase">
-                        Start Your Journey
-                    </span>
+                    <div class="section-label">
+                        Start Learning
+                    </div>
 
-                    <h2 class="display-6 fw-bold text-white mt-2">
-                        Ready to Start Learning?
+                    <h2 class="cta-title mt-2">
+
+                        Your Next Skill
+                        <span class="orange">
+                            Starts Here.
+                        </span>
+
                     </h2>
 
-                    <p class="text-white-50 mb-0">
-                        Explore our courses and take the next
-                        step toward achieving your goals.
+                    <p class="mb-0">
+
+                        Explore our courses, discover something
+                        new and take the next step in your
+                        learning journey.
+
                     </p>
 
                 </div>
@@ -447,9 +875,9 @@ include "header.php";
                 <div class="col-lg-4 text-lg-end">
 
                     <a href="courses.php"
-                       class="btn btn-primary btn-lg">
+                       class="btn btn-orange btn-lg">
 
-                        Explore Courses
+                        View Courses
 
                         <i class="fa-solid fa-arrow-right ms-2"></i>
 
@@ -466,8 +894,6 @@ include "header.php";
 </section>
 
 
-<!-- ================= FOOTER ================= -->
-
-<?php 
-include "footer.php"; 
+<?php
+include "footer.php";
 ?>
