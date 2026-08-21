@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2026 at 12:01 AM
+-- Generation Time: Aug 22, 2026 at 12:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,10 +24,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `coursers`
+-- Table structure for table `courses`
 --
 
-CREATE TABLE `coursers` (
+CREATE TABLE `courses` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `hours` int(11) NOT NULL,
@@ -93,9 +93,9 @@ CREATE TABLE `users` (
 --
 
 --
--- Indexes for table `coursers`
+-- Indexes for table `courses`
 --
-ALTER TABLE `coursers`
+ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`);
 
 --
