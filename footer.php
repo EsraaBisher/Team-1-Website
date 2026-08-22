@@ -158,7 +158,9 @@
 
 
     <!-- Bootstrap JS -->
-<script src="/Team-1-Website-main/bootstrap/assets/js/bootstrap.bundle.min.js"></script>
+
+<script src="./bootstrap/assets/js/bootstrap.bundle.min.js"></script>
+
 
 
 </body>
