@@ -1,0 +1,56 @@
+$courses = [
+    [
+        "id" => "web-design",
+        "name" => "Web Design Fundamentals",
+        "description" => "Learn the core principles of web design, including HTML, CSS, and how to build responsive layouts.",
+        "hours" => "10 Hours",
+        "teacher_id" => "Ayat Osama",
+        "image" => "Web Design.JFIF",
+        "avatar" => "/Team-1-Website-main/avatars/Avatar20.png"
+    ],
+    [
+        "id" => "ui-ux",
+        "name" => "UI / UX Design",
+        "description" => "Master user interface and experience design. Learn wireframing, prototyping, and usability testing.",
+        "hours" => "12 Hours",
+        "teacher_id" => "Esraa Bisher",
+        "image" => "UI UX Design.JFIF",
+        "avatar" => "/Team-1-Website-main/avatars/Avatar07.png"
+    ],
+    [
+        "id" => "mobile-app",
+        "name" => "Mobile App Development",
+        "description" => "Dive into building native and cross-platform mobile applications using modern frameworks.",
+        "hours" => "15 Hours",
+        "teacher_id" => "Toka Moustafa",
+        "image" => "Mobile App Development2.JFIF",
+        "avatar" => "/Team-1-Website-main/avatars/Avatar12.png"
+    ],
+    [
+        "id" => "graphic-design",
+        "name" => "Graphic Design for Beginners",
+        "description" => "Discover the fundamentals of graphic design, color theory, typography, and visual communication.",
+        "hours" => "8 Hours",
+        "teacher_id" => "Tasneem Ahmed",
+        "image" => "Graphic Design.jpg",
+        "avatar" => "/Team-1-Website-main/avatars/Avatar11.png"
+    ],
+    [
+        "id" => "front-end",
+        "name" => "Front-End Web Development",
+        "description" => "Become proficient in front-end web development to create interactive and dynamic websites.",
+        "hours" => "20 Hours",
+        "teacher_id" => "Ziad Zidan",
+        "image" => "Front-End Web Development.JFIF",
+        "avatar" => "/Team-1-Website-main/avatars/Avatar06.png"
+    ],
+    [
+        "id" => "digital-marketing",
+        "name" => "Digital Marketing",
+        "description" => "Learn how to reach your audience effectively using SEO, social media, and online advertising strategies.",
+        "hours" => "14 Hours",
+        "teacher_id" => "Waleed Allam",
+        "image" => "Digital Marketing.JFIF",
+        "avatar" => "/Team-1-Website-main/avatars/Avatar19.png"
+    ]
+];
