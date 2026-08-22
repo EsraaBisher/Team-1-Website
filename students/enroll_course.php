@@ -1,28 +1,44 @@
 <?php
 session_start();
+include '../connect.php';
 
-// استقبال كود الكورس
+// التأكد من تسجيل دخول الطالب ومكانه في السيشن
+$student_id = $_SESSION['student_id'] ?? 1;
+
+// استقبال كود الكورس المراد إضافته
 if (isset($_GET['course_id'])) {
-    $course_id = $_GET['course_id'];
+    $course_id = mysqli_real_escape_string($conn, $_GET['course_id']);
     
-    // إنشاء مصفوفة الكورسات في السشن لو مش موجودة
-    if (!isset($_SESSION['my_courses'])) {
-        $_SESSION['my_courses'] = [];
+    // 1. التحقق مما إذا كان الكورس مضافاً بالفعل للـ Student
+    $check_query = "SELECT * FROM enrollments WHERE student_id = '$student_id' AND course_id = '$course_id'";
+    $check_result = mysqli_query($conn, $check_query);
+
+    if (mysqli_num_rows($check_result) > 0) {
+        // الكورس مضاف مسبقاً
+        echo "<script>
+                alert('You are already enrolled in this course!');
+                window.location.href = 'mycourses.php';
+              </script>";
+    } else {
+        // 2. تنفيذ عملية الإضافة (Add / Enroll) في قاعدة البيانات
+        $insert_query = "INSERT INTO enrollments (student_id, course_id) VALUES ('$student_id', '$course_id')";
+        
+        if (mysqli_query($conn, $insert_query)) {
+            echo "<script>
+                    alert('Enrolled Successfully!');
+                    window.location.href = 'mycourses.php';
+                  </script>";
+        } else {
+            echo "<script>
+                    alert('Failed to enroll. Please try again.');
+                    window.location.href = 'mycourses.php';
+                  </script>";
+        }
     }
-    
-    // إضافة الكورس
-    if (!in_array($course_id, $_SESSION['my_courses'])) {
-        $_SESSION['my_courses'][] = $course_id;
-    }
-    
-    // إظهار رسالة والتحويل لصفحة الكورسات
-    echo "<script>
-            alert('Enrolled Successfully!');
-            window.location.href = 'mycourses.php';
-          </script>";
     exit();
 } else {
-    header("Location: courses.php");
+    // في حال عدم وجود course_id يتم التوجيه لصفحة الكورسات
+    header("Location: mycourses.php");
     exit();
 }
 ?>

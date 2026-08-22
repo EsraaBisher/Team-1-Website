@@ -36,8 +36,18 @@ $total_courses = mysqli_fetch_assoc($count_result)['total'];
                         <p class="text-muted mb-0">Account Role</p>
                     </div>
                 </div>
-                <div class="mt-4 text-center">
-                    <a href="mycourses.php" class="btn btn-warning text-white fw-bold">My Courses</a>
+                <hr>
+                <!-- أزرار التحكم والتعديل للحساب -->
+                <div class="mt-4 d-flex justify-content-center gap-2 wrap flex-wrap">
+                    <a href="mycourses.php" class="btn btn-warning text-white fw-bold">
+                        <i class="fa-solid fa-book me-1"></i> My Courses
+                    </a>
+                    <a href="edit_profile.php" class="btn btn-primary fw-bold">
+                        <i class="fa-solid fa-pen-to-square me-1"></i> Edit Profile
+                    </a>
+                    <a href="delete_profile.php" class="btn btn-danger fw-bold" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                        <i class="fa-solid fa-trash me-1"></i> Delete Account
+                    </a>
                 </div>
             </div>
         </div>
