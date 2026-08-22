@@ -1,5 +1,54 @@
 <?php
 include "header.php";
+include "connect2.php";
+
+$objCon = new Connect2();
+
+$error = "";
+
+if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['role'] === 'teacher') {
+        header('location:index.php');
+    } elseif ($_SESSION['role'] === 'student') {
+        header('location:index.php');
+    } else {
+        header('location:index.php');
+    }
+    exit();
+}
+
+if (isset($_POST['email'])  && isset($_POST['password'])) {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+    $user = $objCon->login($email);
+
+    //password_verify-> checks if the password matches the hashed pass in the db
+    if (count($user) > 0 && password_verify($password, $user['password'])) {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['name'] = $user['name'];
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['role'] = $user['role'];
+        $_SESSION['image'] = $user['image'];
+
+        if (isset($_POST['rememberMe'])) {
+            setcookie('remembered_email', $email, time() + (86400 * 30), '/');
+        }
+
+        if ($user['role'] === 'teacher') {
+            header('location:index.php');
+        } elseif ($user['role'] === 'student') {
+            header('location:index.php');
+        } else {
+            header('location:index.php');
+        }
+        exit();
+    } else {
+        $error = "you are not logged in";
+    }
+}
+
+$rememberedEmail = $_COOKIE['remembered_email'] ?? '';
 ?>
 <section class="py-5" style="background-color: #f7f7f7;">
     <div class="container">
@@ -36,10 +85,14 @@ include "header.php";
                 <div class="card border-0 shadow-sm p-3 p-md-5 mb-5">
                     <h1 class="fw-bold text-center mb-2">Login</h1>
                     <p class="text-center mb-3">Welcome back! Please log in to access your account.</p>
+                    <?php if ($error) { ?>
+                        <div class="alert alert-danger py-2"><?= $error ?></div>
+                    <?php } ?>
+
                     <form method="POST">
                         <div class="mb-3">
                             <label for="email" class="form-label fw-bold">Email</label>
-                            <input type="email" class="form-control form-control-lg" name="email" placeholder="Enter your Email" required>
+                            <input type="email" class="form-control form-control-lg" name="email" placeholder="Enter your Email" required value="<?= htmlspecialchars($rememberedEmail) ?>">
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label fw-bold">Password</label>
@@ -54,10 +107,10 @@ include "header.php";
                             <p>Forgot Password?</p>
                         </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" name="rememberMe">
+                            <input type="checkbox" class="form-check-input" name="rememberMe" <?= $rememberedEmail ? 'checked' : '' ?>>
                             <label class="form-check-label" for="rememberMe">Remember Me</label>
                         </div>
-                        <button href="index.php" type="submit" class="btn fw-meduim btn-lg w-100 text-white mb-4" style="background-color: #FF9500;">Login</button>
+                        <button type="submit" class="btn fw-meduim btn-lg w-100 text-white mb-4" style="background-color: #FF9500;">Login</button>
 
                         <div class="d-flex align-items-center gap-3 mb-4">
                             <div class="flex-grow-1" style="border-top:2px solid #eee;"></div>
@@ -82,17 +135,7 @@ include "header.php";
         </div>
     </div>
 </section>
-<?php
-if (isset($_POST['email']) && isset($_POST['password'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
 
-    if ($email == "test@gmail" && $password == "111") {
-        echo "<script>window.location.href='index.php';</script>";
-    } else {
-    }
-}
-?>
 <?php
 include "footer.php";
 ?>

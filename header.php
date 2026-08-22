@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+$isLoggedIn = isset($_SESSION['user_id']);
+$userRole   = $_SESSION['role'] ?? null;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,8 +62,30 @@
                     </li>
 
                 </ul>
+                <?php if ($isLoggedIn) { ?>
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="profile.php" class="d-flex align-items-center gap-2 text-decoration-none" style="color:#262626;">
+                            <img src="<?= htmlspecialchars($_SESSION['image'] ?? 'bootstrap/assets/image/profile.jpg') ?>"
+                                alt="profile" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
+                            <span class="fw-medium"><?= htmlspecialchars($_SESSION['name'] ?? 'Profile') ?></span>
+                        </a>
 
-                <div>
+                        <a href="logout.php" class="btn text-white fw-medium fs-5" style="background-color: #FF9500;">
+                            Logout
+                        </a>
+                    </div>
+                <?php } else { ?>
+                    <div>
+                        <a href="login.php" class="btn fw-medium fs-5 me-2" style="color: #262626;">
+                            Login
+                        </a>
+
+                        <a href="register.php" class="btn text-white fs-5 fw-medium" style="background-color: #FF9500;">
+                            Register
+                        </a>
+                    </div>
+                <?php } ?>
+                <!-- <div>
                     <a href="login.php" class="btn fw-medium fs-5 me-2" style="color: #262626;">
                         Login
                     </a>
@@ -63,7 +93,7 @@
                     <a href="register.php" class="btn text-white fs-5 fw-medium" style="background-color: #FF9500;">
                         Register
                     </a>
-                </div>
+                </div> -->
 
             </div>
 
