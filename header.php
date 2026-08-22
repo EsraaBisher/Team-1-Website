@@ -16,8 +16,10 @@ $userRole   = $_SESSION['role'] ?? null;
     <title>Course System</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="./bootstrap/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./bootstrap/assets/css/style.css">
+    <!-- Bootstrap CSS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom Style CDN/Relative -->
+<link rel="stylesheet" href="../bootstrap/assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
