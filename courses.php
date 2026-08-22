@@ -151,6 +151,7 @@ $courses = [
                         </div>
                         <div class="modal-footer border-top-0 pt-0">
                             <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Close</button>
+                            <a href="enroll_course.php?course_id=<?= $course['id'] ?>" class="btn btn-warning text-white rounded-3 px-4 fw-bold">Enroll Now</a>
                         </div>
                     </div>
                 </div>

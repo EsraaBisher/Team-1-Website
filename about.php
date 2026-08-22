@@ -228,34 +228,6 @@ include "header.php";
     }
 
 
-    /* ================= STATISTICS ================= */
-
-    .stats-section {
-        background: #222222;
-        padding: 65px 0;
-    }
-
-    .stat-number {
-        color: #FF9500 !important;
-        font-size: 38px;
-        font-weight: 800;
-    }
-
-    .stat-title {
-        color: white !important;
-        margin: 0;
-        font-size: 14px;
-    }
-
-    .stat-item {
-        border-right: 1px solid #444444;
-    }
-
-    .stat-item:last-child {
-        border-right: none;
-    }
-
-
     /* ================= CTA ================= */
 
     .cta-section {
@@ -298,12 +270,6 @@ include "header.php";
 
         .section-title {
             font-size: 29px;
-        }
-
-        .stat-item {
-            border-right: none;
-            border-bottom: 1px solid #444444;
-            padding-bottom: 20px;
         }
 
         .cta-box {
@@ -759,73 +725,6 @@ include "header.php";
                     </p>
 
                 </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- ================= STATISTICS ================= -->
-
-<section class="stats-section">
-
-    <div class="container">
-
-        <div class="row text-center g-4">
-
-
-            <div class="col-6 col-lg-3 stat-item">
-
-                <div class="stat-number">
-                    150+
-                </div>
-
-                <p class="stat-title">
-                    Online Courses
-                </p>
-
-            </div>
-
-
-            <div class="col-6 col-lg-3 stat-item">
-
-                <div class="stat-number">
-                    50+
-                </div>
-
-                <p class="stat-title">
-                    Expert Instructors
-                </p>
-
-            </div>
-
-
-            <div class="col-6 col-lg-3 stat-item">
-
-                <div class="stat-number">
-                    5K+
-                </div>
-
-                <p class="stat-title">
-                    Active Students
-                </p>
-
-            </div>
-
-
-            <div class="col-6 col-lg-3 stat-item">
-
-                <div class="stat-number">
-                    20+
-                </div>
-
-                <p class="stat-title">
-                    Course Categories
-                </p>
 
             </div>
 
