@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 
 include "../connect.php";
 
@@ -8,7 +7,7 @@ include "../connect.php";
 // Later:
 // $user_id = $_SESSION['user_id'];
 
-$user_id = 0;
+$user_id = 1;
 
 
 // Get teacher data

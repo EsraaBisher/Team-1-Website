@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 
 include "../connect.php";
 
@@ -11,7 +10,9 @@ include "../connect.php";
 // }
 // $user_id = $_SESSION['user_id'];
 
-$user_id = 0;
+$user_id = 1;
+
+
 
 
 // Get teacher data
@@ -515,47 +516,6 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
 
         </div>
-
-    </div>
-
-
-
-    <!-- MY COURSES -->
-
-    <div class="d-flex justify-content-between align-items-center mb-3">
-
-
-        <div>
-
-            <h3 class="fw-bold mb-1">
-
-                My Courses
-
-            </h3>
-
-
-            <p class="text-muted mb-0">
-
-                View and manage your courses
-
-            </p>
-
-        </div>
-
-
-
-        <!-- VIEW ALL COURSES -->
-
-        <a
-            href="../courses/courses.php"
-            class="btn text-white"
-            style="background-color:#FF9500;"
-        >
-
-            View All
-
-        </a>
-
 
     </div>
 

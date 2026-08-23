@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include '../connect.php';
 
 // التأكد من تسجيل دخول الطالب ومكانه في السيشن

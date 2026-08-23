@@ -17,6 +17,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
+
 if (isset($_POST['email'])  && isset($_POST['password'])) {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);

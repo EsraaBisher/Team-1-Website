@@ -1,45 +1,334 @@
 <?php
-session_start();
 include '../header.php';
 ?>
 
-<div class="container my-5" style="min-height: 70vh;">
-    <h2 class="fw-bold mb-4">Student Dashboard</h2>
-    <div class="row g-4">
-        <!-- قسم الكورسات -->
-        <div class="col-md-6">
-            <div class="card p-4 shadow-sm border-0 text-center h-100">
-                <i class="fa-solid fa-graduation-cap fs-1 text-warning mb-3"></i>
-                <h4 class="fw-bold">My Courses</h4>
-                <p class="text-muted">Access your enrolled courses, register for new ones, and manage them.</p>
-                <div class="d-flex justify-content-center gap-2 mt-auto">
-                    <a href="mycourses.php" class="btn btn-warning text-white fw-bold">
-                        <i class="fa-solid fa-eye me-1"></i> View Courses
-                    </a>
-                    <a href="enroll.php" class="btn btn-success fw-bold">
-                        <i class="fa-solid fa-plus me-1"></i> Enroll / Add
-                    </a>
-                </div>
-            </div>
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Fix Navbar Links
+    const navLinks = document.querySelectorAll("nav a");
+
+    navLinks.forEach(function (link) {
+
+        const href = link.getAttribute("href");
+
+        if (href === "index.php") {
+            link.href = "../index.php";
+        }
+
+        else if (href === "about.php") {
+            link.href = "../about.php";
+        }
+
+        else if (href === "courses.php") {
+            link.href = "../courses.php";
+        }
+
+        else if (href === "pricing.php") {
+            link.href = "../pricing.php";
+        }
+
+        else if (href === "login.php") {
+            link.href = "../login.php";
+        }
+
+        else if (href === "register.php") {
+            link.href = "../register.php";
+        }
+
+    });
+
+
+    // Fix Footer Links
+    const footerLinks = document.querySelectorAll("footer a");
+
+    footerLinks.forEach(function (link) {
+
+        const href = link.getAttribute("href");
+
+        if (href === "index.php") {
+            link.href = "../index.php";
+        }
+
+        else if (href === "about.php") {
+            link.href = "../about.php";
+        }
+
+        else if (href === "courses.php") {
+            link.href = "../courses.php";
+        }
+
+        else if (href === "pricing.php") {
+            link.href = "../pricing.php";
+        }
+
+        else if (href === "login.php") {
+            link.href = "../login.php";
+        }
+
+        else if (href === "register.php") {
+            link.href = "../register.php";
+        }
+
+    });
+
+});
+
+</script>
+
+
+<style>
+
+    .student-dashboard {
+        background: #f8f9fa;
+        min-height: 75vh;
+    }
+
+    .dashboard-header {
+        background: linear-gradient(135deg, #262626, #3b3b3b);
+        border-radius: 20px;
+        padding: 35px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dashboard-header::after {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 149, 0, 0.15);
+        right: -60px;
+        top: -80px;
+    }
+
+    .dashboard-header h1 {
+        font-weight: 700;
+        position: relative;
+        z-index: 2;
+    }
+
+    .dashboard-header p {
+        color: #d5d5d5;
+        position: relative;
+        z-index: 2;
+    }
+
+    .dashboard-card {
+        border: none;
+        border-radius: 20px;
+        background: white;
+        padding: 30px;
+        height: 100%;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        transition: all 0.3s ease;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);
+    }
+
+    .dashboard-icon {
+        width: 65px;
+        height: 65px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff3df;
+        color: #FF9500;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .dashboard-card h4 {
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-card p {
+        color: #777;
+        line-height: 1.7;
+        min-height: 55px;
+    }
+
+    .btn-orange {
+        background-color: #FF9500;
+        color: white;
+        border: none;
+    }
+
+    .btn-orange:hover {
+        background-color: #e88600;
+        color: white;
+    }
+
+    .quick-title {
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+
+    .quick-link {
+        background: white;
+        border-radius: 15px;
+        padding: 18px 20px;
+        text-decoration: none;
+        color: #262626;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: 0.3s;
+    }
+
+    .quick-link:hover {
+        transform: translateY(-3px);
+        color: #FF9500;
+    }
+
+    .quick-link i {
+        color: #FF9500;
+        font-size: 22px;
+    }
+
+</style>
+
+
+<div class="student-dashboard py-5">
+
+    <div class="container">
+
+        <!-- ================= HEADER ================= -->
+
+        <div class="dashboard-header mb-5">
+
+            <h1>
+                Welcome, Student 👋
+            </h1>
+
+            <p class="mb-0">
+                Manage your courses and profile from your dashboard.
+            </p>
+
         </div>
 
-        <!-- قسم الملف الشخصي -->
-        <div class="col-md-6">
-            <div class="card p-4 shadow-sm border-0 text-center h-100">
-                <i class="fa-solid fa-id-card fs-1 text-warning mb-3"></i>
-                <h4 class="fw-bold">My Profile</h4>
-                <p class="text-muted">Manage your personal information and update your profile settings.</p>
-                <div class="d-flex justify-content-center gap-2 mt-auto">
-                    <a href="profile.php" class="btn btn-warning text-white fw-bold">
-                        <i class="fa-solid fa-user me-1"></i> View Profile
-                    </a>
-                    <a href="edit_profile.php" class="btn btn-primary fw-bold">
-                        <i class="fa-solid fa-pen-to-square me-1"></i> Edit Profile
-                    </a>
+
+        <!-- ================= MAIN CARDS ================= -->
+
+        <div class="row g-4">
+
+
+            <!-- MY COURSES -->
+
+            <div class="col-lg-6">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                    </div>
+
+                    <h4>
+                        My Courses
+                    </h4>
+
+                    <p>
+                        View your enrolled courses, explore new courses,
+                        and manage your learning journey easily.
+                    </p>
+
+                    <div class="d-flex gap-2 mt-4">
+
+                        <a
+                            href="mycourses.php"
+                            class="btn btn-orange px-4 fw-bold"
+                        >
+
+                            <i class="fa-solid fa-book-open me-2"></i>
+                            View Courses
+
+                        </a>
+
+                        <a
+                            href="enroll.php"
+                            class="btn btn-outline-success px-4 fw-bold"
+                        >
+
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Enroll
+
+                        </a>
+
+                    </div>
+
                 </div>
+
             </div>
+
+
+            <!-- MY PROFILE -->
+
+            <div class="col-lg-6">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-icon">
+
+                        <i class="fa-solid fa-user"></i>
+
+                    </div>
+
+                    <h4>
+                        My Profile
+                    </h4>
+
+                    <p>
+                        View your personal information and keep your
+                        student profile up to date.
+                    </p>
+
+                    <div class="d-flex gap-2 mt-4">
+
+                        <a
+                            href="profile.php"
+                            class="btn btn-orange px-4 fw-bold"
+                        >
+
+                            <i class="fa-solid fa-user me-2"></i>
+                            View Profile
+
+                        </a>
+
+                        <a
+                            href="edit_profile.php"
+                            class="btn btn-outline-primary px-4 fw-bold"
+                        >
+
+                            <i class="fa-solid fa-pen me-2"></i>
+                            Edit
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
+
+
     </div>
+
 </div>
 
-<?php include 'footer.php'; ?>
+
+<?php
+include '../footer.php';
+?>

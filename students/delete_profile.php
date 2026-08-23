@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include '../connect.php';
 
 // الحصول على ID الطالب الحالي من السيشن

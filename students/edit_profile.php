@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 include '../connect.php';
 include '../header.php';
 
@@ -27,6 +27,80 @@ if (isset($_POST['update_profile'])) {
     }
 }
 ?>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const navLinks = document.querySelectorAll("nav a");
+
+    navLinks.forEach(function (link) {
+
+        const href = link.getAttribute("href");
+
+        if (href === "index.php") {
+            link.href = "../index.php";
+        }
+
+        else if (href === "about.php") {
+            link.href = "../about.php";
+        }
+
+        else if (href === "courses.php") {
+            link.href = "../courses.php";
+        }
+
+        else if (href === "pricing.php") {
+            link.href = "../pricing.php";
+        }
+
+        else if (href === "login.php") {
+            link.href = "../login.php";
+        }
+
+        else if (href === "register.php") {
+            link.href = "../register.php";
+        }
+
+    });
+
+
+    const footerLinks = document.querySelectorAll("footer a");
+
+    footerLinks.forEach(function (link) {
+
+        const href = link.getAttribute("href");
+
+        if (href === "index.php") {
+            link.href = "../index.php";
+        }
+
+        else if (href === "about.php") {
+            link.href = "../about.php";
+        }
+
+        else if (href === "courses.php") {
+            link.href = "../courses.php";
+        }
+
+        else if (href === "pricing.php") {
+            link.href = "../pricing.php";
+        }
+
+        else if (href === "login.php") {
+            link.href = "../login.php";
+        }
+
+        else if (href === "register.php") {
+            link.href = "../register.php";
+        }
+
+    });
+
+});
+
+</script>
+
 
 <div class="container my-5" style="min-height: 70vh;">
     <div class="row justify-content-center">
