@@ -33,7 +33,7 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
 
             $error = "An account using this email already exists.";
         } else {
-            $imagePath = "bootstrap/assets/image/avatar.jpg";
+            $imagePath = "bootstrap/assets/image/avatar.webp";
 
             if (isset($_FILES['profilePic']) && $_FILES['profilePic']['error'] === 0) {
 
