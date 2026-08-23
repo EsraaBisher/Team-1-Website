@@ -3,11 +3,16 @@
 
 include "../connect.php";
 
-// Temporary test user
-// Later:
-// $user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'] ?? null;
 
-$user_id = 1;
+if (!$user_id) {
+    header("Location: ../login.php");
+    exit;
+}
+
+
+// $user_id = 1;
+
 
 
 // Get teacher data
