@@ -136,7 +136,7 @@ $userRole   = $_SESSION['role'] ?? null;
 
                         <!-- Logout -->
 
-                        <a href="logout.php"
+                        <a  href="/Team-1-Website/logout.php"
                             class="btn text-white fw-medium fs-5"
                             style="background-color: #FF9500;">
 

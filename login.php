@@ -1,30 +1,45 @@
 <?php
 
-include "header.php";
 include "connect2.php";
 
 $objCon = new Connect2();
 
 $error = "";
 
-// If user is already logged in
-if (isset($_SESSION['user_id'])) {
-
-    if ($_SESSION['role'] === 'teacher') {
-        header('location:/Team-1-Website/teachers/dashboard.php');
-
-    } elseif ($_SESSION['role'] === 'student') {
-        header('location:/Team-1-Website/students/profile.php');
-
-    } else {
-        header('location:/Team-1-Website/index.php');
-    }
-
-    exit();
+// Start session only if not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
 
+// =====================================================
+// If user is already logged in
+// =====================================================
+
+if (isset($_SESSION['user_id'])) {
+
+    if ($_SESSION['role'] === 'teacher') {
+
+        header('Location: /Team-1-Website/teachers/dashboard.php');
+        exit();
+
+    } elseif ($_SESSION['role'] === 'student') {
+
+        header('Location: /Team-1-Website/students/profile.php');
+        exit();
+
+    } else {
+
+        header('Location: /Team-1-Website/index.php');
+        exit();
+    }
+}
+
+
+// =====================================================
 // Login
+// =====================================================
+
 if (isset($_POST['email']) && isset($_POST['password'])) {
 
     $email = trim($_POST['email']);
@@ -32,18 +47,63 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
     $user = $objCon->login($email);
 
+
+    // =================================================
     // Check email and password
+    // =================================================
+
     if (count($user) > 0 && password_verify($password, $user['password'])) {
 
+
+        // =================================================
         // Save user data in session
+        // =================================================
+
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['name'] = $user['name'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
         $_SESSION['image'] = $user['image'];
 
+
+        // =================================================
+        // Student Session
+        // =================================================
+
+        if ($user['role'] === 'student') {
+
+            $student_query = "SELECT id FROM students WHERE user_id = ?";
+
+            $student_stmt = $objCon->getConnection()->prepare($student_query);
+
+            if ($student_stmt) {
+
+                $student_stmt->bind_param("i", $user['id']);
+
+                $student_stmt->execute();
+
+                $student_result = $student_stmt->get_result();
+
+                $student_data = $student_result->fetch_assoc();
+
+
+                if ($student_data) {
+
+                    $_SESSION['student_id'] = $student_data['id'];
+
+                }
+
+                $student_stmt->close();
+            }
+        }
+
+
+        // =================================================
         // Remember Me
+        // =================================================
+
         if (isset($_POST['rememberMe'])) {
+
             setcookie(
                 'remembered_email',
                 $email,
@@ -52,21 +112,27 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             );
         }
 
+
+        // =================================================
         // Redirect according to role
+        // =================================================
+
         if ($user['role'] === 'teacher') {
 
-            header('location:/Team-1-Website/teachers/dashboard.php');
+            header('Location: /Team-1-Website/teachers/dashboard.php');
+            exit();
 
         } elseif ($user['role'] === 'student') {
 
-            header('location:/Team-1-Website/students/profile.php');
+            header('Location: /Team-1-Website/students/profile.php');
+            exit();
 
         } else {
 
-            header('location:/Team-1-Website/index.php');
+            header('Location: /Team-1-Website/index.php');
+            exit();
         }
 
-        exit();
 
     } else {
 
@@ -75,10 +141,22 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 }
 
 
+// =====================================================
 // Remembered email
+// =====================================================
+
 $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
 
+
+// =====================================================
+// Header
+// IMPORTANT: Must be after all redirects
+// =====================================================
+
+include "header.php";
+
 ?>
+
 
 <section class="py-5" style="background-color: #f7f7f7;">
 
@@ -86,7 +164,10 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
 
         <div class="row align-items-center">
 
-            <!-- TESTIMONIAL -->
+
+            <!-- ==========================================
+                 TESTIMONIAL
+            =========================================== -->
 
             <div class="col-lg-6 order-lg-1 order-2">
 
@@ -97,11 +178,13 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
                     </h2>
 
                     <p class="mb-3">
+
                         Lorem ipsum dolor sit amet consectetur.
                         Tempus tincidunt etiam eget elit id imperdiet et.
                         Cras eu sit dignissim lorem nibh et.
                         Ac cum eget habitasse in velit fringilla feugiat
                         senectus in.
+
                     </p>
 
                 </div>
@@ -110,13 +193,17 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
                 <div class="card border-0 shadow-sm p-4">
 
                     <p>
+
                         The web design course provided a solid foundation
                         for me. The instructors were knowledgeable and supportive,
                         and the interactive learning environment was engaging.
                         I highly recommend it!
+
                     </p>
 
+
                     <div class="d-flex justify-content-between align-items-center mt-3">
+
 
                         <div class="d-flex align-items-center gap-3">
 
@@ -124,7 +211,8 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
                                 src="bootstrap/assets/image/profile.jpg"
                                 alt="profile"
                                 class="rounded-2"
-                                style="width:48px; aspect-ratio:1/1; object-fit:cover;">
+                                style="width:48px; aspect-ratio:1/1; object-fit:cover;"
+                            >
 
                             <span class="fw-semibold">
                                 Sarah L
@@ -132,11 +220,16 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
 
                         </div>
 
+
                         <a
                             href="#"
-                            class="btn btn-light fw-medium py-2 px-3">
+                            class="btn btn-light fw-medium py-2 px-3"
+                        >
+
                             Read More
+
                         </a>
+
 
                     </div>
 
@@ -147,14 +240,21 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
 
                     <button
                         class="btn shadow-sm"
-                        style="background-color:white;">
+                        style="background-color:white;"
+                    >
+
                         <i class="bi bi-arrow-left"></i>
+
                     </button>
+
 
                     <button
                         class="btn shadow-sm"
-                        style="background-color:white;">
+                        style="background-color:white;"
+                    >
+
                         <i class="bi bi-arrow-right"></i>
+
                     </button>
 
                 </div>
@@ -162,25 +262,36 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
             </div>
 
 
-            <!-- LOGIN -->
+            <!-- ==========================================
+                 LOGIN
+            =========================================== -->
 
             <div class="col-lg-6 order-1 order-lg-2">
 
                 <div class="card border-0 shadow-sm p-3 p-md-5 mb-5">
 
+
                     <h1 class="fw-bold text-center mb-2">
                         Login
                     </h1>
 
+
                     <p class="text-center mb-3">
-                        Welcome back! Please log in to access your account.
+
+                        Welcome back!
+                        Please log in to access your account.
+
                     </p>
 
+
+                    <!-- ERROR -->
 
                     <?php if (!empty($error)): ?>
 
                         <div class="alert alert-danger">
-                            <?php echo $error; ?>
+
+                            <?php echo htmlspecialchars($error); ?>
+
                         </div>
 
                     <?php endif; ?>
@@ -188,49 +299,69 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
 
                     <form method="POST">
 
-                        <!-- EMAIL -->
+
+                        <!-- =================================
+                             EMAIL
+                        ================================== -->
 
                         <div class="mb-3">
 
                             <label
                                 for="email"
-                                class="form-label fw-bold">
+                                class="form-label fw-bold"
+                            >
+
                                 Email
+
                             </label>
+
 
                             <input
                                 type="email"
+                                id="email"
                                 class="form-control form-control-lg"
                                 name="email"
                                 placeholder="Enter your Email"
                                 value="<?php echo htmlspecialchars($rememberedEmail); ?>"
-                                required>
+                                required
+                            >
 
                         </div>
 
 
-                        <!-- PASSWORD -->
+                        <!-- =================================
+                             PASSWORD
+                        ================================== -->
 
                         <div class="mb-3">
 
                             <label
                                 for="password"
-                                class="form-label fw-bold">
+                                class="form-label fw-bold"
+                            >
+
                                 Password
+
                             </label>
+
 
                             <div class="position-relative">
 
+
                                 <input
                                     type="password"
+                                    id="password"
                                     class="form-control form-control-lg"
                                     name="password"
                                     placeholder="Enter your Password"
-                                    required>
+                                    required
+                                >
+
 
                                 <button
                                     type="button"
-                                    class="btn position-absolute translate-middle-y border-0 end-0 top-50">
+                                    class="btn position-absolute translate-middle-y border-0 end-0 top-50"
+                                >
 
                                     <i class="bi bi-eye"></i>
 
@@ -241,7 +372,9 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
                         </div>
 
 
-                        <!-- FORGOT PASSWORD -->
+                        <!-- =================================
+                             FORGOT PASSWORD
+                        ================================== -->
 
                         <div class="text-end mb-3">
 
@@ -252,66 +385,89 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
                         </div>
 
 
-                        <!-- REMEMBER ME -->
+                        <!-- =================================
+                             REMEMBER ME
+                        ================================== -->
 
                         <div class="mb-3 form-check">
 
                             <input
                                 type="checkbox"
                                 class="form-check-input"
-                                name="rememberMe">
+                                id="rememberMe"
+                                name="rememberMe"
+                            >
 
-                            <label class="form-check-label">
+                            <label
+                                class="form-check-label"
+                                for="rememberMe"
+                            >
+
                                 Remember Me
+
                             </label>
 
                         </div>
 
 
-                        <!-- LOGIN -->
+                        <!-- =================================
+                             LOGIN BUTTON
+                        ================================== -->
 
                         <button
                             type="submit"
                             class="btn fw-medium btn-lg w-100 text-white mb-4"
-                            style="background-color:#FF9500;">
+                            style="background-color:#FF9500;"
+                        >
 
                             Login
 
                         </button>
 
 
-                        <!-- OR -->
+                        <!-- =================================
+                             OR
+                        ================================== -->
 
                         <div class="d-flex align-items-center gap-3 mb-4">
 
+
                             <div
                                 class="flex-grow-1"
-                                style="border-top:2px solid #eee;">
+                                style="border-top:2px solid #eee;"
+                            >
                             </div>
+
 
                             <span style="color:#bcbbbb;">
                                 OR
                             </span>
 
+
                             <div
                                 class="flex-grow-1"
-                                style="border-top:2px solid #eee;">
+                                style="border-top:2px solid #eee;"
+                            >
                             </div>
 
                         </div>
 
 
-                        <!-- GOOGLE -->
+                        <!-- =================================
+                             GOOGLE
+                        ================================== -->
 
                         <a
                             href="#"
-                            class="btn btn-light fw-medium btn-lg w-100 d-flex align-items-center justify-content-center gap-2 mb-3 p-3">
+                            class="btn btn-light fw-medium btn-lg w-100 d-flex align-items-center justify-content-center gap-2 mb-3 p-3"
+                        >
 
                             <img
                                 src="bootstrap/assets/image/googleIcon.png"
                                 alt="google"
                                 width="20"
-                                height="20">
+                                height="20"
+                            >
 
                             <span class="fs-6">
                                 Login with Google
@@ -320,17 +476,22 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
                         </a>
 
 
-                        <!-- REGISTER -->
+                        <!-- =================================
+                             REGISTER
+                        ================================== -->
 
                         <p class="text-center">
 
                             Don't have an account?
 
+
                             <a
                                 href="register.php"
-                                class="fw-medium">
+                                class="fw-medium"
+                            >
 
                                 Sign Up
+
                                 <i class="bi bi-arrow-up-right"></i>
 
                             </a>
@@ -352,5 +513,7 @@ $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
 
 
 <?php
+
 include "footer.php";
+
 ?>
