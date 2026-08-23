@@ -9,13 +9,12 @@ $error = "";
 
 // If user is already logged in
 if (isset($_SESSION['user_id'])) {
-
-    if ($_SESSION['role'] === 'teacher') {
+    if ($_SESSION['role'] === 'admin') {
+        header('location:admin_dashboard.php');
+    } elseif ($_SESSION['role'] === 'teacher') {
         header('location:/Team-1-Website/teachers/dashboard.php');
-
     } elseif ($_SESSION['role'] === 'student') {
         header('location:/Team-1-Website/students/profile.php');
-
     } else {
         header('location:/Team-1-Website/index.php');
     }
@@ -53,21 +52,20 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         }
 
         // Redirect according to role
-        if ($user['role'] === 'teacher') {
+        if ($user['role'] === 'admin') {
+            header('location:admin_dashboard.php');
+        } else if ($user['role'] === 'teacher') {
 
             header('location:/Team-1-Website/teachers/dashboard.php');
-
         } elseif ($user['role'] === 'student') {
 
             header('location:/Team-1-Website/students/profile.php');
-
         } else {
 
             header('location:/Team-1-Website/index.php');
         }
 
         exit();
-
     } else {
 
         $error = "Invalid email or password.";
