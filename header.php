@@ -128,7 +128,7 @@ $userRole   = $_SESSION['role'] ?? null;
                         <a href="/Team-1-Website/<?php if ($userRole === 'teacher') echo 'bootstrap/assets/css/teachers/profil.php';
                                                     elseif ($userRole === 'student') echo 'students/profile.php';
                                                     else echo 'users/profile.php'; ?>" class=" d-flex align-items-center gap-2 text-decoration-none" style="color:#262626;">
-                            <img src="/<?= !empty($_SESSION['image']) ? $_SESSION['image'] : 'bootstrap/assets/image/avatar.webp' ?>"
+                            <img src="/Team-1-Website/<?= !empty($_SESSION['image']) ? $_SESSION['image'] : 'bootstrap/assets/image/avatar.webp' ?>"
                                 alt="profile" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
                             <span class="fw-medium"><?= htmlspecialchars($_SESSION['name'] ?? 'Profile') ?></span>
                         </a>
