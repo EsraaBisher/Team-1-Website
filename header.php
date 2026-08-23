@@ -70,7 +70,7 @@ $userRole   = $_SESSION['role'] ?? null;
                     <li class="nav-item">
 
                         <a class="nav-link active fs-5 fw-medium"
-                            href="index.php">
+                            href="/Team-1-Website/index.php">
 
                             Home
 
@@ -82,7 +82,7 @@ $userRole   = $_SESSION['role'] ?? null;
                     <li class="nav-item">
 
                         <a class="nav-link fw-medium fs-5"
-                            href="about.php">
+                            href="/Team-1-Website/about.php">
 
                             About
 
@@ -94,7 +94,7 @@ $userRole   = $_SESSION['role'] ?? null;
                     <li class="nav-item">
 
                         <a class="nav-link fw-medium fs-5"
-                            href="courses.php">
+                            href="/Team-1-Website/courses.php">
 
                             Courses
 
@@ -106,7 +106,7 @@ $userRole   = $_SESSION['role'] ?? null;
                     <li class="nav-item">
 
                         <a class="nav-link fw-medium fs-5"
-                            href="pricing.php">
+                            href="/Team-1-Website/pricing.php">
 
                             Pricing
 
@@ -125,8 +125,10 @@ $userRole   = $_SESSION['role'] ?? null;
                     <!-- User is logged in -->
 
                     <div class="d-flex align-items-center gap-2">
-                        <a href="users/profile.php" class="d-flex align-items-center gap-2 text-decoration-none" style="color:#262626;">
-                            <img src="/Team-1-Website/<?= htmlspecialchars($_SESSION['image'] ?? 'bootstrap/assets/image/avatar.webp') ?>"
+                        <a href="/Team-1-Website/<?php if ($userRole === 'teacher') echo 'bootstrap/assets/css/teachers/profil.php';
+                                                    elseif ($userRole === 'student') echo 'students/profile.php';
+                                                    else echo 'users/profile.php'; ?>" class=" d-flex align-items-center gap-2 text-decoration-none" style="color:#262626;">
+                            <img src="/<?= !empty($_SESSION['image']) ? $_SESSION['image'] : 'bootstrap/assets/image/avatar.webp' ?>"
                                 alt="profile" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
                             <span class="fw-medium"><?= htmlspecialchars($_SESSION['name'] ?? 'Profile') ?></span>
                         </a>
