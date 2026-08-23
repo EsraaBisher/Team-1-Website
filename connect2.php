@@ -51,6 +51,16 @@ class Connect2
         return [];
     }
 
+    public function update(string $sql): bool
+    {
+        return $this->conn->query($sql);
+    }
+
+    public function getConnection()
+    {
+        return $this->conn;
+    }
+
     public function query(string $sql): array
     {
         $rows = $this->conn->query($sql);

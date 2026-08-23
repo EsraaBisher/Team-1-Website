@@ -16,13 +16,19 @@ $userRole   = $_SESSION['role'] ?? null;
 
     <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <<<<<<< HEAD
 
-    <!-- Custom Style -->
-    <link rel="stylesheet" href="../bootstrap/assets/css/style.css">
+        <!-- Custom Style -->
+        <link rel="stylesheet" href="../bootstrap/assets/css/style.css">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        =======
+        <!-- Custom Style CDN/Relative -->
+        <link rel="stylesheet" href="../bootstrap/assets/css/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+        >>>>>>> login-register
 </head>
 
 <body>
@@ -122,25 +128,10 @@ $userRole   = $_SESSION['role'] ?? null;
                     <!-- User is logged in -->
 
                     <div class="d-flex align-items-center gap-2">
-
-                        <!-- Profile -->
-
-                        <a href="profile.php"
-                            class="d-flex align-items-center gap-2 text-decoration-none"
-                            style="color:#262626;">
-
-                            <img
-                                src="<?= htmlspecialchars($_SESSION['image'] ?? 'bootstrap/assets/image/profile.jpg') ?>"
-                                alt="profile"
-                                class="rounded-circle"
-                                style="width:36px;height:36px;object-fit:cover;">
-
-                            <span class="fw-medium">
-
-                                <?= htmlspecialchars($_SESSION['name'] ?? 'Profile') ?>
-
-                            </span>
-
+                        <a href="users/profile.php" class="d-flex align-items-center gap-2 text-decoration-none" style="color:#262626;">
+                            <img src="/Team-1-Website/<?= htmlspecialchars($_SESSION['image'] ?? 'bootstrap/assets/image/avatar.webp') ?>"
+                                alt="profile" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
+                            <span class="fw-medium"><?= htmlspecialchars($_SESSION['name'] ?? 'Profile') ?></span>
                         </a>
 
 
