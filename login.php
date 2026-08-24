@@ -388,46 +388,44 @@ include "header.php";
 
                         </div>
 
+                        <!-- GOOGLE -->
 
-                        <<<<<<< HEAD=======<!-- GOOGLE -->
-                            >>>>>>> login-register
+
+                        <a
+                            href="#"
+                            class="btn btn-light fw-medium btn-lg w-100 d-flex align-items-center justify-content-center gap-2 mb-3 p-3">
+
+                            <img
+                                src="bootstrap/assets/image/googleIcon.png"
+                                alt="google"
+                                width="20"
+                                height="20">
+
+                            <span class="fs-6">
+                                Login with Google
+                            </span>
+
+                        </a>
+
+
+                        <!-- REGISTER -->
+
+                        <p class="text-center">
+
+                            Don't have an account?
+
 
                             <a
-                                href="#"
-                                class="btn btn-light fw-medium btn-lg w-100 d-flex align-items-center justify-content-center gap-2 mb-3 p-3">
+                                href="register.php"
+                                class="fw-medium">
 
-                                <img
-                                    src="bootstrap/assets/image/googleIcon.png"
-                                    alt="google"
-                                    width="20"
-                                    height="20">
+                                Sign Up
 
-                                <span class="fs-6">
-                                    Login with Google
-                                </span>
+                                <i class="bi bi-arrow-up-right"></i>
 
                             </a>
 
-
-                            <<<<<<< HEAD=======<!-- REGISTER -->
-                                >>>>>>> login-register
-
-                                <p class="text-center">
-
-                                    Don't have an account?
-
-
-                                    <a
-                                        href="register.php"
-                                        class="fw-medium">
-
-                                        Sign Up
-
-                                        <i class="bi bi-arrow-up-right"></i>
-
-                                    </a>
-
-                                </p>
+                        </p>
 
 
                     </form>
