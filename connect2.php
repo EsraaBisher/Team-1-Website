@@ -4,7 +4,7 @@ class Connect2
     private const host_name = "localhost";
     private const user_name = "root";
     private const password = "";
-    private const db = "course_system(1)";
+    private const db = "course_system";
 
     private $conn;
 

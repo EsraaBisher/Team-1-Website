@@ -1,18 +1,27 @@
 <?php
-include "header.php";
 include "connect2.php";
 
 $objCon = new Connect2();
 
 $error = "";
 
-$old = ['fullName' => '', 'email' => '', 'role' => 'user', 'student_number' => '', 'class' => '', 'phone' => '', 'subject' => ''];
+$old = [
+    'fullName' => '',
+    'email' => '',
+    'role' => 'user',
+    'student_number' => '',
+    'class' => '',
+    'phone' => '',
+    'subject' => ''
+];
 
 if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullName'])) {
+
     $fullName = $_POST['fullName'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $role = $_POST['role'] ?? 'user';
+
     $role = in_array($role, ['student', 'teacher', 'user']) ? $role : 'user';
 
     $old['fullName'] = $fullName;
@@ -24,33 +33,51 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
     $old['subject'] = $_POST['subject'] ?? '';
 
     if (!isset($_POST['terms'])) {
+
         $error = "you must agree to the terms";
-    } elseif (strlen($password) < 6) {  //strlen()=> counts characters
+
+    } elseif (strlen($password) < 6) {
+
         $error = "Password must be at least 6 characters";
+
     } else {
+
         $user = $objCon->login($email);
+
         if (count($user) > 0) {
 
             $error = "An account using this email already exists.";
+
         } else {
+
             $imagePath = "bootstrap/assets/image/avatar.webp";
 
             if (isset($_FILES['profilePic']) && $_FILES['profilePic']['error'] === 0) {
 
                 $imageName = time() . "_" . basename($_FILES['profilePic']['name']);
 
-                move_uploaded_file($_FILES['profilePic']['tmp_name'], "bootstrap/assets/uploads/" . $imageName);
+                move_uploaded_file(
+                    $_FILES['profilePic']['tmp_name'],
+                    "bootstrap/assets/uploads/" . $imageName
+                );
+
                 $imagePath = "bootstrap/assets/uploads/" . $imageName;
             }
 
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $userData = ['name' => $fullName, 'email' => $email, 'password' => $hashedPassword, 'role' => $role, 'image' => $imagePath];
+            $userData = [
+                'name' => $fullName,
+                'email' => $email,
+                'password' => $hashedPassword,
+                'role' => $role,
+                'image' => $imagePath
+            ];
 
             if ($objCon->insert($userData, "users")) {
 
-                // Get newly created user's ID
                 $userId = $objCon->lastId();
+
                 if ($role === 'student') {
 
                     $studentNumber = $_POST['student_number'];
@@ -63,10 +90,10 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
                     ];
 
                     $objCon->insert($studentData, "students");
+
+                    $_SESSION['student_id'] = $objCon->lastId();
                 }
 
-
-                //teacher
                 elseif ($role === 'teacher') {
 
                     $phone = $_POST['phone'];
@@ -86,19 +113,23 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = $role;
                 $_SESSION['image'] = $imagePath;
-                if ($role === 'student') {
-                    $_SESSION['student_id'] = $objCon->lastId();
-                }
+
                 if ($role === 'teacher') {
-                    header('Location:/Team-1-Website/teachers/dashboard.php');
+
+                    header('Location: /Team-1-Website/teachers/dashboard.php');
                     exit();
+
                 } elseif ($role === 'student') {
-                    header('Location:/Team-1-Website/students/profile.php');
+
+                    header('Location: /Team-1-Website/students/profile.php');
                     exit();
+
                 } else {
-                    header('Location:/Team-1-Website/index.php');
+
+                    header('Location: /Team-1-Website/index.php');
                     exit();
                 }
+
             } else {
 
                 $error = "Registration failed.";
@@ -107,6 +138,10 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
     }
 }
 ?>
+
+<?php include "header.php"; ?>
+
+
 <section class="py-5" style="background-color: #f7f7f7;">
     <div class="container">
         <div class="row align-items-start">
