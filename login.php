@@ -22,10 +22,12 @@ if (isset($_SESSION['user_id'])) {
 }
 
 
-
 if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['role'] === 'admin') {
 
-    if ($_SESSION['role'] === 'teacher') {
+        header('Location: /Team-1-Website/admin_dashboard.php');
+        exit();
+    } elseif ($_SESSION['role'] === 'teacher') {
 
         header('Location: /Team-1-Website/teachers/dashboard.php');
         exit();
@@ -48,7 +50,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $password = trim($_POST['password']);
 
     $user = $objCon->login($email);
-
 
 
     if (count($user) > 0 && password_verify($password, $user['password'])) {
@@ -89,7 +90,6 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         }
 
 
-
         if (isset($_POST['rememberMe'])) {
 
             setcookie(
@@ -113,7 +113,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             header('location:/Team-1-Website/students/profile.php');
         } else {
 
-            header('Location: /Team-1-Website/index.php');
+            header('Location:/Team-1-Website/index.php');
             exit();
         }
 
@@ -356,7 +356,6 @@ include "header.php";
 
 
 
-
                         <button
                             type="submit"
                             class="btn fw-medium btn-lg w-100 text-white mb-4"
@@ -390,41 +389,45 @@ include "header.php";
                         </div>
 
 
-
-                        <a
-                            href="#"
-                            class="btn btn-light fw-medium btn-lg w-100 d-flex align-items-center justify-content-center gap-2 mb-3 p-3">
-
-                            <img
-                                src="bootstrap/assets/image/googleIcon.png"
-                                alt="google"
-                                width="20"
-                                height="20">
-
-                            <span class="fs-6">
-                                Login with Google
-                            </span>
-
-                        </a>
-
-
-
-                        <p class="text-center">
-
-                            Don't have an account?
-
+                        <<<<<<< HEAD=======<!-- GOOGLE -->
+                            >>>>>>> login-register
 
                             <a
-                                href="register.php"
-                                class="fw-medium">
+                                href="#"
+                                class="btn btn-light fw-medium btn-lg w-100 d-flex align-items-center justify-content-center gap-2 mb-3 p-3">
 
-                                Sign Up
+                                <img
+                                    src="bootstrap/assets/image/googleIcon.png"
+                                    alt="google"
+                                    width="20"
+                                    height="20">
 
-                                <i class="bi bi-arrow-up-right"></i>
+                                <span class="fs-6">
+                                    Login with Google
+                                </span>
 
                             </a>
 
-                        </p>
+
+                            <<<<<<< HEAD=======<!-- REGISTER -->
+                                >>>>>>> login-register
+
+                                <p class="text-center">
+
+                                    Don't have an account?
+
+
+                                    <a
+                                        href="register.php"
+                                        class="fw-medium">
+
+                                        Sign Up
+
+                                        <i class="bi bi-arrow-up-right"></i>
+
+                                    </a>
+
+                                </p>
 
 
                     </form>

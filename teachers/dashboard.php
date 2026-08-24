@@ -43,16 +43,15 @@ $teacher = $result->fetch_assoc();
 if (!$teacher) {
 
     die("Teacher not found.");
-
 }
 
 
 // Get teacher courses
 
 $course_sql = "SELECT id,name, hours,image   FROM courses WHERE teacher_id = ?";
-               
-                      
-                
+
+
+
 
 $course_stmt = $conn->prepare($course_sql);
 
@@ -79,126 +78,102 @@ include "../header.php";
 
 <link
     rel="stylesheet"
-    href="../bootstrap/assets/css/bootstrap.min.css"
->
+    href="../bootstrap/assets/css/bootstrap.min.css">
 
 
 <!-- Bootstrap Icons -->
 
 <link
     rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
->
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
 
 
 <!-- Fix Navbar + Footer Links -->
 
 <script>
-
-document.addEventListener("DOMContentLoaded", function () {
-
-
-    // NAVBAR LINKS
-
-    const navLinks = document.querySelectorAll("nav a");
+    document.addEventListener("DOMContentLoaded", function() {
 
 
-    navLinks.forEach(function (link) {
+        // NAVBAR LINKS
 
-        const href = link.getAttribute("href");
+        const navLinks = document.querySelectorAll("nav a");
 
 
-        if (href === "index.php") {
+        navLinks.forEach(function(link) {
 
-            link.href = "../index.php";
+            const href = link.getAttribute("href");
 
-        }
 
-        else if (href === "about.php") {
+            if (href === "index.php") {
 
-            link.href = "../about.php";
+                link.href = "../index.php";
 
-        }
+            } else if (href === "about.php") {
 
-        else if (href === "courses.php") {
+                link.href = "../about.php";
 
-            link.href = "../courses.php";
+            } else if (href === "courses.php") {
 
-        }
+                link.href = "../courses.php";
 
-        else if (href === "pricing.php") {
+            } else if (href === "pricing.php") {
 
-            link.href = "../pricing.php";
+                link.href = "../pricing.php";
 
-        }
+            } else if (href === "login.php") {
 
-        else if (href === "login.php") {
+                link.href = "../login.php";
 
-            link.href = "../login.php";
+            } else if (href === "register.php") {
 
-        }
+                link.href = "../register.php";
 
-        else if (href === "register.php") {
+            }
 
-            link.href = "../register.php";
-
-        }
-
-    });
+        });
 
 
 
-    // FOOTER LINKS
+        // FOOTER LINKS
 
-    const footerLinks = document.querySelectorAll("footer a");
-
-
-    footerLinks.forEach(function (link) {
-
-        const href = link.getAttribute("href");
+        const footerLinks = document.querySelectorAll("footer a");
 
 
-        if (href === "index.php") {
+        footerLinks.forEach(function(link) {
 
-            link.href = "../index.php";
+            const href = link.getAttribute("href");
 
-        }
 
-        else if (href === "about.php") {
+            if (href === "index.php") {
 
-            link.href = "../about.php";
+                link.href = "../index.php";
 
-        }
+            } else if (href === "about.php") {
 
-        else if (href === "courses.php") {
+                link.href = "../about.php";
 
-            link.href = "../courses.php";
+            } else if (href === "courses.php") {
 
-        }
+                link.href = "../courses.php";
 
-        else if (href === "pricing.php") {
+            } else if (href === "pricing.php") {
 
-            link.href = "../pricing.php";
+                link.href = "../pricing.php";
 
-        }
+            } else if (href === "login.php") {
 
-        else if (href === "login.php") {
+                link.href = "../login.php";
 
-            link.href = "../login.php";
+            } else if (href === "register.php") {
 
-        }
+                link.href = "../register.php";
 
-        else if (href === "register.php") {
+            }
 
-            link.href = "../register.php";
-
-        }
+        });
 
     });
-
-});
-
 </script>
 
 
@@ -410,8 +385,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             width="120"
                             height="120"
                             class="rounded-circle"
-                            style="object-fit:cover;"
-                        >
+                            style="object-fit:cover;">
 
 
                     <?php else: ?>
@@ -419,8 +393,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <div
                             class="rounded-circle bg-secondary-subtle d-flex justify-content-center align-items-center mx-auto"
-                            style="width:120px;height:120px;"
-                        >
+                            style="width:120px;height:120px;">
 
                             <i class="bi bi-person fs-1 text-secondary"></i>
 
@@ -501,8 +474,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <a
                         href="profile.php"
                         class="btn text-white px-4"
-                        style="background-color:#FF9500;"
-                    >
+                        style="background-color:#FF9500;">
 
                         View Profile
 
@@ -546,8 +518,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 src="../<?php echo htmlspecialchars($course['image']); ?>"
                                 class="card-img-top"
                                 alt="Course"
-                                style="height:180px;object-fit:cover;"
-                            >
+                                style="height:180px;object-fit:cover;">
 
 
                         <?php else: ?>
@@ -555,8 +526,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                             <div
                                 class="bg-secondary-subtle d-flex justify-content-center align-items-center"
-                                style="height:180px;"
-                            >
+                                style="height:180px;">
 
                                 <i class="bi bi-book fs-1 text-secondary"></i>
 
@@ -601,8 +571,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <a
                                 href="../courses/course_details.php?id=<?php echo $course['id']; ?>"
                                 class="btn text-white w-100"
-                                style="background-color:#FF9500;"
-                            >
+                                style="background-color:#FF9500;">
 
                                 View Course
 
