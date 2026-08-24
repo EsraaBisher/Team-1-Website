@@ -1,6 +1,7 @@
 <?php
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $isLoggedIn = isset($_SESSION['user_id']);
 $userRole   = $_SESSION['role'] ?? null;
 ?>
@@ -126,8 +127,8 @@ $userRole   = $_SESSION['role'] ?? null;
 
                     <div class="d-flex align-items-center gap-2">
                         <a href="/Team-1-Website/<?php if ($userRole === 'teacher') echo 'teachers/dashboard.php';
-                            elseif ($userRole === 'student') echo 'students/profile.php';
-                            else echo 'users/profile.php'; ?>" class=" d-flex align-items-center gap-2 text-decoration-none" style="color:#262626;">
+                                                    elseif ($userRole === 'student') echo 'students/profile.php';
+                                                    else echo 'users/profile.php'; ?>" class=" d-flex align-items-center gap-2 text-decoration-none" style="color:#262626;">
                             <img src="/Team-1-Website/<?= !empty($_SESSION['image']) ? $_SESSION['image'] : 'bootstrap/assets/image/avatar.webp' ?>"
                                 alt="profile" class="rounded-circle" style="width:36px;height:36px;object-fit:cover;">
                             <span class="fw-medium"><?= htmlspecialchars($_SESSION['name'] ?? 'Profile') ?></span>
@@ -136,7 +137,7 @@ $userRole   = $_SESSION['role'] ?? null;
 
                         <!-- Logout -->
 
-                        <a  href="/Team-1-Website/logout.php"
+                        <a href="/Team-1-Website/logout.php"
                             class="btn text-white fw-medium fs-5"
                             style="background-color: #FF9500;">
 

@@ -12,22 +12,19 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
-// =====================================================
-// If user is already logged in
-// =====================================================
-
 if (isset($_SESSION['user_id'])) {
+    if ($_SESSION['role'] === 'admin') {
 
-    if ($_SESSION['role'] === 'teacher') {
+        header('Location: /Team-1-Website/admin_dashboard.php');
+        exit();
+    } elseif ($_SESSION['role'] === 'teacher') {
 
         header('Location: /Team-1-Website/teachers/dashboard.php');
         exit();
-
     } elseif ($_SESSION['role'] === 'student') {
 
         header('Location: /Team-1-Website/students/profile.php');
         exit();
-
     } else {
 
         header('Location: /Team-1-Website/index.php');
@@ -36,9 +33,6 @@ if (isset($_SESSION['user_id'])) {
 }
 
 
-// =====================================================
-// Login
-// =====================================================
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
 
@@ -48,27 +42,14 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $user = $objCon->login($email);
 
 
-    // =================================================
-    // Check email and password
-    // =================================================
-
     if (count($user) > 0 && password_verify($password, $user['password'])) {
 
-
-        // =================================================
-        // Save user data in session
-        // =================================================
 
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['name'] = $user['name'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
         $_SESSION['image'] = $user['image'];
-
-
-        // =================================================
-        // Student Session
-        // =================================================
 
         if ($user['role'] === 'student') {
 
@@ -90,17 +71,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
                 if ($student_data) {
 
                     $_SESSION['student_id'] = $student_data['id'];
-
                 }
 
                 $student_stmt->close();
             }
         }
 
-
-        // =================================================
-        // Remember Me
-        // =================================================
 
         if (isset($_POST['rememberMe'])) {
 
@@ -112,28 +88,22 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             );
         }
 
-
-        // =================================================
-        // Redirect according to role
-        // =================================================
-
-        if ($user['role'] === 'teacher') {
-
-            header('Location: /Team-1-Website/teachers/dashboard.php');
+        if ($user['role'] === 'admin') {
+            header('Location:/Team-1-Website/admin_dashboard.php');
             exit();
+        } elseif ($user['role'] === 'teacher') {
 
+            header('Location:/Team-1-Website/teachers/dashboard.php');
+            exit();
         } elseif ($user['role'] === 'student') {
 
-            header('Location: /Team-1-Website/students/profile.php');
+            header('Location:/Team-1-Website/students/profile.php');
             exit();
-
         } else {
 
-            header('Location: /Team-1-Website/index.php');
+            header('Location:/Team-1-Website/index.php');
             exit();
         }
-
-
     } else {
 
         $error = "Invalid email or password.";
@@ -141,17 +111,10 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 }
 
 
-// =====================================================
-// Remembered email
-// =====================================================
 
 $rememberedEmail = $_COOKIE['remembered_email'] ?? '';
 
 
-// =====================================================
-// Header
-// IMPORTANT: Must be after all redirects
-// =====================================================
 
 include "header.php";
 
@@ -165,9 +128,7 @@ include "header.php";
         <div class="row align-items-center">
 
 
-            <!-- ==========================================
-                 TESTIMONIAL
-            =========================================== -->
+            <!--  TESTIMONIAL-->
 
             <div class="col-lg-6 order-lg-1 order-2">
 
@@ -211,8 +172,7 @@ include "header.php";
                                 src="bootstrap/assets/image/profile.jpg"
                                 alt="profile"
                                 class="rounded-2"
-                                style="width:48px; aspect-ratio:1/1; object-fit:cover;"
-                            >
+                                style="width:48px; aspect-ratio:1/1; object-fit:cover;">
 
                             <span class="fw-semibold">
                                 Sarah L
@@ -223,8 +183,7 @@ include "header.php";
 
                         <a
                             href="#"
-                            class="btn btn-light fw-medium py-2 px-3"
-                        >
+                            class="btn btn-light fw-medium py-2 px-3">
 
                             Read More
 
@@ -240,8 +199,7 @@ include "header.php";
 
                     <button
                         class="btn shadow-sm"
-                        style="background-color:white;"
-                    >
+                        style="background-color:white;">
 
                         <i class="bi bi-arrow-left"></i>
 
@@ -250,8 +208,7 @@ include "header.php";
 
                     <button
                         class="btn shadow-sm"
-                        style="background-color:white;"
-                    >
+                        style="background-color:white;">
 
                         <i class="bi bi-arrow-right"></i>
 
@@ -262,9 +219,7 @@ include "header.php";
             </div>
 
 
-            <!-- ==========================================
-                 LOGIN
-            =========================================== -->
+            <!--  LOGIN -->
 
             <div class="col-lg-6 order-1 order-lg-2">
 
@@ -300,16 +255,13 @@ include "header.php";
                     <form method="POST">
 
 
-                        <!-- =================================
-                             EMAIL
-                        ================================== -->
+                        <!--EMAIL -->
 
                         <div class="mb-3">
 
                             <label
                                 for="email"
-                                class="form-label fw-bold"
-                            >
+                                class="form-label fw-bold">
 
                                 Email
 
@@ -323,22 +275,18 @@ include "header.php";
                                 name="email"
                                 placeholder="Enter your Email"
                                 value="<?php echo htmlspecialchars($rememberedEmail); ?>"
-                                required
-                            >
+                                required>
 
                         </div>
 
 
-                        <!-- =================================
-                             PASSWORD
-                        ================================== -->
+                        <!--  PASSWORD-->
 
                         <div class="mb-3">
 
                             <label
                                 for="password"
-                                class="form-label fw-bold"
-                            >
+                                class="form-label fw-bold">
 
                                 Password
 
@@ -354,14 +302,12 @@ include "header.php";
                                     class="form-control form-control-lg"
                                     name="password"
                                     placeholder="Enter your Password"
-                                    required
-                                >
+                                    required>
 
 
                                 <button
                                     type="button"
-                                    class="btn position-absolute translate-middle-y border-0 end-0 top-50"
-                                >
+                                    class="btn position-absolute translate-middle-y border-0 end-0 top-50">
 
                                     <i class="bi bi-eye"></i>
 
@@ -372,9 +318,7 @@ include "header.php";
                         </div>
 
 
-                        <!-- =================================
-                             FORGOT PASSWORD
-                        ================================== -->
+                        <!--   FORGOT PASSWORD-->
 
                         <div class="text-end mb-3">
 
@@ -385,9 +329,7 @@ include "header.php";
                         </div>
 
 
-                        <!-- =================================
-                             REMEMBER ME
-                        ================================== -->
+                        <!--  REMEMBER ME-->
 
                         <div class="mb-3 form-check">
 
@@ -395,13 +337,11 @@ include "header.php";
                                 type="checkbox"
                                 class="form-check-input"
                                 id="rememberMe"
-                                name="rememberMe"
-                            >
+                                name="rememberMe">
 
                             <label
                                 class="form-check-label"
-                                for="rememberMe"
-                            >
+                                for="rememberMe">
 
                                 Remember Me
 
@@ -410,32 +350,26 @@ include "header.php";
                         </div>
 
 
-                        <!-- =================================
-                             LOGIN BUTTON
-                        ================================== -->
+                        <!-- LOGIN BUTTON-->
 
                         <button
                             type="submit"
                             class="btn fw-medium btn-lg w-100 text-white mb-4"
-                            style="background-color:#FF9500;"
-                        >
+                            style="background-color:#FF9500;">
 
                             Login
 
                         </button>
 
 
-                        <!-- =================================
-                             OR
-                        ================================== -->
+                        <!-- OR -->
 
                         <div class="d-flex align-items-center gap-3 mb-4">
 
 
                             <div
                                 class="flex-grow-1"
-                                style="border-top:2px solid #eee;"
-                            >
+                                style="border-top:2px solid #eee;">
                             </div>
 
 
@@ -446,28 +380,23 @@ include "header.php";
 
                             <div
                                 class="flex-grow-1"
-                                style="border-top:2px solid #eee;"
-                            >
+                                style="border-top:2px solid #eee;">
                             </div>
 
                         </div>
 
 
-                        <!-- =================================
-                             GOOGLE
-                        ================================== -->
+                        <!-- GOOGLE -->
 
                         <a
                             href="#"
-                            class="btn btn-light fw-medium btn-lg w-100 d-flex align-items-center justify-content-center gap-2 mb-3 p-3"
-                        >
+                            class="btn btn-light fw-medium btn-lg w-100 d-flex align-items-center justify-content-center gap-2 mb-3 p-3">
 
                             <img
                                 src="bootstrap/assets/image/googleIcon.png"
                                 alt="google"
                                 width="20"
-                                height="20"
-                            >
+                                height="20">
 
                             <span class="fs-6">
                                 Login with Google
@@ -476,9 +405,7 @@ include "header.php";
                         </a>
 
 
-                        <!-- =================================
-                             REGISTER
-                        ================================== -->
+                        <!--  REGISTER -->
 
                         <p class="text-center">
 
@@ -487,8 +414,7 @@ include "header.php";
 
                             <a
                                 href="register.php"
-                                class="fw-medium"
-                            >
+                                class="fw-medium">
 
                                 Sign Up
 

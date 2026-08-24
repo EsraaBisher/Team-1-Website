@@ -86,8 +86,19 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
                 $_SESSION['email'] = $email;
                 $_SESSION['role'] = $role;
                 $_SESSION['image'] = $imagePath;
-                header("location: index.php");
-                exit();
+                if ($role === 'student') {
+                    $_SESSION['student_id'] = $objCon->lastId();
+                }
+                if ($role === 'teacher') {
+                    header('Location:/Team-1-Website/teachers/dashboard.php');
+                    exit();
+                } elseif ($role === 'student') {
+                    header('Location:/Team-1-Website/students/profile.php');
+                    exit();
+                } else {
+                    header('Location:/Team-1-Website/index.php');
+                    exit();
+                }
             } else {
 
                 $error = "Registration failed.";
