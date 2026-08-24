@@ -6,6 +6,10 @@ $objCon = new Connect2();
 
 $error = "";
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // If user is already logged in
 if (isset($_SESSION['user_id'])) {
     if ($_SESSION['role'] === 'admin') {
