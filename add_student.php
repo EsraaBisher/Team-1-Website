@@ -29,91 +29,187 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Add Student</title>
-
-    <link rel="stylesheet" href="./bootstrap/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./bootstrap/assets/css/style.css">
-</head>
-
-<body>
+<?php include "header.php"; ?>
 
 <div class="container py-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="fw-bold">Add Student</h1>
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 
-        <a href="manage_students.php" class="btn btn-dark">
-            Back
+        <div>
+            <h1 class="fw-bold mb-1">Add Student</h1>
+            <p class="text-muted mb-0">
+                Add a new student to the course system.
+            </p>
+        </div>
+
+        <a href="manage_students.php"
+           class="btn btn-outline-dark">
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Students
         </a>
+
     </div>
 
-    <div class="card border-0 shadow-sm p-4">
 
-        <form method="POST">
+    <!-- Form Card -->
+    <div class="card border-0 shadow-sm rounded-4">
 
-            <div class="mb-3">
-                <label class="form-label fw-bold">Name</label>
-                <input type="text"
-                       name="name"
-                       class="form-control"
-                       placeholder="Enter student name"
-                       required>
-            </div>
+        <div class="card-body p-4 p-md-5">
 
-            <div class="mb-3">
-                <label class="form-label fw-bold">Email</label>
-                <input type="email"
-                       name="email"
-                       class="form-control"
-                       placeholder="Enter student email"
-                       required>
-            </div>
+            <form method="POST">
 
-            <div class="mb-3">
-                <label class="form-label fw-bold">Password</label>
-                <input type="password"
-                       name="password"
-                       class="form-control"
-                       placeholder="Enter password"
-                       required>
-            </div>
+                <div class="row g-4">
 
-            <div class="mb-3">
-                <label class="form-label fw-bold">Student Number</label>
-                <input type="number"
-                       name="student_number"
-                       class="form-control"
-                       placeholder="Enter student number"
-                       required>
-            </div>
+                    <!-- Name -->
+                    <div class="col-md-6">
 
-            <div class="mb-3">
-                <label class="form-label fw-bold">Class</label>
-                <input type="text"
-                       name="class"
-                       class="form-control"
-                       placeholder="Enter class"
-                       required>
-            </div>
+                        <label for="name" class="form-label fw-semibold">
+                            Student Name
+                        </label>
 
-            <button type="submit"
-                    name="submit"
-                    class="btn btn-dark w-100">
-                Add Student
-            </button>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-person"></i>
+                            </span>
 
-        </form>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="form-control"
+                                placeholder="Enter student name"
+                                required>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Email -->
+                    <div class="col-md-6">
+
+                        <label for="email" class="form-label fw-semibold">
+                            Email
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-envelope"></i>
+                            </span>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter student email"
+                                required>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="col-md-6">
+
+                        <label for="password" class="form-label fw-semibold">
+                            Password
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-lock"></i>
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Enter password"
+                                required>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Student Number -->
+                    <div class="col-md-6">
+
+                        <label for="student_number" class="form-label fw-semibold">
+                            Student Number
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-hash"></i>
+                            </span>
+
+                            <input
+                                type="number"
+                                id="student_number"
+                                name="student_number"
+                                class="form-control"
+                                placeholder="Enter student number"
+                                required>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Class -->
+                    <div class="col-12">
+
+                        <label for="class" class="form-label fw-semibold">
+                            Class
+                        </label>
+
+                        <div class="input-group">
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-mortarboard"></i>
+                            </span>
+
+                            <input
+                                type="text"
+                                id="class"
+                                name="class"
+                                class="form-control"
+                                placeholder="Enter class"
+                                required>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
+
+                    <a href="manage_students.php"
+                       class="btn btn-outline-secondary px-4">
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        name="submit"
+                        class="btn text-white px-4"
+                        style="background-color: #FF9500;">
+
+                        <i class="bi bi-person-plus me-1"></i>
+                        Add Student
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
 </div>
 
-</body>
-</html>
+<?php include "footer.php"; ?>

@@ -7,64 +7,93 @@ $sql = "SELECT students.id, students.student_number, students.class,
         JOIN users ON students.user_id = users.id";
 
 $result = $conn->query($sql);
+
+include "header.php";
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Students</title>
-
-    <link rel="stylesheet" href="./bootstrap/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./bootstrap/assets/css/style.css">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-</head>
-
-<body>
 
 <div class="container py-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-md-center
+                gap-3
+                mb-4">
 
         <div>
-            <h1 class="fw-bold">Manage Students</h1>
-            <p class="text-muted">View and manage students</p>
+            <h1 class="fw-bold mb-1">
+                Manage Students
+            </h1>
+
+            <p class="text-muted mb-0">
+                View and manage all registered students.
+            </p>
         </div>
 
-        <div>
-            <a href="add_student.php" class="btn btn-success">
-                <i class="bi bi-plus-lg"></i>
-                Add Student
+        <div class="d-flex gap-2">
+
+            <a href="admin_dashboard.php"
+               class="btn btn-outline-secondary">
+
+                <i class="bi bi-arrow-left me-1"></i>
+                Dashboard
+
             </a>
 
-            <a href="admin_dashboard.php" class="btn btn-dark">
-                <i class="bi bi-arrow-left"></i>
-                Dashboard
+            <a href="add_student.php"
+               class="btn admin-primary-btn">
+
+                <i class="bi bi-plus-lg me-1"></i>
+                Add Student
+
             </a>
+
         </div>
 
     </div>
 
-    <div class="card border-0 shadow-sm">
 
-        <div class="card-body">
+    <!-- Students Table -->
+    <div class="card border-0 shadow-sm rounded-4">
+
+        <div class="card-body p-0">
 
             <div class="table-responsive">
 
-                <table class="table table-hover align-middle">
+                <table class="table table-hover align-middle mb-0">
 
-                    <thead>
+                    <thead class="table-light">
+
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Student Number</th>
-                            <th>Class</th>
-                            <th>Actions</th>
+
+                            <th class="px-4 py-3">
+                                ID
+                            </th>
+
+                            <th class="py-3">
+                                Name
+                            </th>
+
+                            <th class="py-3">
+                                Email
+                            </th>
+
+                            <th class="py-3">
+                                Student Number
+                            </th>
+
+                            <th class="py-3">
+                                Class
+                            </th>
+
+                            <th class="py-3 pe-4">
+                                Actions
+                            </th>
+
                         </tr>
+
                     </thead>
+
 
                     <tbody>
 
@@ -74,40 +103,55 @@ $result = $conn->query($sql);
 
                             <tr>
 
-                                <td>
-                                    <?php echo $student['id']; ?>
+                                <td class="px-4 fw-medium">
+                                    <?= $student['id'] ?>
                                 </td>
 
                                 <td>
-                                    <?php echo htmlspecialchars($student['name']); ?>
+                                    <span class="fw-semibold">
+                                        <?= htmlspecialchars($student['name']) ?>
+                                    </span>
+                                </td>
+
+                                <td class="text-muted">
+                                    <?= htmlspecialchars($student['email']) ?>
                                 </td>
 
                                 <td>
-                                    <?php echo htmlspecialchars($student['email']); ?>
-                                </td>
-
-                                <td>
-                                    <?php echo $student['student_number']; ?>
-                                </td>
-
-                                <td>
-                                    <?php echo htmlspecialchars($student['class']); ?>
+                                    <?= htmlspecialchars($student['student_number']) ?>
                                 </td>
 
                                 <td>
 
-                                    <a href="edit_student.php?id=<?php echo $student['id']; ?>"
-                                       class="btn btn-sm btn-primary">
-                                        <i class="bi bi-pencil"></i>
-                                        Edit
-                                    </a>
+                                    <span class="badge text-bg-light">
+                                        <?= htmlspecialchars($student['class']) ?>
+                                    </span>
 
-                                    <a href="delete_student.php?id=<?php echo $student['id']; ?>"
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Are you sure you want to delete this student?');">
-                                        <i class="bi bi-trash"></i>
-                                        Delete
-                                    </a>
+                                </td>
+
+                                <td class="pe-4">
+
+                                    <div class="d-flex flex-wrap gap-2">
+
+                                        <a href="edit_student.php?id=<?= $student['id'] ?>"
+                                           class="btn btn-sm btn-outline-primary">
+
+                                            <i class="bi bi-pencil me-1"></i>
+                                            Edit
+
+                                        </a>
+
+
+                                        <a href="delete_student.php?id=<?= $student['id'] ?>"
+                                           class="btn btn-sm btn-outline-danger"
+                                           onclick="return confirm('Are you sure you want to delete this student?');">
+
+                                            <i class="bi bi-trash me-1"></i>
+                                            Delete
+
+                                        </a>
+
+                                    </div>
 
                                 </td>
 
@@ -118,10 +162,22 @@ $result = $conn->query($sql);
                     <?php else: ?>
 
                         <tr>
+
                             <td colspan="6"
-                                class="text-center text-muted py-4">
-                                No students found.
+                                class="text-center text-muted py-5">
+
+                                <i class="bi bi-people fs-1 d-block mb-3"></i>
+
+                                <h5 class="fw-semibold">
+                                    No students found
+                                </h5>
+
+                                <p class="mb-0">
+                                    There are currently no students to display.
+                                </p>
+
                             </td>
+
                         </tr>
 
                     <?php endif; ?>
@@ -138,5 +194,6 @@ $result = $conn->query($sql);
 
 </div>
 
-</body>
-</html>
+<?php
+include "footer.php";
+?>

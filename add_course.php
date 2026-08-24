@@ -40,124 +40,192 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Add Course</title>
-
-    <link rel="stylesheet"
-          href="./bootstrap/assets/css/bootstrap.min.css">
-
-</head>
-
-<body>
+<?php include "header.php"; ?>
 
 <div class="container py-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 
-        <h1 class="fw-bold">Add Course</h1>
+        <div>
+            <h1 class="fw-bold mb-1">Add Course</h1>
+
+            <p class="text-muted mb-0">
+                Add a new course to the course system.
+            </p>
+        </div>
 
         <a href="manage_courses.php"
-           class="btn btn-dark">
-            Back
+           class="btn btn-outline-dark">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Courses
+
         </a>
 
     </div>
 
-    <div class="card border-0 shadow-sm p-4">
 
-        <form method="POST" enctype="multipart/form-data">
+    <!-- Form Card -->
+    <div class="card border-0 shadow-sm rounded-4">
 
-            <div class="mb-3">
+        <div class="card-body p-4 p-md-5">
 
-                <label class="form-label fw-bold">
-                    Course Name
-                </label>
+            <form method="POST" enctype="multipart/form-data">
 
-                <input type="text"
-                       name="name"
-                       class="form-control"
-                       placeholder="Enter course name"
-                       required>
+                <div class="row g-4">
 
-            </div>
+                    <!-- Course Name -->
+                    <div class="col-md-6">
 
-            <div class="mb-3">
+                        <label for="name" class="form-label fw-semibold">
+                            Course Name
+                        </label>
 
-                <label class="form-label fw-bold">
-                    Hours
-                </label>
+                        <div class="input-group">
 
-                <input type="number"
-                       name="hours"
-                       class="form-control"
-                       placeholder="Enter course hours"
-                       required>
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-book"></i>
+                            </span>
 
-            </div>
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="form-control"
+                                placeholder="Enter course name"
+                                required>
 
-            <div class="mb-3">
+                        </div>
 
-                <label class="form-label fw-bold">
-                    Teacher
-                </label>
+                    </div>
 
-                <select name="teacher_id"
-                        class="form-select"
-                        required>
 
-                    <option value="">
-                        Select Teacher
-                    </option>
+                    <!-- Hours -->
+                    <div class="col-md-6">
 
-                    <?php while ($teacher = $teachers->fetch_assoc()): ?>
+                        <label for="hours" class="form-label fw-semibold">
+                            Course Hours
+                        </label>
 
-                        <option value="<?php echo $teacher['id']; ?>">
+                        <div class="input-group">
 
-                            <?php echo $teacher['name']; ?>
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-clock"></i>
+                            </span>
 
-                        </option>
+                            <input
+                                type="number"
+                                id="hours"
+                                name="hours"
+                                class="form-control"
+                                placeholder="Enter course hours"
+                                min="1"
+                                required>
 
-                    <?php endwhile; ?>
+                        </div>
 
-                </select>
+                    </div>
 
-            </div>
 
-            <div class="mb-3">
+                    <!-- Teacher -->
+                    <div class="col-12">
 
-                <label class="form-label fw-bold">
-                    Course Image
-                </label>
+                        <label for="teacher_id" class="form-label fw-semibold">
+                            Teacher
+                        </label>
 
-                <input type="file"
-                       name="image"
-                       class="form-control"
-                       accept="image/*">
+                        <div class="input-group">
 
-            </div>
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-person-workspace"></i>
+                            </span>
 
-            <button type="submit"
-                    name="submit"
-                    class="btn btn-dark w-100">
+                            <select
+                                id="teacher_id"
+                                name="teacher_id"
+                                class="form-select"
+                                required>
 
-                Add Course
+                                <option value="">
+                                    Select Teacher
+                                </option>
 
-            </button>
+                                <?php while ($teacher = $teachers->fetch_assoc()): ?>
 
-        </form>
+                                    <option value="<?php echo $teacher['id']; ?>">
+                                        <?php echo htmlspecialchars($teacher['name']); ?>
+                                    </option>
+
+                                <?php endwhile; ?>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Course Image -->
+                    <div class="col-12">
+
+                        <label for="image" class="form-label fw-semibold">
+                            Course Image
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text bg-white">
+                                <i class="bi bi-image"></i>
+                            </span>
+
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                class="form-control"
+                                accept="image/*">
+
+                        </div>
+
+                        <small class="text-muted">
+                            Upload an image for the course. This field is optional.
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
+
+                    <a href="manage_courses.php"
+                       class="btn btn-outline-secondary px-4">
+
+                        Cancel
+
+                    </a>
+
+                    <button
+                        type="submit"
+                        name="submit"
+                        class="btn text-white px-4"
+                        style="background-color: #FF9500;">
+
+                        <i class="bi bi-plus-circle me-1"></i>
+                        Add Course
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
 </div>
 
-</body>
-</html>
+<?php include "footer.php"; ?>

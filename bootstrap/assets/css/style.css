@@ -1,27 +1,51 @@
 /* even زوجيه
 odd فرديه */
-
-
 .row1 *:nth-child(even)
 {
     background-color: aquamarine;
 }
-
 .row1 *:nth-child(odd)
 {
     background-color: rgb(110, 110, 124);
 }
-
 #box{
     border: 2px solid red;
     height: 400px;
     text-align: center;
     width: 800px;
 }
-
 #box * {
     text-align: center;
     padding: 1cm;
     font-size: 20px;
     height: fit-content;
+}
+
+:root {
+    --primary-orange: #FF9500;
+    --dark-text: #262626;
+    --light-bg: #f8f9fa;
+    --border-color: #eeeeee;
+}
+.admin-primary-btn {
+    background-color: #FF9500;
+    border-color: #FF9500;
+    color: #fff;
+}
+
+.admin-primary-btn:hover {
+    background-color: #e68600;
+    border-color: #e68600;
+    color: #fff;
+}
+.admin-primary-btn {
+    background-color: #FF9500;
+    border-color: #FF9500;
+    color: white;
+}
+
+.admin-primary-btn:hover {
+    background-color: #e68600;
+    border-color: #e68600;
+    color: white;
 }
