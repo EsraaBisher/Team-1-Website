@@ -14,14 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         move_uploaded_file($_FILES["image"]["tmp_name"], $imageName);
 
         // Save the correct path to the database
-        $_POST["image"] = "/Team-1-Website-main/courses/" . $imageName;
+        $_POST["image"] = "/Team-1-Website/courses/" . $imageName;
     }
 
     // 2. Handle Avatar Upload (Added ../ to paths)
     if (isset($_FILES["avatar"]) && $_FILES["avatar"]["name"] != "") {
         $avatarName = time() . "_avatar_" . basename($_FILES["avatar"]["name"]);
         move_uploaded_file($_FILES["avatar"]["tmp_name"], "../avatars/" . $avatarName);
-        $_POST["avatar"] = "/Team-1-Website-main/avatars/" . $avatarName;
+        $_POST["avatar"] = "/Team-1-Website/avatars/" . $avatarName;
     }
 
     // Insert into the 'courses' table

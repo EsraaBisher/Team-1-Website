@@ -17,14 +17,14 @@ if (isset($_GET["id"])) {
             move_uploaded_file($_FILES["image"]["tmp_name"], $imageName);
 
             // Save the correct path to the database
-            $_POST["image"] = "/Team-1-Website-main/courses/" . $imageName;
+            $_POST["image"] = "/Team-1-Website/courses/" . $imageName;
         }
 
         // Handle Avatar Update
         if (isset($_FILES["avatar"]) && $_FILES["avatar"]["name"] != "") {
             $avatarName = time() . "_avatar_" . basename($_FILES["avatar"]["name"]);
             move_uploaded_file($_FILES["avatar"]["tmp_name"], "../avatars/" . $avatarName);
-            $_POST["avatar"] = "/Team-1-Website-main/avatars/" . $avatarName;
+            $_POST["avatar"] = "/Team-1-Website/avatars/" . $avatarName;
         }
 
         if ($objCon->update($_POST, "courses", $course["id"])) {

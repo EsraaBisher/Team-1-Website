@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "header.php";
 include "connect.php";
 
@@ -30,8 +30,8 @@ if ($result) {
 ?>
 
 <!-- Hero Section -->
-<section 
-    class="d-flex align-items-center" 
+<section
+    class="d-flex align-items-center"
     style="
         min-height: 650px;
 
@@ -51,13 +51,13 @@ if ($result) {
             </h1>
 
             <p class="lead my-4 fw-medium text-white-50">
-                Discover the best courses and develop your skills 
+                Discover the best courses and develop your skills
                 with our online learning platform.
             </p>
 
-            <a href="courses.php" 
-               class="btn fw-medium btn-lg text-white" 
-               style="background-color: #FF9500;">
+            <a href="/Team-1-Website/courses/index.php"
+                class="btn fw-medium btn-lg text-white"
+                style="background-color: #FF9500;">
                 Our Courses
             </a>
 
@@ -209,7 +209,7 @@ if ($result) {
 
                     <div class="mb-3">
                         <span class="d-inline-flex align-items-center justify-content-center rounded-circle text-white fw-bold"
-                              style="width: 55px; height: 55px; background-color: #FF9500;">
+                            style="width: 55px; height: 55px; background-color: #FF9500;">
                             1
                         </span>
                     </div>
@@ -235,7 +235,7 @@ if ($result) {
 
                     <div class="mb-3">
                         <span class="d-inline-flex align-items-center justify-content-center rounded-circle text-white fw-bold"
-                              style="width: 55px; height: 55px; background-color: #FF9500;">
+                            style="width: 55px; height: 55px; background-color: #FF9500;">
                             2
                         </span>
                     </div>
@@ -261,7 +261,7 @@ if ($result) {
 
                     <div class="mb-3">
                         <span class="d-inline-flex align-items-center justify-content-center rounded-circle text-white fw-bold"
-                              style="width: 55px; height: 55px; background-color: #FF9500;">
+                            style="width: 55px; height: 55px; background-color: #FF9500;">
                             3
                         </span>
                     </div>
@@ -287,7 +287,7 @@ if ($result) {
 
                     <div class="mb-3">
                         <span class="d-inline-flex align-items-center justify-content-center rounded-circle text-white fw-bold"
-                              style="width: 55px; height: 55px; background-color: #FF9500;">
+                            style="width: 55px; height: 55px; background-color: #FF9500;">
                             4
                         </span>
                     </div>
@@ -332,7 +332,7 @@ if ($result) {
 
             </div>
 
-            <a href="courses.php" class="btn btn-light">
+            <a href="/Team-1-Website/courses/index.php" class="btn btn-light">
                 View All
             </a>
 
@@ -349,8 +349,8 @@ if ($result) {
                 <div class="card h-100 border-0 shadow-sm p-3">
 
                     <img src="./bootstrap/assets/image/Image 1.png"
-                         class="card-img-top rounded"
-                         alt="Web Design">
+                        class="card-img-top rounded"
+                        alt="Web Design">
 
                     <div class="card-body px-0 pb-0">
 
@@ -389,8 +389,8 @@ if ($result) {
                 <div class="card h-100 border-0 shadow-sm p-3">
 
                     <img src="./bootstrap/assets/image/Image 2.png"
-                         class="card-img-top rounded"
-                         alt="UI UX Design">
+                        class="card-img-top rounded"
+                        alt="UI UX Design">
 
                     <div class="card-body px-0 pb-0">
 
@@ -435,7 +435,7 @@ if ($result) {
     <div class="container">
 
         <div class="rounded-4 p-5 text-center text-white"
-             style="background-color: #262626;">
+            style="background-color: #262626;">
 
             <h2 class="fw-bold mb-3">
                 Ready to Start Learning?
@@ -448,13 +448,13 @@ if ($result) {
 
             <div class="d-flex justify-content-center gap-3 flex-wrap">
 
-                <a href="courses.php"
-                   class="btn btn-warning text-white px-4 py-2">
+                <a href="/Team-1-Website/courses/index.php"
+                    class="btn btn-warning text-white px-4 py-2">
                     Explore Courses
                 </a>
 
                 <a href="register.php"
-                   class="btn btn-outline-light px-4 py-2">
+                    class="btn btn-outline-light px-4 py-2">
                     Create Account
                 </a>
 
@@ -467,6 +467,6 @@ if ($result) {
 </section>
 
 
-<?php 
-include "footer.php"; 
+<?php
+include "footer.php";
 ?>

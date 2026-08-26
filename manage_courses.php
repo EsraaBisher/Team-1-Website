@@ -8,204 +8,121 @@ $sql = "SELECT courses.id, courses.name, courses.hours, courses.image,
         JOIN users ON teachers.user_id = users.id";
 
 $result = $conn->query($sql);
-
-include "header.php";
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Courses</title>
+
+    <link rel="stylesheet" href="./bootstrap/assets/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+
+<body>
 
 <div class="container py-5">
 
-    <!-- Page Header -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
-            <h1 class="fw-bold mb-2">
-                Manage Courses
-            </h1>
-
-            <p class="text-muted mb-0">
-                View and manage all courses.
-            </p>
+            <h1 class="fw-bold">Manage Courses</h1>
+            <p class="text-muted">View and manage courses</p>
         </div>
 
-        <div class="d-flex gap-2">
+        <div>
 
-            <a href="add_course.php"
-               class="btn text-white fw-medium"
-               style="background-color: #FF9500;">
-
-                <i class="bi bi-plus-lg me-1"></i>
+            <a href="add_course.php" class="btn btn-success">
+                <i class="bi bi-plus-lg"></i>
                 Add Course
-
             </a>
 
-            <a href="admin_dashboard.php"
-               class="btn btn-outline-secondary fw-medium">
-
-                <i class="bi bi-arrow-left me-1"></i>
+            <a href="admin_dashboard.php" class="btn btn-dark">
+                <i class="bi bi-arrow-left"></i>
                 Dashboard
-
             </a>
 
         </div>
 
     </div>
 
+    <div class="card border-0 shadow-sm">
 
-    <!-- Courses Table Card -->
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-
-        <div class="card-body p-0">
+        <div class="card-body">
 
             <div class="table-responsive">
 
-                <table class="table table-hover align-middle mb-0">
+                <table class="table table-hover align-middle">
 
-                    <thead class="table-light">
-
-                        <tr>
-
-                            <th class="px-4 py-3">
-                                ID
-                            </th>
-
-                            <th class="py-3">
-                                Image
-                            </th>
-
-                            <th class="py-3">
-                                Course Name
-                            </th>
-
-                            <th class="py-3">
-                                Hours
-                            </th>
-
-                            <th class="py-3">
-                                Teacher
-                            </th>
-
-                            <th class="py-3 pe-4">
-                                Actions
-                            </th>
-
-                        </tr>
-
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Course Name</th>
+                        <th>Hours</th>
+                        <th>Teacher</th>
+                        <th>Actions</th>
+                    </tr>
                     </thead>
-
 
                     <tbody>
 
-                    <?php if ($result && $result->num_rows > 0): ?>
+                    <?php if ($result->num_rows > 0): ?>
 
                         <?php while ($course = $result->fetch_assoc()): ?>
 
                             <tr>
 
-                                <!-- ID -->
-                                <td class="px-4 fw-medium">
+                                <td>
                                     <?php echo $course['id']; ?>
                                 </td>
 
-
-                                <!-- Image -->
                                 <td>
 
                                     <?php if (!empty($course['image'])): ?>
 
-                                        <img
-                                            src="upload/<?php echo htmlspecialchars($course['image']); ?>"
-                                            alt="Course Image"
-                                            class="rounded-3"
-                                            style="
-                                                width: 60px;
-                                                height: 60px;
-                                                object-fit: cover;
-                                            "
-                                        >
+                                        <img src="upload/<?php echo $course['image']; ?>"
+                                             width="60"
+                                             height="60"
+                                             style="object-fit: cover;">
 
                                     <?php else: ?>
 
-                                        <div
-                                            class="d-flex align-items-center justify-content-center bg-light rounded-3"
-                                            style="
-                                                width: 60px;
-                                                height: 60px;
-                                            "
-                                        >
-                                            <i class="bi bi-book text-muted fs-4"></i>
-                                        </div>
+                                        No Image
 
                                     <?php endif; ?>
 
                                 </td>
 
-
-                                <!-- Course Name -->
                                 <td>
-
-                                    <span class="fw-semibold">
-                                        <?php echo htmlspecialchars($course['name']); ?>
-                                    </span>
-
+                                    <?php echo $course['name']; ?>
                                 </td>
 
-
-                                <!-- Hours -->
                                 <td>
-
-                                    <span class="badge bg-light text-dark border px-3 py-2">
-                                        <?php echo htmlspecialchars($course['hours']); ?> Hours
-                                    </span>
-
+                                    <?php echo $course['hours']; ?>
                                 </td>
 
-
-                                <!-- Teacher -->
                                 <td>
-
-                                    <div class="d-flex align-items-center gap-2">
-
-                                        <i class="bi bi-person-circle text-muted"></i>
-
-                                        <span>
-                                            <?php echo htmlspecialchars($course['teacher_name']); ?>
-                                        </span>
-
-                                    </div>
-
+                                    <?php echo $course['teacher_name']; ?>
                                 </td>
 
+                                <td>
 
-                                <!-- Actions -->
-                                <td class="pe-4">
+                                    <a href="edit_course.php?id=<?php echo $course['id']; ?>"
+                                       class="btn btn-sm btn-primary">
+                                        Edit
+                                    </a>
 
-                                    <div class="d-flex gap-2">
-
-                                        <!-- Edit -->
-                                        <a
-                                            href="edit_course.php?id=<?php echo $course['id']; ?>"
-                                            class="btn btn-sm btn-outline-secondary"
-                                        >
-
-                                            <i class="bi bi-pencil me-1"></i>
-                                            Edit
-
-                                        </a>
-
-
-                                        <!-- Delete -->
-                                        <a
-                                            href="delete_course.php?id=<?php echo $course['id']; ?>"
-                                            class="btn btn-sm btn-outline-danger"
-                                            onclick="return confirm('Are you sure you want to delete this course?');"
-                                        >
-
-                                            <i class="bi bi-trash me-1"></i>
-                                            Delete
-
-                                        </a>
-
-                                    </div>
+                                    <a href="delete_course.php?id=<?php echo $course['id']; ?>"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Are you sure you want to delete this course?');">
+                                        Delete
+                                    </a>
 
                                 </td>
 
@@ -213,37 +130,14 @@ include "header.php";
 
                         <?php endwhile; ?>
 
-
                     <?php else: ?>
 
-                        <!-- Empty State -->
                         <tr>
 
                             <td colspan="6"
-                                class="text-center py-5">
+                                class="text-center text-muted py-4">
 
-                                <div class="mb-3">
-
-                                    <i class="bi bi-book fs-1 text-muted"></i>
-
-                                </div>
-
-                                <h5 class="fw-bold">
-                                    No Courses Found
-                                </h5>
-
-                                <p class="text-muted mb-3">
-                                    There are no courses available yet.
-                                </p>
-
-                                <a
-                                    href="add_course.php"
-                                    class="btn text-white"
-                                    style="background-color: #FF9500;"
-                                >
-                                    <i class="bi bi-plus-lg me-1"></i>
-                                    Add Course
-                                </a>
+                                No courses found.
 
                             </td>
 
@@ -263,6 +157,5 @@ include "header.php";
 
 </div>
 
-<?php
-include "footer.php";
-?>
+</body>
+</html>

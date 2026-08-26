@@ -7,93 +7,64 @@ $sql = "SELECT students.id, students.student_number, students.class,
         JOIN users ON students.user_id = users.id";
 
 $result = $conn->query($sql);
-
-include "header.php";
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students</title>
+
+    <link rel="stylesheet" href="./bootstrap/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./bootstrap/assets/css/style.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+</head>
+
+<body>
 
 <div class="container py-5">
 
-    <!-- Page Header -->
-    <div class="d-flex flex-column flex-md-row
-                justify-content-between
-                align-items-md-center
-                gap-3
-                mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
         <div>
-            <h1 class="fw-bold mb-1">
-                Manage Students
-            </h1>
-
-            <p class="text-muted mb-0">
-                View and manage all registered students.
-            </p>
+            <h1 class="fw-bold">Manage Students</h1>
+            <p class="text-muted">View and manage students</p>
         </div>
 
-        <div class="d-flex gap-2">
-
-            <a href="admin_dashboard.php"
-               class="btn btn-outline-secondary">
-
-                <i class="bi bi-arrow-left me-1"></i>
-                Dashboard
-
-            </a>
-
-            <a href="add_student.php"
-               class="btn admin-primary-btn">
-
-                <i class="bi bi-plus-lg me-1"></i>
+        <div>
+            <a href="add_student.php" class="btn btn-success">
+                <i class="bi bi-plus-lg"></i>
                 Add Student
-
             </a>
 
+            <a href="admin_dashboard.php" class="btn btn-dark">
+                <i class="bi bi-arrow-left"></i>
+                Dashboard
+            </a>
         </div>
 
     </div>
 
+    <div class="card border-0 shadow-sm">
 
-    <!-- Students Table -->
-    <div class="card border-0 shadow-sm rounded-4">
-
-        <div class="card-body p-0">
+        <div class="card-body">
 
             <div class="table-responsive">
 
-                <table class="table table-hover align-middle mb-0">
+                <table class="table table-hover align-middle">
 
-                    <thead class="table-light">
-
+                    <thead>
                         <tr>
-
-                            <th class="px-4 py-3">
-                                ID
-                            </th>
-
-                            <th class="py-3">
-                                Name
-                            </th>
-
-                            <th class="py-3">
-                                Email
-                            </th>
-
-                            <th class="py-3">
-                                Student Number
-                            </th>
-
-                            <th class="py-3">
-                                Class
-                            </th>
-
-                            <th class="py-3 pe-4">
-                                Actions
-                            </th>
-
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Student Number</th>
+                            <th>Class</th>
+                            <th>Actions</th>
                         </tr>
-
                     </thead>
-
 
                     <tbody>
 
@@ -103,55 +74,40 @@ include "header.php";
 
                             <tr>
 
-                                <td class="px-4 fw-medium">
-                                    <?= $student['id'] ?>
+                                <td>
+                                    <?php echo $student['id']; ?>
                                 </td>
 
                                 <td>
-                                    <span class="fw-semibold">
-                                        <?= htmlspecialchars($student['name']) ?>
-                                    </span>
-                                </td>
-
-                                <td class="text-muted">
-                                    <?= htmlspecialchars($student['email']) ?>
+                                    <?php echo htmlspecialchars($student['name']); ?>
                                 </td>
 
                                 <td>
-                                    <?= htmlspecialchars($student['student_number']) ?>
+                                    <?php echo htmlspecialchars($student['email']); ?>
+                                </td>
+
+                                <td>
+                                    <?php echo $student['student_number']; ?>
+                                </td>
+
+                                <td>
+                                    <?php echo htmlspecialchars($student['class']); ?>
                                 </td>
 
                                 <td>
 
-                                    <span class="badge text-bg-light">
-                                        <?= htmlspecialchars($student['class']) ?>
-                                    </span>
+                                    <a href="edit_student.php?id=<?php echo $student['id']; ?>"
+                                       class="btn btn-sm btn-primary">
+                                        <i class="bi bi-pencil"></i>
+                                        Edit
+                                    </a>
 
-                                </td>
-
-                                <td class="pe-4">
-
-                                    <div class="d-flex flex-wrap gap-2">
-
-                                        <a href="edit_student.php?id=<?= $student['id'] ?>"
-                                           class="btn btn-sm btn-outline-primary">
-
-                                            <i class="bi bi-pencil me-1"></i>
-                                            Edit
-
-                                        </a>
-
-
-                                        <a href="delete_student.php?id=<?= $student['id'] ?>"
-                                           class="btn btn-sm btn-outline-danger"
-                                           onclick="return confirm('Are you sure you want to delete this student?');">
-
-                                            <i class="bi bi-trash me-1"></i>
-                                            Delete
-
-                                        </a>
-
-                                    </div>
+                                    <a href="delete_student.php?id=<?php echo $student['id']; ?>"
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('Are you sure you want to delete this student?');">
+                                        <i class="bi bi-trash"></i>
+                                        Delete
+                                    </a>
 
                                 </td>
 
@@ -162,22 +118,10 @@ include "header.php";
                     <?php else: ?>
 
                         <tr>
-
                             <td colspan="6"
-                                class="text-center text-muted py-5">
-
-                                <i class="bi bi-people fs-1 d-block mb-3"></i>
-
-                                <h5 class="fw-semibold">
-                                    No students found
-                                </h5>
-
-                                <p class="mb-0">
-                                    There are currently no students to display.
-                                </p>
-
+                                class="text-center text-muted py-4">
+                                No students found.
                             </td>
-
                         </tr>
 
                     <?php endif; ?>
@@ -194,6 +138,5 @@ include "header.php";
 
 </div>
 
-<?php
-include "footer.php";
-?>
+</body>
+</html>

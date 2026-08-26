@@ -12,8 +12,8 @@ if (isset($_POST["delete_id"])) {
     }
 }
 
-// Fetch all courses directly from your database
-$courses = $objCon->selectAll("courses");
+// Fetch all courses with their teacher's real names
+$courses = $objCon->getAllCoursesWithTeacher();
 ?>
 
 <div class="container my-5">
@@ -58,7 +58,7 @@ $courses = $objCon->selectAll("courses");
                                     </div>
 
                                     <div class="d-flex align-items-center">
-                                        <span class="me-2">Teacher ID: <?= $course['teacher_id'] ?></span>
+                                        <span class="me-2"><?= $course['teacher_name'] ?? 'Unknown Teacher' ?></span>
                                         <img src="<?= $course['avatar'] ?>" class="rounded-circle border" width="30" height="30" alt="Avatar">
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@ $courses = $objCon->selectAll("courses");
                                             <img src="<?= $course['avatar'] ?>" class="rounded-circle border me-3" width="50" height="50" alt="Avatar">
                                             <div>
                                                 <p class="mb-0 fw-bold">Instructor</p>
-                                                <p class="mb-0 text-muted">Teacher ID: <?= $course['teacher_id'] ?></p>
+                                                <p class="mb-0 text-muted"><?= $course['teacher_name'] ?? 'Unknown Teacher' ?></p>
                                             </div>
                                         </div>
 
@@ -113,11 +113,21 @@ $courses = $objCon->selectAll("courses");
                             </div>
                             <div class="modal-footer border-top-0 pt-0">
                                 <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Close</button>
-                                <a href="edit.php?id=<?= $course['id'] ?>" class="btn btn-success rounded-3 px-4">Edit</a>
-                                <form action="" method="POST" class="d-inline">
-                                    <input type="hidden" name="delete_id" value="<?= $course['id'] ?>">
-                                    <button type="submit" class="btn btn-danger rounded-3 px-4">Delete</button>
-                                </form>
+
+                                <!-- ONLY show Edit/Delete if the user is NOT a student and NOT a teacher -->
+                                <?php if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'teacher' && $_SESSION['role'] !== 'student')): ?>
+                                    <a href="edit.php?id=<?= $course['id'] ?>" class="btn btn-success rounded-3 px-4">Edit</a>
+
+                                    <form action="" method="POST" class="d-inline">
+                                        <input type="hidden" name="delete_id" value="<?= $course['id'] ?>">
+                                        <button type="submit" class="btn btn-danger rounded-3 px-4">Delete</button>
+                                    </form>
+                                <?php endif; ?>
+
+                                <a href="/Team-1-Website/students/enroll_course.php?course_id=<?= $course['id'] ?>"
+                                    class="btn btn-warning text-white rounded-3 px-4 fw-bold">
+                                    Enroll Now
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -131,9 +141,12 @@ $courses = $objCon->selectAll("courses");
 
     </div>
 
-    <div class="text-center mt-5">
-        <a href="add.php" class="btn btn-success px-5 py-2 fw-bold fs-5 rounded-3">Add Course</a>
-    </div>
+    <!-- ONLY show Add Course if the user is NOT a student and NOT a teacher -->
+    <?php if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'teacher' && $_SESSION['role'] !== 'student')): ?>
+        <div class="text-center mt-5">
+            <a href="add.php" class="btn btn-success px-5 py-2 fw-bold fs-5 rounded-3">Add Course</a>
+        </div>
+    <?php endif; ?>
 </div>
 
 <?php include_once "../footer.php"; ?>

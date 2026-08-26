@@ -36,201 +36,125 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<?php include "header.php"; ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Teacher</title>
+
+    <link rel="stylesheet"
+          href="./bootstrap/assets/css/bootstrap.min.css">
+
+</head>
+
+<body>
 
 <div class="container py-5">
 
-    <!-- Page Header -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div>
-            <h1 class="fw-bold mb-1">Add Teacher</h1>
-
-            <p class="text-muted mb-0">
-                Add a new teacher to the course system.
-            </p>
-        </div>
+        <h1 class="fw-bold">Add Teacher</h1>
 
         <a href="manage_teachers.php"
-           class="btn btn-outline-dark">
-
-            <i class="bi bi-arrow-left me-1"></i>
-            Back to Teachers
-
+           class="btn btn-dark">
+            Back
         </a>
 
     </div>
 
+    <div class="card border-0 shadow-sm p-4">
 
-    <!-- Form Card -->
-    <div class="card border-0 shadow-sm rounded-4">
+        <form method="POST">
 
-        <div class="card-body p-4 p-md-5">
+            <div class="mb-3">
 
-            <form method="POST">
+                <label class="form-label fw-bold">
+                    Name
+                </label>
 
-                <div class="row g-4">
+                <input type="text"
+                       name="name"
+                       class="form-control"
+                       placeholder="Enter teacher name"
+                       required>
 
-                    <!-- Name -->
-                    <div class="col-md-6">
+            </div>
 
-                        <label for="name" class="form-label fw-semibold">
-                            Teacher Name
-                        </label>
+            <div class="mb-3">
 
-                        <div class="input-group">
+                <label class="form-label fw-bold">
+                    Email
+                </label>
 
-                            <span class="input-group-text bg-white">
-                                <i class="bi bi-person"></i>
-                            </span>
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       placeholder="Enter teacher email"
+                       required>
 
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                class="form-control"
-                                placeholder="Enter teacher name"
-                                required>
+            </div>
 
-                        </div>
+            <div class="mb-3">
 
-                    </div>
+                <label class="form-label fw-bold">
+                    Password
+                </label>
 
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="Enter password"
+                       required>
 
-                    <!-- Email -->
-                    <div class="col-md-6">
+            </div>
 
-                        <label for="email" class="form-label fw-semibold">
-                            Email
-                        </label>
+            <div class="mb-3">
 
-                        <div class="input-group">
+                <label class="form-label fw-bold">
+                    Phone
+                </label>
 
-                            <span class="input-group-text bg-white">
-                                <i class="bi bi-envelope"></i>
-                            </span>
+                <input type="text"
+                       name="phone"
+                       class="form-control"
+                       placeholder="Enter phone number"
+                       required>
 
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                class="form-control"
-                                placeholder="Enter teacher email"
-                                required>
+            </div>
 
-                        </div>
+            <div class="mb-3">
 
-                    </div>
+                <label class="form-label fw-bold">
+                    Subject
+                </label>
 
+                <input type="text"
+                       name="subject"
+                       class="form-control"
+                       placeholder="Enter subject"
+                       required>
 
-                    <!-- Password -->
-                    <div class="col-md-6">
+            </div>
 
-                        <label for="password" class="form-label fw-semibold">
-                            Password
-                        </label>
+            <button type="submit"
+                    name="submit"
+                    class="btn btn-dark w-100">
 
-                        <div class="input-group">
+                Add Teacher
 
-                            <span class="input-group-text bg-white">
-                                <i class="bi bi-lock"></i>
-                            </span>
+            </button>
 
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                class="form-control"
-                                placeholder="Enter password"
-                                required>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Phone -->
-                    <div class="col-md-6">
-
-                        <label for="phone" class="form-label fw-semibold">
-                            Phone
-                        </label>
-
-                        <div class="input-group">
-
-                            <span class="input-group-text bg-white">
-                                <i class="bi bi-telephone"></i>
-                            </span>
-
-                            <input
-                                type="text"
-                                id="phone"
-                                name="phone"
-                                class="form-control"
-                                placeholder="Enter phone number"
-                                required>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Subject -->
-                    <div class="col-12">
-
-                        <label for="subject" class="form-label fw-semibold">
-                            Subject
-                        </label>
-
-                        <div class="input-group">
-
-                            <span class="input-group-text bg-white">
-                                <i class="bi bi-book"></i>
-                            </span>
-
-                            <input
-                                type="text"
-                                id="subject"
-                                name="subject"
-                                class="form-control"
-                                placeholder="Enter subject"
-                                required>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Buttons -->
-                <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-5">
-
-                    <a href="manage_teachers.php"
-                       class="btn btn-outline-secondary px-4">
-
-                        Cancel
-
-                    </a>
-
-                    <button
-                        type="submit"
-                        name="submit"
-                        class="btn text-white px-4"
-                        style="background-color: #FF9500;">
-
-                        <i class="bi bi-person-plus me-1"></i>
-                        Add Teacher
-
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
+        </form>
 
     </div>
 
 </div>
-<?php include "footer.php"; ?>
+
+</body>
+</html>

@@ -57,4 +57,17 @@ class connect
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // Fetch courses AND the teacher's real name from the users table
+    public function getAllCoursesWithTeacher()
+    {
+        $query = "SELECT courses.*, users.name AS teacher_name 
+                  FROM courses 
+                  LEFT JOIN teachers ON courses.teacher_id = teachers.id 
+                  LEFT JOIN users ON teachers.user_id = users.id";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

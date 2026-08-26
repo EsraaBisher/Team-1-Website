@@ -24,93 +24,66 @@ $result = mysqli_query($conn, $query);
 ?>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
 
-document.addEventListener("DOMContentLoaded", function () {
+        // ================= NAVBAR =================
 
-    // ================= NAVBAR =================
+        const navLinks = document.querySelectorAll("nav a");
 
-    const navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach(function(link) {
 
-    navLinks.forEach(function (link) {
+            const href = link.getAttribute("href");
 
-        const href = link.getAttribute("href");
+            if (href === "index.php") {
+                link.href = "../index.php";
+            } else if (href === "about.php") {
+                link.href = "../about.php";
+            } else if (href === "courses.php") {
+                link.href = "../courses.php";
+            } else if (href === "pricing.php") {
+                link.href = "../pricing.php";
+            } else if (href === "login.php") {
+                link.href = "../login.php";
+            } else if (href === "register.php") {
+                link.href = "../register.php";
+            } else if (href === "logout.php") {
+                link.href = "../logout.php";
+            }
 
-        if (href === "index.php") {
-            link.href = "../index.php";
-        }
-
-        else if (href === "about.php") {
-            link.href = "../about.php";
-        }
-
-        else if (href === "courses.php") {
-            link.href = "../courses.php";
-        }
-
-        else if (href === "pricing.php") {
-            link.href = "../pricing.php";
-        }
-
-        else if (href === "login.php") {
-            link.href = "../login.php";
-        }
-
-        else if (href === "register.php") {
-            link.href = "../register.php";
-        }
-
-        else if (href === "logout.php") {
-            link.href = "../logout.php";
-        }
-
-    });
+        });
 
 
-    // ================= FOOTER =================
+        // ================= FOOTER =================
 
-    const footerLinks = document.querySelectorAll("footer a");
+        const footerLinks = document.querySelectorAll("footer a");
 
-    footerLinks.forEach(function (link) {
+        footerLinks.forEach(function(link) {
 
-        const href = link.getAttribute("href");
+            const href = link.getAttribute("href");
 
-        if (href === "index.php") {
-            link.href = "../index.php";
-        }
+            if (href === "index.php") {
+                link.href = "../index.php";
+            } else if (href === "about.php") {
+                link.href = "../about.php";
+            } else if (href === "courses.php") {
+                link.href = "../courses.php";
+            } else if (href === "pricing.php") {
+                link.href = "../pricing.php";
+            } else if (href === "login.php") {
+                link.href = "../login.php";
+            } else if (href === "register.php") {
+                link.href = "../register.php";
+            } else if (href === "logout.php") {
+                link.href = "../logout.php";
+            }
 
-        else if (href === "about.php") {
-            link.href = "../about.php";
-        }
-
-        else if (href === "courses.php") {
-            link.href = "../courses.php";
-        }
-
-        else if (href === "pricing.php") {
-            link.href = "../pricing.php";
-        }
-
-        else if (href === "login.php") {
-            link.href = "../login.php";
-        }
-
-        else if (href === "register.php") {
-            link.href = "../register.php";
-        }
-
-        else if (href === "logout.php") {
-            link.href = "../logout.php";
-        }
+        });
 
     });
-
-});
-
 </script>
 
 
 <style>
-
     .courses-page {
         background: #f8f9fa;
         min-height: 75vh;
@@ -231,7 +204,6 @@ document.addEventListener("DOMContentLoaded", function () {
         font-size: 32px;
         margin: 0 auto 20px;
     }
-
 </style>
 
 
@@ -260,9 +232,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 <a
-                    href="../courses.php"
-                    class="btn btn-warning fw-bold px-4"
-                >
+                    href="/Team-1-Website/courses/index.php"
+                    class="btn btn-warning fw-bold px-4">
 
                     <i class="fa-solid fa-plus me-2"></i>
 
@@ -295,10 +266,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             <!-- IMAGE -->
 
                             <img
-                                src="../images/<?php echo htmlspecialchars($course['image'] ?? 'default.jpg'); ?>"
+                                src="<?php echo htmlspecialchars($course['image'] ?? 'default.jpg'); ?>"
                                 class="course-image"
-                                alt="Course Image"
-                            >
+                                alt="Course Image">
 
 
                             <!-- BODY -->
@@ -310,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                     <?php
                                     echo htmlspecialchars(
-                                        $course['title']
+                                        $course['name']
                                     );
                                     ?>
 
@@ -345,8 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                     <a
                                         href="course_details.php?id=<?php echo $course['id']; ?>"
-                                        class="btn btn-orange w-100 fw-bold mb-2"
-                                    >
+                                        class="btn btn-orange w-100 fw-bold mb-2">
 
                                         <i class="fa-solid fa-play me-2"></i>
 
@@ -362,8 +331,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                         <a
                                             href="edit_course.php?id=<?php echo $course['id']; ?>"
-                                            class="btn btn-outline-primary btn-sm w-50 fw-bold"
-                                        >
+                                            class="btn btn-outline-primary btn-sm w-50 fw-bold">
 
                                             <i class="fa-solid fa-pen me-1"></i>
 
@@ -375,8 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <a
                                             href="delete_course.php?enrollment_id=<?php echo $course['enrollment_id']; ?>"
                                             class="btn btn-outline-danger btn-sm w-50 fw-bold"
-                                            onclick="return confirm('Are you sure you want to remove this course?');"
-                                        >
+                                            onclick="return confirm('Are you sure you want to remove this course?');">
 
                                             <i class="fa-solid fa-trash me-1"></i>
 
@@ -429,9 +396,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         <a
-                            href="../courses.php"
-                            class="btn btn-orange px-4 fw-bold"
-                        >
+                            href="/Team-1-Website/courses/index.php"
+                            class="btn btn-orange px-4 fw-bold">
 
                             <i class="fa-solid fa-magnifying-glass me-2"></i>
 

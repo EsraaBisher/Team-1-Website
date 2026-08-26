@@ -24,6 +24,9 @@ $userRole   = $_SESSION['role'] ?? null;
     <!-- Bootstrap Icons -->
     <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- Custom Style CDN/Relative -->
+    <link rel="stylesheet" href="../bootstrap/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
 
 <body>
@@ -92,7 +95,7 @@ $userRole   = $_SESSION['role'] ?? null;
                     <li class="nav-item">
 
                         <a class="nav-link fw-medium fs-5"
-                            href="/Team-1-Website/courses.php">
+                            href="/Team-1-Website/courses/index.php">
 
                             Courses
 
@@ -153,7 +156,7 @@ $userRole   = $_SESSION['role'] ?? null;
 
                         <!-- Login -->
 
-                        <a href="login.php"
+                        <a href="/Team-1-Website/login.php"
                             class="btn fw-medium fs-5 me-2"
                             style="color: #262626;">
 
@@ -164,7 +167,7 @@ $userRole   = $_SESSION['role'] ?? null;
 
                         <!-- Register -->
 
-                        <a href="register.php"
+                        <a href="/Team-1-Website/register.php"
                             class="btn text-white fs-5 fw-medium"
                             style="background-color: #FF9500;">
 
@@ -182,3 +185,12 @@ $userRole   = $_SESSION['role'] ?? null;
         </div>
 
     </nav>
+
+
+    <!-- Bootstrap JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,13 +1,12 @@
 <?php
-
 include "connect.php";
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+if (!isset($_GET['id'])) {
     header("Location: manage_courses.php");
     exit();
 }
 
-$id = (int) $_GET['id'];
+$id = $_GET['id'];
 
 $sql = "SELECT *
         FROM courses
@@ -63,197 +62,125 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<?php include "header.php"; ?>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Course</title>
+
+    <link rel="stylesheet"
+          href="./bootstrap/assets/css/bootstrap.min.css">
+
+</head>
+
+<body>
 
 <div class="container py-5">
 
-    <!-- Page Header -->
-    <div class="d-flex flex-column flex-md-row
-                justify-content-between
-                align-items-md-center
-                gap-3
-                mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div>
-            <h1 class="fw-bold mb-1">
-                Edit Course
-            </h1>
-
-            <p class="text-muted mb-0">
-                Update course information
-            </p>
-        </div>
+        <h1 class="fw-bold">Edit Course</h1>
 
         <a href="manage_courses.php"
-           class="btn btn-outline-secondary">
-
-            <i class="bi bi-arrow-left me-1"></i>
-            Back to Courses
-
+           class="btn btn-dark">
+            Back
         </a>
 
     </div>
 
+    <div class="card border-0 shadow-sm p-4">
 
-    <!-- Form Card -->
-    <div class="card border-0 shadow-sm rounded-4">
+        <form method="POST" enctype="multipart/form-data">
 
-        <div class="card-body p-4 p-md-5">
+            <div class="mb-3">
 
-            <form method="POST"
-                  enctype="multipart/form-data">
+                <label class="form-label fw-bold">
+                    Course Name
+                </label>
 
-                <div class="row g-4">
+                <input type="text"
+                       name="name"
+                       class="form-control"
+                       value="<?php echo $course['name']; ?>"
+                       required>
 
-                    <!-- Course Name -->
-                    <div class="col-12">
+            </div>
 
-                        <label class="form-label fw-semibold">
-                            Course Name
-                        </label>
+            <div class="mb-3">
 
-                        <input type="text"
-                               name="name"
-                               class="form-control form-control-lg"
-                               value="<?php echo htmlspecialchars($course['name']); ?>"
-                               placeholder="Enter course name"
-                               required>
+                <label class="form-label fw-bold">
+                    Hours
+                </label>
 
-                    </div>
+                <input type="number"
+                       name="hours"
+                       class="form-control"
+                       value="<?php echo $course['hours']; ?>"
+                       required>
 
+            </div>
 
-                    <!-- Hours -->
-                    <div class="col-md-6">
+            <div class="mb-3">
 
-                        <label class="form-label fw-semibold">
-                            Hours
-                        </label>
+                <label class="form-label fw-bold">
+                    Teacher
+                </label>
 
-                        <input type="number"
-                               name="hours"
-                               class="form-control"
-                               value="<?php echo htmlspecialchars($course['hours']); ?>"
-                               placeholder="Enter course hours"
-                               min="1"
-                               required>
+                <select name="teacher_id"
+                        class="form-select"
+                        required>
 
-                    </div>
+                    <?php while ($teacher = $teachers->fetch_assoc()): ?>
 
+                        <option value="<?php echo $teacher['id']; ?>"
+                            <?php
+                            if ($teacher['id'] == $course['teacher_id']) {
+                                echo "selected";
+                            }
+                            ?>>
 
-                    <!-- Teacher -->
-                    <div class="col-md-6">
+                            <?php echo $teacher['name']; ?>
 
-                        <label class="form-label fw-semibold">
-                            Teacher
-                        </label>
+                        </option>
 
-                        <select name="teacher_id"
-                                class="form-select"
-                                required>
+                    <?php endwhile; ?>
 
-                            <option value="">
-                                Select Teacher
-                            </option>
+                </select>
 
-                            <?php while ($teacher = $teachers->fetch_assoc()): ?>
+            </div>
 
-                                <option value="<?php echo $teacher['id']; ?>"
-                                    <?php
-                                    if ($teacher['id'] == $course['teacher_id']) {
-                                        echo "selected";
-                                    }
-                                    ?>>
+            <div class="mb-3">
 
-                                    <?php echo htmlspecialchars($teacher['name']); ?>
+                <label class="form-label fw-bold">
+                    Course Image
+                </label>
 
-                                </option>
+                <input type="file"
+                       name="image"
+                       class="form-control"
+                       accept="image/*">
 
-                            <?php endwhile; ?>
+            </div>
 
-                        </select>
+            <button type="submit"
+                    name="submit"
+                    class="btn btn-primary w-100">
 
-                    </div>
+                Update Course
 
+            </button>
 
-                    <!-- Current Image -->
-                    <?php if (!empty($course['image'])): ?>
-
-                        <div class="col-12">
-
-                            <label class="form-label fw-semibold">
-                                Current Course Image
-                            </label>
-
-                            <div>
-                                <img src="upload/<?php echo htmlspecialchars($course['image']); ?>"
-                                     alt="Course Image"
-                                     class="rounded-3 border"
-                                     style="width: 180px; height: 120px; object-fit: cover;">
-                            </div>
-
-                        </div>
-
-                    <?php endif; ?>
-
-
-                    <!-- New Image -->
-                    <div class="col-12">
-
-                        <label class="form-label fw-semibold">
-                            Course Image
-                        </label>
-
-                        <input type="file"
-                               name="image"
-                               class="form-control"
-                               accept="image/*">
-
-                        <div class="form-text">
-                            Leave empty if you don't want to change the current image.
-                        </div>
-
-                    </div>
-
-
-                    <!-- Buttons -->
-                    <div class="col-12">
-
-                        <div class="d-flex flex-column flex-md-row
-                                    gap-2
-                                    pt-3">
-
-                            <button type="submit"
-                                    name="submit"
-                                    class="btn text-white px-4"
-                                    style="background-color: #FF9500;">
-
-                                <i class="bi bi-check-lg me-1"></i>
-                                Update Course
-
-                            </button>
-
-
-                            <a href="manage_courses.php"
-                               class="btn btn-outline-secondary px-4">
-
-                                Cancel
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </form>
-
-        </div>
+        </form>
 
     </div>
 
 </div>
 
-
-<?php include "footer.php"; ?>
+</body>
+</html>

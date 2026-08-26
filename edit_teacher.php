@@ -1,13 +1,12 @@
 <?php
-
 include "connect.php";
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+if (!isset($_GET['id'])) {
     header("Location: manage_teachers.php");
     exit();
 }
 
-$id = (int) $_GET['id'];
+$id = $_GET['id'];
 
 $sql = "SELECT teachers.id,
                teachers.phone,
@@ -55,157 +54,113 @@ if (isset($_POST['submit'])) {
         echo "Error: " . $conn->error;
     }
 }
-
 ?>
 
-<?php include "header.php"; ?>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Teacher</title>
+
+    <link rel="stylesheet"
+          href="./bootstrap/assets/css/bootstrap.min.css">
+
+</head>
+
+<body>
 
 <div class="container py-5">
 
-    <!-- Page Header -->
-    <div class="d-flex flex-column flex-md-row
-                justify-content-between
-                align-items-md-center
-                gap-3
-                mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div>
-
-            <h1 class="fw-bold mb-1">
-                Edit Teacher
-            </h1>
-
-            <p class="text-muted mb-0">
-                Update teacher information
-            </p>
-
-        </div>
+        <h1 class="fw-bold">Edit Teacher</h1>
 
         <a href="manage_teachers.php"
-           class="btn btn-outline-secondary">
-
-            <i class="bi bi-arrow-left me-1"></i>
-            Back to Teachers
-
+           class="btn btn-dark">
+            Back
         </a>
 
     </div>
 
+    <div class="card border-0 shadow-sm p-4">
 
-    <!-- Form Card -->
-    <div class="card border-0 shadow-sm rounded-4">
+        <form method="POST">
 
-        <div class="card-body p-4 p-md-5">
+            <div class="mb-3">
 
-            <form method="POST">
+                <label class="form-label fw-bold">
+                    Name
+                </label>
 
-                <div class="row g-4">
+                <input type="text"
+                       name="name"
+                       class="form-control"
+                       value="<?php echo $teacher['name']; ?>"
+                       required>
 
-                    <!-- Name -->
-                    <div class="col-md-6">
+            </div>
 
-                        <label class="form-label fw-semibold">
-                            Name
-                        </label>
+            <div class="mb-3">
 
-                        <input type="text"
-                               name="name"
-                               class="form-control form-control-lg"
-                               value="<?php echo htmlspecialchars($teacher['name']); ?>"
-                               placeholder="Enter teacher name"
-                               required>
+                <label class="form-label fw-bold">
+                    Email
+                </label>
 
-                    </div>
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       value="<?php echo $teacher['email']; ?>"
+                       required>
 
+            </div>
 
-                    <!-- Email -->
-                    <div class="col-md-6">
+            <div class="mb-3">
 
-                        <label class="form-label fw-semibold">
-                            Email
-                        </label>
+                <label class="form-label fw-bold">
+                    Phone
+                </label>
 
-                        <input type="email"
-                               name="email"
-                               class="form-control form-control-lg"
-                               value="<?php echo htmlspecialchars($teacher['email']); ?>"
-                               placeholder="Enter teacher email"
-                               required>
+                <input type="text"
+                       name="phone"
+                       class="form-control"
+                       value="<?php echo $teacher['phone']; ?>"
+                       required>
 
-                    </div>
+            </div>
 
+            <div class="mb-3">
 
-                    <!-- Phone -->
-                    <div class="col-md-6">
+                <label class="form-label fw-bold">
+                    Subject
+                </label>
 
-                        <label class="form-label fw-semibold">
-                            Phone
-                        </label>
+                <input type="text"
+                       name="subject"
+                       class="form-control"
+                       value="<?php echo $teacher['subject']; ?>"
+                       required>
 
-                        <input type="text"
-                               name="phone"
-                               class="form-control"
-                               value="<?php echo htmlspecialchars($teacher['phone']); ?>"
-                               placeholder="Enter phone number"
-                               required>
+            </div>
 
-                    </div>
+            <button type="submit"
+                    name="submit"
+                    class="btn btn-primary w-100">
 
+                Update Teacher
 
-                    <!-- Subject -->
-                    <div class="col-md-6">
+            </button>
 
-                        <label class="form-label fw-semibold">
-                            Subject
-                        </label>
-
-                        <input type="text"
-                               name="subject"
-                               class="form-control"
-                               value="<?php echo htmlspecialchars($teacher['subject']); ?>"
-                               placeholder="Enter subject"
-                               required>
-
-                    </div>
-
-
-                    <!-- Buttons -->
-                    <div class="col-12">
-
-                        <div class="d-flex flex-column flex-md-row
-                                    gap-2
-                                    pt-3">
-
-                            <button type="submit"
-                                    name="submit"
-                                    class="btn text-white px-4"
-                                    style="background-color: #FF9500;">
-
-                                <i class="bi bi-check-lg me-1"></i>
-                                Update Teacher
-
-                            </button>
-
-
-                            <a href="manage_teachers.php"
-                               class="btn btn-outline-secondary px-4">
-
-                                Cancel
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </form>
-
-        </div>
+        </form>
 
     </div>
 
 </div>
-<?php include "footer.php"; ?>
+
+</body>
+</html>
