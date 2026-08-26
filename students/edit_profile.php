@@ -1,23 +1,30 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-include '../connect.php';
+include '../connect2.php';
 include '../header.php';
 
-$student_id = $_SESSION['student_id'] ?? 1;
+$db = new Connect2();
+$conn = $db->getConnection();
 
-// 1. جلب بيانات الطالب الحالية
-$query = "SELECT * FROM students WHERE id = '$student_id'";
-$result = mysqli_query($conn, $query);
-$user = mysqli_fetch_assoc($result);
+$session_id = $_SESSION['user_id'] ?? $_SESSION['student_id'] ?? 1;
+$safe_id = $conn->real_escape_string($session_id);
 
-// 2. معالجة التعديل عند التكيز على حفظ
+// 1. Fetch current user data from `users`
+$query = "SELECT * FROM users WHERE id = '$safe_id' LIMIT 1";
+$users = $db->query($query);
+$user = !empty($users) ? $users[0] : [];
+
+// 2. Handle form update submission
 if (isset($_POST['update_profile'])) {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $name = $conn->real_escape_string($_POST['name']);
+    $email = $conn->real_escape_string($_POST['email']);
 
-    $update_query = "UPDATE students SET name = '$name', email = '$email' WHERE id = '$student_id'";
-    
-    if (mysqli_query($conn, $update_query)) {
+    $update_query = "UPDATE users SET name = '$name', email = '$email' WHERE id = '$safe_id'";
+
+    if ($db->update($update_query)) {
         echo "<script>
                 alert('Profile Updated Successfully!');
                 window.location.href = 'profile.php';
@@ -29,85 +36,37 @@ if (isset($_POST['update_profile'])) {
 ?>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach(function(link) {
+            const href = link.getAttribute("href");
+            if (href === "index.php") link.href = "../index.php";
+            else if (href === "about.php") link.href = "../about.php";
+            else if (href === "courses.php") link.href = "../courses.php";
+            else if (href === "pricing.php") link.href = "../pricing.php";
+            else if (href === "login.php") link.href = "../login.php";
+            else if (href === "register.php") link.href = "../register.php";
+        });
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    const navLinks = document.querySelectorAll("nav a");
-
-    navLinks.forEach(function (link) {
-
-        const href = link.getAttribute("href");
-
-        if (href === "index.php") {
-            link.href = "../index.php";
-        }
-
-        else if (href === "about.php") {
-            link.href = "../about.php";
-        }
-
-        else if (href === "courses.php") {
-            link.href = "../courses.php";
-        }
-
-        else if (href === "pricing.php") {
-            link.href = "../pricing.php";
-        }
-
-        else if (href === "login.php") {
-            link.href = "../login.php";
-        }
-
-        else if (href === "register.php") {
-            link.href = "../register.php";
-        }
-
+        const footerLinks = document.querySelectorAll("footer a");
+        footerLinks.forEach(function(link) {
+            const href = link.getAttribute("href");
+            if (href === "index.php") link.href = "../index.php";
+            else if (href === "about.php") link.href = "../about.php";
+            else if (href === "courses.php") link.href = "../courses.php";
+            else if (href === "pricing.php") link.href = "../pricing.php";
+            else if (href === "login.php") link.href = "../login.php";
+            else if (href === "register.php") link.href = "../register.php";
+        });
     });
-
-
-    const footerLinks = document.querySelectorAll("footer a");
-
-    footerLinks.forEach(function (link) {
-
-        const href = link.getAttribute("href");
-
-        if (href === "index.php") {
-            link.href = "../index.php";
-        }
-
-        else if (href === "about.php") {
-            link.href = "../about.php";
-        }
-
-        else if (href === "courses.php") {
-            link.href = "../courses.php";
-        }
-
-        else if (href === "pricing.php") {
-            link.href = "../pricing.php";
-        }
-
-        else if (href === "login.php") {
-            link.href = "../login.php";
-        }
-
-        else if (href === "register.php") {
-            link.href = "../register.php";
-        }
-
-    });
-
-});
-
 </script>
-
 
 <div class="container my-5" style="min-height: 70vh;">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow-sm border-0 p-4">
                 <h3 class="fw-bold text-center mb-4">Edit Profile</h3>
-                
+
                 <?php if (isset($error)): ?>
                     <div class="alert alert-danger"><?php echo $error; ?></div>
                 <?php endif; ?>
@@ -115,12 +74,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <form method="POST" action="">
                     <div class="mb-3">
                         <label class="form-label fw-bold">Full Name</label>
-                        <input type="text" name="name" class="form-control" value="<?php echo $user['name'] ?? ''; ?>" required>
+                        <input type="text" name="name" class="form-control" value="<?php echo htmlspecialchars($user['name'] ?? ''); ?>" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Email Address</label>
-                        <input type="email" name="email" class="form-control" value="<?php echo $user['email'] ?? ''; ?>" required>
+                        <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>" required>
                     </div>
 
                     <div class="d-flex gap-2 mt-4">

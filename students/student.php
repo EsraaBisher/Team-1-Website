@@ -1,85 +1,91 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+include '../connect2.php';
 include '../header.php';
+
+$db = new Connect2();
+$conn = $db->getConnection();
+
+// Fetch session user ID
+$session_id = $_SESSION['user_id'] ?? $_SESSION['student_id'] ?? 1;
+$safe_id = $conn->real_escape_string($session_id);
+
+// Query user details joined with student data
+$user_query = "SELECT users.*, students.class 
+              FROM users 
+              LEFT JOIN students ON users.id = students.user_id 
+              WHERE users.id = '$safe_id' OR students.id = '$safe_id' 
+              LIMIT 1";
+
+$users = $db->query($user_query);
+$user = (!empty($users) && is_array($users)) ? $users[0] : [];
+
+$display_name = $user['name'] ?? $_SESSION['name'] ?? 'Student';
+$class_info = $user['class'] ?? '';
 ?>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
 
-document.addEventListener("DOMContentLoaded", function () {
+        // Fix Navbar Links
+        const navLinks = document.querySelectorAll("nav a");
 
-    // Fix Navbar Links
-    const navLinks = document.querySelectorAll("nav a");
+        navLinks.forEach(function(link) {
 
-    navLinks.forEach(function (link) {
+            const href = link.getAttribute("href");
 
-        const href = link.getAttribute("href");
+            if (href === "index.php") {
+                link.href = "../index.php";
+            } else if (href === "about.php") {
+                link.href = "../about.php";
+            } else if (href === "courses.php") {
+                link.href = "../courses.php";
+            } else if (href === "pricing.php") {
+                link.href = "../pricing.php";
+            } else if (href === "login.php") {
+                link.href = "../login.php";
+            } else if (href === "register.php") {
+                link.href = "../register.php";
+            } else if (href === "logout.php") {
+                link.href = "../logout.php";
+            }
 
-        if (href === "index.php") {
-            link.href = "../index.php";
-        }
-
-        else if (href === "about.php") {
-            link.href = "../about.php";
-        }
-
-        else if (href === "courses.php") {
-            link.href = "../courses.php";
-        }
-
-        else if (href === "pricing.php") {
-            link.href = "../pricing.php";
-        }
-
-        else if (href === "login.php") {
-            link.href = "../login.php";
-        }
-
-        else if (href === "register.php") {
-            link.href = "../register.php";
-        }
-
-    });
+        });
 
 
-    // Fix Footer Links
-    const footerLinks = document.querySelectorAll("footer a");
+        // Fix Footer Links
+        const footerLinks = document.querySelectorAll("footer a");
 
-    footerLinks.forEach(function (link) {
+        footerLinks.forEach(function(link) {
 
-        const href = link.getAttribute("href");
+            const href = link.getAttribute("href");
 
-        if (href === "index.php") {
-            link.href = "../index.php";
-        }
+            if (href === "index.php") {
+                link.href = "../index.php";
+            } else if (href === "about.php") {
+                link.href = "../about.php";
+            } else if (href === "courses.php") {
+                link.href = "../courses.php";
+            } else if (href === "pricing.php") {
+                link.href = "../pricing.php";
+            } else if (href === "login.php") {
+                link.href = "../login.php";
+            } else if (href === "register.php") {
+                link.href = "../register.php";
+            } else if (href === "logout.php") {
+                link.href = "../logout.php";
+            }
 
-        else if (href === "about.php") {
-            link.href = "../about.php";
-        }
-
-        else if (href === "courses.php") {
-            link.href = "../courses.php";
-        }
-
-        else if (href === "pricing.php") {
-            link.href = "../pricing.php";
-        }
-
-        else if (href === "login.php") {
-            link.href = "../login.php";
-        }
-
-        else if (href === "register.php") {
-            link.href = "../register.php";
-        }
+        });
 
     });
-
-});
-
 </script>
 
 
 <style>
-
     .student-dashboard {
         background: #f8f9fa;
         min-height: 75vh;
@@ -194,7 +200,6 @@ document.addEventListener("DOMContentLoaded", function () {
         color: #FF9500;
         font-size: 22px;
     }
-
 </style>
 
 
@@ -207,11 +212,14 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="dashboard-header mb-5">
 
             <h1>
-                Welcome, Student 👋
+                Welcome, <?php echo htmlspecialchars($display_name); ?> 👋
             </h1>
 
             <p class="mb-0">
                 Manage your courses and profile from your dashboard.
+                <?php if (!empty($class_info)): ?>
+                    <span class="badge bg-warning text-dark ms-2">Class: <?php echo htmlspecialchars($class_info); ?></span>
+                <?php endif; ?>
             </p>
 
         </div>
@@ -247,8 +255,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <a
                             href="mycourses.php"
-                            class="btn btn-orange px-4 fw-bold"
-                        >
+                            class="btn btn-orange px-4 fw-bold">
 
                             <i class="fa-solid fa-book-open me-2"></i>
                             View Courses
@@ -256,9 +263,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         </a>
 
                         <a
-                            href="enroll.php"
-                            class="btn btn-outline-success px-4 fw-bold"
-                        >
+                            href="../courses.php"
+                            class="btn btn-outline-success px-4 fw-bold">
 
                             <i class="fa-solid fa-plus me-2"></i>
                             Enroll
@@ -297,8 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <a
                             href="profile.php"
-                            class="btn btn-orange px-4 fw-bold"
-                        >
+                            class="btn btn-orange px-4 fw-bold">
 
                             <i class="fa-solid fa-user me-2"></i>
                             View Profile
@@ -307,8 +312,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         <a
                             href="edit_profile.php"
-                            class="btn btn-outline-primary px-4 fw-bold"
-                        >
+                            class="btn btn-outline-primary px-4 fw-bold">
 
                             <i class="fa-solid fa-pen me-2"></i>
                             Edit
@@ -328,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </div>
 
-
+<script src="../bootstrap/assets/js/bootstrap.bundle.min.js"></script>
 <?php
 include '../footer.php';
 ?>

@@ -17,7 +17,7 @@ if (isset($_SESSION['user_id'])) {
     } elseif ($_SESSION['role'] === 'teacher') {
         header('location:/Team-1-Website/teachers/dashboard.php');
     } elseif ($_SESSION['role'] === 'student') {
-        header('location:/Team-1-Website/students/profile.php');
+        header('location:/Team-1-Website/students/student.php');
     } else {
         header('location:/Team-1-Website/index.php');
     }
@@ -37,7 +37,7 @@ if (isset($_SESSION['user_id'])) {
         exit();
     } elseif ($_SESSION['role'] === 'student') {
 
-        header('Location: /Team-1-Website/students/profile.php');
+        header('Location: /Team-1-Website/students/student.php');
         exit();
     } else {
 
@@ -114,7 +114,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             header('location:/Team-1-Website/teachers/dashboard.php');
         } elseif ($user['role'] === 'student') {
 
-            header('location:/Team-1-Website/students/profile.php');
+            header('location:/Team-1-Website/students/student.php');
         } else {
 
             header('Location:/Team-1-Website/index.php');

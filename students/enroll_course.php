@@ -1,29 +1,41 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-include '../connect.php';
+include '../connect2.php';
 
-// التأكد من تسجيل دخول الطالب ومكانه في السيشن
-$student_id = $_SESSION['student_id'] ?? 1;
+$db = new Connect2();
+$conn = $db->getConnection();
 
-// استقبال كود الكورس المراد إضافته
+$session_id = $_SESSION['user_id'] ?? $_SESSION['student_id'] ?? 1;
+$safe_id = $conn->real_escape_string($session_id);
+
+// Resolve exact student_id from students table using user_id
+$student_query = "SELECT id FROM students WHERE user_id = '$safe_id' OR id = '$safe_id' LIMIT 1";
+$student_res = $db->query($student_query);
+$student_id = !empty($student_res) ? $student_res[0]['id'] : $safe_id;
+
 if (isset($_GET['course_id'])) {
-    $course_id = mysqli_real_escape_string($conn, $_GET['course_id']);
+    $course_id = $conn->real_escape_string($_GET['course_id']);
 
-    // 1. التحقق مما إذا كان الكورس مضافاً بالفعل للـ Student
+    // 1. Check if already enrolled
     $check_query = "SELECT * FROM enrollments WHERE student_id = '$student_id' AND course_id = '$course_id'";
-    $check_result = mysqli_query($conn, $check_query);
+    $existing = $db->query($check_query);
 
-    if (mysqli_num_rows($check_result) > 0) {
-        // الكورس مضاف مسبقاً
+    if (!empty($existing)) {
         echo "<script>
                 alert('You are already enrolled in this course!');
                 window.location.href = 'mycourses.php';
               </script>";
     } else {
-        // 2. تنفيذ عملية الإضافة (Add / Enroll) في قاعدة البيانات
-        $insert_query = "INSERT INTO enrollments (student_id, course_id) VALUES ('$student_id', '$course_id')";
+        // 2. Perform enrollment insertion
+        $data = [
+            'student_id' => $student_id,
+            'course_id' => $course_id
+        ];
 
-        if (mysqli_query($conn, $insert_query)) {
+        if ($db->insert($data, 'enrollments')) {
             echo "<script>
                     alert('Enrolled Successfully!');
                     window.location.href = 'mycourses.php';
@@ -37,7 +49,6 @@ if (isset($_GET['course_id'])) {
     }
     exit();
 } else {
-    // في حال عدم وجود course_id يتم التوجيه لصفحة الكورسات
     header("Location: mycourses.php");
     exit();
 }
