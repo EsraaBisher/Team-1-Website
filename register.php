@@ -2,6 +2,9 @@
 include "connect2.php";
 
 $objCon = new Connect2();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $error = "";
 
@@ -35,11 +38,9 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
     if (!isset($_POST['terms'])) {
 
         $error = "you must agree to the terms";
-
     } elseif (strlen($password) < 6) {
 
         $error = "Password must be at least 6 characters";
-
     } else {
 
         $user = $objCon->login($email);
@@ -47,7 +48,6 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
         if (count($user) > 0) {
 
             $error = "An account using this email already exists.";
-
         } else {
 
             $imagePath = "bootstrap/assets/image/avatar.webp";
@@ -92,9 +92,7 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
                     $objCon->insert($studentData, "students");
 
                     $_SESSION['student_id'] = $objCon->lastId();
-                }
-
-                elseif ($role === 'teacher') {
+                } elseif ($role === 'teacher') {
 
                     $phone = $_POST['phone'];
                     $subject = $_POST['subject'];
@@ -118,18 +116,15 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
 
                     header('Location: /Team-1-Website/teachers/dashboard.php');
                     exit();
-
                 } elseif ($role === 'student') {
 
                     header('Location: /Team-1-Website/students/profile.php');
                     exit();
-
                 } else {
 
                     header('Location: /Team-1-Website/index.php');
                     exit();
                 }
-
             } else {
 
                 $error = "Registration failed.";
@@ -137,9 +132,8 @@ if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['fullNam
         }
     }
 }
+include "header.php";
 ?>
-
-<?php include "header.php"; ?>
 
 
 <section class="py-5" style="background-color: #f7f7f7;">
