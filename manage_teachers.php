@@ -1,114 +1,185 @@
 <?php
 include "connect.php";
-
 $sql = "SELECT teachers.id, teachers.phone, teachers.subject,
                users.name, users.email
         FROM teachers
         JOIN users ON teachers.user_id = users.id";
-
 $result = $conn->query($sql);
+
+include "header.php";
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Manage Teachers</title>
-
-    <link rel="stylesheet" href="./bootstrap/assets/css/bootstrap.min.css">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-</head>
-
-<body>
 
 <div class="container py-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5">
 
         <div>
-            <h1 class="fw-bold">Manage Teachers</h1>
-            <p class="text-muted">View and manage teachers</p>
+            <h1 class="fw-bold mb-2">
+                Manage Teachers
+            </h1>
+
+            <p class="text-muted mb-0">
+                View and manage all teachers.
+            </p>
         </div>
 
-        <div>
+        <div class="d-flex gap-2">
 
-            <a href="add_teacher.php" class="btn btn-success">
-                <i class="bi bi-plus-lg"></i>
+            <!-- Add Teacher -->
+            <a href="add_teacher.php"
+               class="btn text-white fw-medium"
+               style="background-color: #FF9500;">
+
+                <i class="bi bi-plus-lg me-1"></i>
                 Add Teacher
+
             </a>
 
-            <a href="admin_dashboard.php" class="btn btn-dark">
-                <i class="bi bi-arrow-left"></i>
+            <!-- Dashboard -->
+            <a href="admin_dashboard.php"
+               class="btn btn-outline-secondary fw-medium">
+
+                <i class="bi bi-arrow-left me-1"></i>
                 Dashboard
+
             </a>
 
         </div>
 
     </div>
 
-    <div class="card border-0 shadow-sm">
 
-        <div class="card-body">
+    <!-- Teachers Table -->
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+        <div class="card-body p-0">
 
             <div class="table-responsive">
 
-                <table class="table table-hover align-middle">
+                <table class="table table-hover align-middle mb-0">
 
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Subject</th>
-                        <th>Actions</th>
-                    </tr>
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th class="px-4 py-3">
+                                ID
+                            </th>
+
+                            <th class="py-3">
+                                Name
+                            </th>
+
+                            <th class="py-3">
+                                Email
+                            </th>
+
+                            <th class="py-3">
+                                Phone
+                            </th>
+
+                            <th class="py-3">
+                                Subject
+                            </th>
+
+                            <th class="py-3 pe-4">
+                                Actions
+                            </th>
+
+                        </tr>
+
                     </thead>
+
 
                     <tbody>
 
-                    <?php if ($result->num_rows > 0): ?>
+                    <?php if ($result && $result->num_rows > 0): ?>
 
                         <?php while ($teacher = $result->fetch_assoc()): ?>
 
                             <tr>
 
-                                <td>
+                                <!-- ID -->
+                                <td class="px-4 fw-medium">
                                     <?php echo $teacher['id']; ?>
                                 </td>
 
+
+                                <!-- Name -->
                                 <td>
-                                    <?php echo $teacher['name']; ?>
+
+                                    <div class="d-flex align-items-center gap-2">
+
+                                        <i class="bi bi-person-circle fs-4 text-muted"></i>
+
+                                        <span class="fw-semibold">
+                                            <?php echo htmlspecialchars($teacher['name']); ?>
+                                        </span>
+
+                                    </div>
+
                                 </td>
 
+
+                                <!-- Email -->
                                 <td>
-                                    <?php echo $teacher['email']; ?>
+                                    <?php echo htmlspecialchars($teacher['email']); ?>
                                 </td>
 
+
+                                <!-- Phone -->
                                 <td>
-                                    <?php echo $teacher['phone']; ?>
+
+                                    <span class="text-nowrap">
+                                        <i class="bi bi-telephone me-1 text-muted"></i>
+
+                                        <?php echo htmlspecialchars($teacher['phone']); ?>
+                                    </span>
+
                                 </td>
 
+
+                                <!-- Subject -->
                                 <td>
-                                    <?php echo $teacher['subject']; ?>
+
+                                    <span class="badge bg-light text-dark border px-3 py-2">
+                                        <?php echo htmlspecialchars($teacher['subject']); ?>
+                                    </span>
+
                                 </td>
 
-                                <td>
 
-                                    <a href="edit_teacher.php?id=<?php echo $teacher['id']; ?>"
-                                       class="btn btn-sm btn-primary">
-                                        Edit
-                                    </a>
+                                <!-- Actions -->
+                                <td class="pe-4">
 
-                                    <a href="delete_teacher.php?id=<?php echo $teacher['id']; ?>"
-                                       class="btn btn-sm btn-danger"
-                                       onclick="return confirm('Are you sure you want to delete this teacher?');">
-                                        Delete
-                                    </a>
+                                    <div class="d-flex gap-2">
+
+                                        <!-- Edit -->
+                                        <a
+                                            href="edit_teacher.php?id=<?php echo $teacher['id']; ?>"
+                                            class="btn btn-sm btn-outline-secondary"
+                                        >
+
+                                            <i class="bi bi-pencil me-1"></i>
+                                            Edit
+
+                                        </a>
+
+
+                                        <!-- Delete -->
+                                        <a
+                                            href="delete_teacher.php?id=<?php echo $teacher['id']; ?>"
+                                            class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Are you sure you want to delete this teacher?');"
+                                        >
+
+                                            <i class="bi bi-trash me-1"></i>
+                                            Delete
+
+                                        </a>
+
+                                    </div>
 
                                 </td>
 
@@ -116,14 +187,39 @@ $result = $conn->query($sql);
 
                         <?php endwhile; ?>
 
+
                     <?php else: ?>
 
+                        <!-- Empty State -->
                         <tr>
 
                             <td colspan="6"
-                                class="text-center text-muted py-4">
+                                class="text-center py-5">
 
-                                No teachers found.
+                                <div class="mb-3">
+
+                                    <i class="bi bi-person-workspace fs-1 text-muted"></i>
+
+                                </div>
+
+                                <h5 class="fw-bold">
+                                    No Teachers Found
+                                </h5>
+
+                                <p class="text-muted mb-3">
+                                    There are no teachers available yet.
+                                </p>
+
+                                <a
+                                    href="add_teacher.php"
+                                    class="btn text-white"
+                                    style="background-color: #FF9500;"
+                                >
+
+                                    <i class="bi bi-plus-lg me-1"></i>
+                                    Add Teacher
+
+                                </a>
 
                             </td>
 
@@ -140,8 +236,7 @@ $result = $conn->query($sql);
         </div>
 
     </div>
-
 </div>
-
-</body>
-</html>
+<?php
+include "footer.php";
+?>
