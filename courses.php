@@ -4,58 +4,58 @@ include_once "header.php";
 
 $courses = [
     [
-        "id" => "web-design",
+        "id" => 1,
         "title" => "Web Design Fundamentals",
         "description" => "Learn the core principles of web design, including HTML, CSS, and how to build responsive layouts.",
         "duration" => "10 Hours",
         "instructor" => "Ayat Osama",
-        "image" => "Web Design.JFIF",
-        "avatar" => "avatars\Avatar20.png" 
+        "image" => "/Team-1-Website/courses/Web Design.JFIF",
+        "avatar" => "/Team-1-Website/avatars/Avatar20.png" 
     ],
     [
-        "id" => "ui-ux",
+        "id" => 2,
         "title" => "UI / UX Design",
         "description" => "Master user interface and experience design. Learn wireframing, prototyping, and usability testing.",
         "duration" => "12 Hours",
         "instructor" => "Esraa Bisher",
-        "image" => "UI UX Design.JFIF",
-        "avatar" => "avatars\Avatar07.png"
+        "image" => "/Team-1-Website/courses/UI UX Design.JFIF",
+        "avatar" => "/Team-1-Website/avatars/Avatar07.png"
     ],
     [
-        "id" => "mobile-app",
+        "id" => 3,
         "title" => "Mobile App Development",
         "description" => "Dive into building native and cross-platform mobile applications using modern frameworks.",
         "duration" => "15 Hours",
         "instructor" => "Toka Moustafa",
-        "image" => "Mobile App Development2.JFIF",
-        "avatar" => "avatars\Avatar12.png"
+        "image" => "/Team-1-Website/courses/Mobile App Development2.JFIF",
+        "avatar" => "/Team-1-Website/avatars/Avatar12.png"
     ],
     [
-        "id" => "graphic-design",
+        "id" => 4,
         "title" => "Graphic Design for Beginners",
         "description" => "Discover the fundamentals of graphic design, color theory, typography, and visual communication.",
         "duration" => "8 Hours",
         "instructor" => "Tasneem Ahmed",
-        "image" => "Graphic Design.jpg",
-        "avatar" => "avatars\Avatar11.png"
+        "image" => "/Team-1-Website/courses/Graphic Design.jpg",
+        "avatar" => "/Team-1-Website/avatars/Avatar11.png"
     ],
     [
-        "id" => "front-end",
+        "id" => 5,
         "title" => "Front-End Web Development",
         "description" => "Become proficient in front-end web development to create interactive and dynamic websites.",
         "duration" => "20 Hours",
         "instructor" => "Ziad Zidan",
-        "image" => "Front-End Web Development.JFIF",
-        "avatar" => "avatars\Avatar06.png"
+        "image" => "/Team-1-Website/courses/Front-End Web Development.JFIF",
+        "avatar" => "/Team-1-Website/avatars/Avatar06.png"
     ],
     [
-        "id" => "digital-marketing",
+        "id" => 6,
         "title" => "Digital Marketing",
         "description" => "Learn how to reach your audience effectively using SEO, social media, and online advertising strategies.",
         "duration" => "14 Hours",
         "instructor" => "Waleed Allam",
-        "image" => "Digital Marketing.JFIF",
-        "avatar" => "avatars\Avatar19.png"
+        "image" => "/Team-1-Website/courses/Digital Marketing.JFIF",
+        "avatar" => "/Team-1-Website/avatars/Avatar19.png"
     ]
 ];
 ?>
@@ -151,10 +151,10 @@ $courses = [
                         </div>
                         <div class="modal-footer border-top-0 pt-0">
                             <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Close</button>
-                           <!-- <a href="students/enroll_course.php?course_id=<?= $course['id'] ?>" 
-                                class="btn btn-warning text-white rounded-3 px-4 fw-bold">
+                            <a href="/Team-1-Website/students/enroll_course.php?course_id=<?= $course['id'] ?>" 
+                                class="btn text-white rounded-3 px-4 fw-bold" style="background-color:#FF9500;">
                                     Enroll Now
-                                </a> -->
+                                </a>
                         </div>
                     </div>
                 </div>

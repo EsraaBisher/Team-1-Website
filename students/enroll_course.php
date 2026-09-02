@@ -8,28 +8,52 @@ include '../connect2.php';
 $db = new Connect2();
 $conn = $db->getConnection();
 
-$session_id = $_SESSION['user_id'] ?? $_SESSION['student_id'] ?? 1;
-$safe_id = $conn->real_escape_string($session_id);
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /Team-1-Website/login.php');
+    exit();
+}
 
-// Resolve exact student_id from students table using user_id
-$student_query = "SELECT id FROM students WHERE user_id = '$safe_id' OR id = '$safe_id' LIMIT 1";
-$student_res = $db->query($student_query);
-$student_id = !empty($student_res) ? $student_res[0]['id'] : $safe_id;
+if (($_SESSION['role'] ?? '') !== 'student') {
+    echo "<script>
+            alert('Only students can enroll in courses.');
+            window.location.href = '/Team-1-Website/index.php';
+          </script>";
+    exit();
+}
+
+$user_id = (int) $_SESSION['user_id'];
+
+$stmt = $conn->prepare("SELECT id FROM students WHERE user_id = ? LIMIT 1");
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$student = $result->fetch_assoc();
+
+if (!$student) {
+    echo "<script>
+            alert('Please complete your student profile before enrolling in a course.');
+            window.location.href = '/Team-1-Website/students/profile.php';
+          </script>";
+    exit();
+}
+
+$student_id = (int) $student['id'];
 
 if (isset($_GET['course_id'])) {
-    $course_id = $conn->real_escape_string($_GET['course_id']);
+    $course_id = (int) $_GET['course_id'];
 
-    // 1. Check if already enrolled
-    $check_query = "SELECT * FROM enrollments WHERE student_id = '$student_id' AND course_id = '$course_id'";
-    $existing = $db->query($check_query);
+    $check_query = "SELECT * FROM enrollments WHERE student_id = ? AND course_id = ? LIMIT 1";
+    $check_stmt = $conn->prepare($check_query);
+    $check_stmt->bind_param('ii', $student_id, $course_id);
+    $check_stmt->execute();
+    $existing = $check_stmt->get_result();
 
-    if (!empty($existing)) {
+    if ($existing->num_rows > 0) {
         echo "<script>
                 alert('You are already enrolled in this course!');
                 window.location.href = 'mycourses.php';
               </script>";
     } else {
-        // 2. Perform enrollment insertion
         $data = [
             'student_id' => $student_id,
             'course_id' => $course_id

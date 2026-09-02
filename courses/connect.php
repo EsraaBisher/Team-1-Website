@@ -9,6 +9,18 @@ class connect
         $this->db = new PDO("mysql:host=localhost;dbname=course_system", "root", "");
     }
 
+    private function getTableColumns($table)
+    {
+        $stmt = $this->db->query("SHOW COLUMNS FROM $table");
+        $columns = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $columns[] = $row['Field'];
+        }
+
+        return $columns;
+    }
+
     // Function 1: Delete
     public function delete($table, $id)
     {
@@ -19,27 +31,53 @@ class connect
     // Function 2: Update
     public function update($data, $table, $id)
     {
-        $fields = "";
+        $allowedColumns = $this->getTableColumns($table);
+        $filteredData = [];
+
         foreach ($data as $key => $value) {
+            if (in_array($key, $allowedColumns, true)) {
+                $filteredData[$key] = $value;
+            }
+        }
+
+        if (empty($filteredData)) {
+            return false;
+        }
+
+        $fields = "";
+        foreach ($filteredData as $key => $value) {
             $fields .= "$key = :$key, ";
         }
         $fields = rtrim($fields, ", ");
         $query = "UPDATE $table SET $fields WHERE id = :id";
 
-        $data['id'] = $id;
+        $filteredData['id'] = $id;
         $stmt = $this->db->prepare($query);
-        return $stmt->execute($data);
+        return $stmt->execute($filteredData);
     }
 
     // Function 3: Add New Course
     public function new_course($data, $table)
     {
-        $columns = implode(", ", array_keys($data));
-        $placeholders = ":" . implode(", :", array_keys($data));
+        $allowedColumns = $this->getTableColumns($table);
+        $filteredData = [];
+
+        foreach ($data as $key => $value) {
+            if (in_array($key, $allowedColumns, true)) {
+                $filteredData[$key] = $value;
+            }
+        }
+
+        if (empty($filteredData)) {
+            return false;
+        }
+
+        $columns = implode(", ", array_keys($filteredData));
+        $placeholders = ":" . implode(", :", array_keys($filteredData));
         $query = "INSERT INTO $table ($columns) VALUES ($placeholders)";
 
         $stmt = $this->db->prepare($query);
-        return $stmt->execute($data);
+        return $stmt->execute($filteredData);
     }
 
     // Helper: Select One (needed to populate the Edit page)

@@ -9,17 +9,68 @@ include '../header.php';
 $db = new Connect2();
 $conn = $db->getConnection();
 
-$session_id = $_SESSION['user_id'] ?? $_SESSION['student_id'] ?? 1;
-$safe_id = $conn->real_escape_string($session_id);
+function safeCourseImageUrl($rawValue, $fallback = '/Team-1-Website/bootstrap/assets/image/avatar.webp')
+{
+    $value = trim((string) ($rawValue ?? ''));
 
-// Query enrolled courses by checking student_id or joining through students table
-$query = "SELECT courses.*, enrollments.id AS enrollment_id
-          FROM courses
-          JOIN enrollments ON courses.id = enrollments.course_id
-          LEFT JOIN students ON enrollments.student_id = students.id
-          WHERE enrollments.student_id = '$safe_id' OR students.user_id = '$safe_id'";
+    if ($value === '') {
+        return $fallback;
+    }
 
-$courses = $db->query($query);
+    if (preg_match('/^https?:\/\//i', $value) || preg_match('/^data:image\//i', $value)) {
+        return $value;
+    }
+
+    $value = str_replace('\\', '/', $value);
+
+    if (preg_match('/^\//', $value)) {
+        return $value;
+    }
+
+    if (preg_match('#^upload/#i', $value)) {
+        return '/Team-1-Website/' . $value;
+    }
+
+    if (!preg_match('#[/\\\\]#', $value)) {
+        return '/Team-1-Website/courses/' . ltrim($value, '/');
+    }
+
+    return '/Team-1-Website/' . ltrim($value, '/');
+}
+
+$user_id = (int) ($_SESSION['user_id'] ?? 0);
+
+if ($user_id <= 0) {
+    header('Location: /Team-1-Website/login.php');
+    exit();
+}
+
+// First, get the student record
+$student_query = "SELECT id FROM students WHERE user_id = ?";
+$stmt = $conn->prepare($student_query);
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$student_result = $stmt->get_result();
+$student_row = $student_result->fetch_assoc();
+
+if (!$student_row) {
+    $courses = [];
+} else {
+    $student_id = (int) $student_row['id'];
+    
+    // Get enrolled courses
+    $query = "SELECT courses.*, teachers.user_id as teacher_user_id
+              FROM courses
+              JOIN enrollments ON courses.id = enrollments.course_id
+              LEFT JOIN teachers ON courses.teacher_id = teachers.id
+              WHERE enrollments.student_id = ?
+              ORDER BY enrollments.id DESC";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $student_id);
+    $stmt->execute();
+    $courses = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+}
 ?>
 
 <script>
@@ -176,7 +227,7 @@ $courses = $db->query($query);
                 <?php foreach ($courses as $course): ?>
                     <div class="col-md-6 col-lg-4">
                         <div class="course-card h-100 d-flex flex-column">
-                            <img src="<?php echo htmlspecialchars($course['image'] ?? 'default.jpg'); ?>" class="course-image" alt="Course Image">
+                            <img src="<?php echo htmlspecialchars(safeCourseImageUrl($course['image'] ?? '', '/Team-1-Website/bootstrap/assets/image/avatar.webp')); ?>" class="course-image" alt="Course Image">
                             <div class="course-body d-flex flex-column flex-grow-1">
                                 <h5 class="course-title mb-2">
                                     <?php echo htmlspecialchars($course['name'] ?? ''); ?>
@@ -189,7 +240,7 @@ $courses = $db->query($query);
                                     ?>
                                 </p>
                                 <div class="mt-auto">
-                                    <a href="course_details.php?id=<?php echo $course['id']; ?>" class="btn btn-orange w-100 fw-bold">
+                                    <a href="/Team-1-Website/students/course_details.php?id=<?php echo $course['id']; ?>" class="btn btn-orange w-100 fw-bold">
                                         <i class="fa-solid fa-play me-2"></i> Continue Learning
                                     </a>
                                 </div>

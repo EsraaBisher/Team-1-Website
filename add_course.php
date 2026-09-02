@@ -1,6 +1,8 @@
 <?php
 include "connect.php";
 
+$hasDescriptionColumn = $conn->query("SHOW COLUMNS FROM courses LIKE 'description'")->num_rows > 0;
+
 $teachers = $conn->query("
     SELECT teachers.id, users.name
     FROM teachers
@@ -12,6 +14,7 @@ if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $hours = $_POST['hours'];
     $teacher_id = $_POST['teacher_id'];
+    $description = $_POST['description'] ?? '';
 
     $image = "";
 
@@ -25,8 +28,16 @@ if (isset($_POST['submit'])) {
         );
     }
 
-    $sql = "INSERT INTO courses (name, hours, teacher_id, image)
-            VALUES ('$name', '$hours', '$teacher_id', '$image')";
+    $columns = ['name', 'hours', 'teacher_id', 'image'];
+    $values = ["'$name'", "'$hours'", "'$teacher_id'", "'$image'"];
+
+    if ($hasDescriptionColumn) {
+        $columns[] = 'description';
+        $values[] = "'" . $conn->real_escape_string($description) . "'";
+    }
+
+    $sql = "INSERT INTO courses (" . implode(', ', $columns) . ")
+            VALUES (" . implode(', ', $values) . ")";
 
     if ($conn->query($sql)) {
 
@@ -127,6 +138,25 @@ if (isset($_POST['submit'])) {
 
                     </div>
 
+
+                    <?php if ($hasDescriptionColumn): ?>
+                        <!-- Description -->
+                        <div class="col-12">
+
+                            <label for="description" class="form-label fw-semibold">
+                                Description
+                            </label>
+
+                            <textarea
+                                id="description"
+                                name="description"
+                                class="form-control"
+                                rows="4"
+                                placeholder="Enter course description"
+                                required></textarea>
+
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Teacher -->
                     <div class="col-12">

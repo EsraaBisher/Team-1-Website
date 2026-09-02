@@ -2,6 +2,8 @@
 
 include "connect.php";
 
+$hasDescriptionColumn = $conn->query("SHOW COLUMNS FROM courses LIKE 'description'")->num_rows > 0;
+
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: manage_courses.php");
     exit();
@@ -31,6 +33,7 @@ if (isset($_POST['submit'])) {
     $name = $_POST['name'];
     $hours = $_POST['hours'];
     $teacher_id = $_POST['teacher_id'];
+    $description = $_POST['description'] ?? $course['description'] ?? '';
 
     $image = $course['image'];
 
@@ -44,11 +47,19 @@ if (isset($_POST['submit'])) {
         );
     }
 
+    $sqlParts = [
+        "name='$name'",
+        "hours='$hours'",
+        "teacher_id='$teacher_id'",
+        "image='$image'"
+    ];
+
+    if ($hasDescriptionColumn) {
+        $sqlParts[] = "description='" . $conn->real_escape_string($description) . "'";
+    }
+
     $sql = "UPDATE courses
-            SET name='$name',
-                hours='$hours',
-                teacher_id='$teacher_id',
-                image='$image'
+            SET " . implode(", ", $sqlParts) . "
             WHERE id=$id";
 
     if ($conn->query($sql)) {
@@ -140,6 +151,23 @@ if (isset($_POST['submit'])) {
 
                     </div>
 
+
+                    <?php if ($hasDescriptionColumn): ?>
+                        <!-- Description -->
+                        <div class="col-12">
+
+                            <label class="form-label fw-semibold">
+                                Description
+                            </label>
+
+                            <textarea name="description"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Enter course description"
+                                      required><?php echo htmlspecialchars($course['description'] ?? ''); ?></textarea>
+
+                        </div>
+                    <?php endif; ?>
 
                     <!-- Teacher -->
                     <div class="col-md-6">

@@ -55,9 +55,21 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
     $user = $objCon->login($email);
 
+    $isValid = false;
 
-    if (count($user) > 0 && password_verify($password, $user['password'])) {
+    if (count($user) > 0) {
+        $storedPassword = $user['password'] ?? '';
+        $isValid = password_verify($password, $storedPassword) || ($storedPassword !== '' && md5($password) === $storedPassword);
 
+        if ($isValid && !password_verify($password, $storedPassword) && $storedPassword !== '') {
+            $newHashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $safeHash = $objCon->getConnection()->real_escape_string($newHashedPassword);
+            $userId = (int) $user['id'];
+            $objCon->getConnection()->query("UPDATE users SET password = '$safeHash' WHERE id = $userId");
+        }
+    }
+
+    if ($isValid) {
 
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['name'] = $user['name'];

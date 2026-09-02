@@ -14,6 +14,47 @@ if (isset($_POST["delete_id"])) {
 
 // Fetch all courses with their teacher's real names
 $courses = $objCon->getAllCoursesWithTeacher();
+
+function safeAssetUrl($rawValue, $fallback)
+{
+    $value = trim((string) ($rawValue ?? ''));
+
+    if ($value === '') {
+        return $fallback;
+    }
+
+    if (preg_match('/^https?:\/\//i', $value) || preg_match('/^data:image\//i', $value)) {
+        return $value;
+    }
+
+    $value = str_replace('\\', '/', $value);
+
+    if (preg_match('/\/Team-1-Website\//i', $value)) {
+        return '/' . ltrim(substr($value, strpos(strtolower($value), '/team-1-website/')), '/');
+    }
+
+    if (preg_match('/\/xampp\/htdocs\//i', $value)) {
+        return '/' . ltrim(preg_replace('#^.*?/htdocs/#i', '', $value), '/');
+    }
+
+    if (preg_match('/^\//', $value)) {
+        return $value;
+    }
+
+    if (preg_match('/^[A-Za-z]:\//', $value)) {
+        return '/' . ltrim($value, '/');
+    }
+
+    // If no path separators and looks like a simple filename, assume it's in /courses/
+    if (!preg_match('#[/\\\\]#', $value)) {
+        return '/Team-1-Website/courses/' . $value;
+    }
+
+    return '/' . ltrim($value, '/');
+}
+
+$fallbackImage = 'data:image/svg+xml;charset=UTF-8,' . rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="100%" height="100%" fill="#f5f5f5"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="30" fill="#666">Course</text></svg>');
+$fallbackAvatar = 'data:image/svg+xml;charset=UTF-8,' . rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="100%" height="100%" rx="40" fill="#e5e7eb"/><circle cx="40" cy="30" r="14" fill="#9ca3af"/><path d="M22 60c6-12 16-18 18-18s12 6 18 18" fill="#9ca3af"/></svg>');
 ?>
 
 <div class="container my-5">
@@ -35,16 +76,20 @@ $courses = $objCon->getAllCoursesWithTeacher();
 
         <?php if (!empty($courses)): ?>
             <?php foreach ($courses as $course): ?>
+                <?php
+                    $imageSrc = safeAssetUrl($course['image'] ?? '', $fallbackImage);
+                    $avatarSrc = safeAssetUrl($course['avatar'] ?? '', $fallbackAvatar);
+                ?>
                 <div class="col">
                     <div class="card h-100 border-1 shadow-sm rounded-4" style="border-color: #e0e0e0;">
 
-                        <img src="<?= $course['image'] ?>" class="card-img-top rounded-top-4" alt="<?= $course['name'] ?>" style="object-fit: cover; height: 250px;">
+                        <img src="<?= htmlspecialchars($imageSrc) ?>" class="card-img-top rounded-top-4" alt="<?= htmlspecialchars($course['name']) ?>" style="object-fit: cover; height: 250px;">
 
                         <div class="card-body d-flex flex-column mt-2">
                             <h5 class="card-title fw-bold text-end mb-2"><?= $course['name'] ?></h5>
 
                             <p class="card-text text-muted text-end small mb-4">
-                                <?= $course['description'] ?>
+                                <?= htmlspecialchars($course['description'] ?? 'No description available.') ?>
                             </p>
 
                             <div class="mt-auto">
@@ -59,7 +104,7 @@ $courses = $objCon->getAllCoursesWithTeacher();
 
                                     <div class="d-flex align-items-center">
                                         <span class="me-2"><?= $course['teacher_name'] ?? 'Unknown Teacher' ?></span>
-                                        <img src="<?= $course['avatar'] ?>" class="rounded-circle border" width="30" height="30" alt="Avatar">
+                                        <img src="<?= htmlspecialchars($avatarSrc) ?>" class="rounded-circle border" width="30" height="30" alt="Avatar">
                                     </div>
                                 </div>
 
@@ -82,14 +127,14 @@ $courses = $objCon->getAllCoursesWithTeacher();
                             <div class="modal-body pt-4">
                                 <div class="row g-4">
                                     <div class="col-md-5">
-                                        <img src="<?= $course['image'] ?>" class="img-fluid rounded-4 shadow-sm" alt="<?= $course['name'] ?>" style="object-fit: cover; width: 100%; height: auto;">
+                                        <img src="<?= htmlspecialchars($imageSrc) ?>" class="img-fluid rounded-4 shadow-sm" alt="<?= htmlspecialchars($course['name']) ?>" style="object-fit: cover; width: 100%; height: auto;">
                                     </div>
                                     <div class="col-md-7">
                                         <h6 class="fw-bold text-muted mb-3">About this course</h6>
-                                        <p class="mb-4"><?= $course['description'] ?></p>
+                                        <p class="mb-4"><?= htmlspecialchars($course['description'] ?? 'No description available.') ?></p>
 
                                         <div class="d-flex align-items-center mb-3">
-                                            <img src="<?= $course['avatar'] ?>" class="rounded-circle border me-3" width="50" height="50" alt="Avatar">
+                                            <img src="<?= htmlspecialchars($avatarSrc) ?>" class="rounded-circle border me-3" width="50" height="50" alt="Avatar">
                                             <div>
                                                 <p class="mb-0 fw-bold">Instructor</p>
                                                 <p class="mb-0 text-muted"><?= $course['teacher_name'] ?? 'Unknown Teacher' ?></p>
@@ -114,8 +159,8 @@ $courses = $objCon->getAllCoursesWithTeacher();
                             <div class="modal-footer border-top-0 pt-0">
                                 <button type="button" class="btn btn-secondary rounded-3 px-4" data-bs-dismiss="modal">Close</button>
 
-                                <!-- ONLY show Edit/Delete if the user is NOT a student and NOT a teacher -->
-                                <?php if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'teacher' && $_SESSION['role'] !== 'student')): ?>
+                                <!-- Only admin can edit/delete courses -->
+                                <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
                                     <a href="edit.php?id=<?= $course['id'] ?>" class="btn btn-success rounded-3 px-4">Edit</a>
 
                                     <form action="" method="POST" class="d-inline">
@@ -124,10 +169,12 @@ $courses = $objCon->getAllCoursesWithTeacher();
                                     </form>
                                 <?php endif; ?>
 
-                                <a href="/Team-1-Website/students/enroll_course.php?course_id=<?= $course['id'] ?>"
-                                    class="btn btn-warning text-white rounded-3 px-4 fw-bold">
-                                    Enroll Now
-                                </a>
+                                <?php if (isset($_SESSION['user_id']) && ($_SESSION['role'] ?? '') === 'student'): ?>
+                                    <a href="/Team-1-Website/students/enroll_course.php?course_id=<?= $course['id'] ?>"
+                                        class="btn btn-warning text-white rounded-3 px-4 fw-bold">
+                                        Enroll Now
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -141,8 +188,8 @@ $courses = $objCon->getAllCoursesWithTeacher();
 
     </div>
 
-    <!-- ONLY show Add Course if the user is NOT a student and NOT a teacher -->
-    <?php if (!isset($_SESSION['role']) || ($_SESSION['role'] !== 'teacher' && $_SESSION['role'] !== 'student')): ?>
+    <!-- Show Add Course only for admin/teacher -->
+    <?php if (isset($_SESSION['role']) && ($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'teacher')): ?>
         <div class="text-center mt-5">
             <a href="add.php" class="btn btn-success px-5 py-2 fw-bold fs-5 rounded-3">Add Course</a>
         </div>

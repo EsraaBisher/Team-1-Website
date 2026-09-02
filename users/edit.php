@@ -1,10 +1,13 @@
 <?php
-include "../header.php";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 include "../connect2.php";
 
 if (!isset($_SESSION['user_id'])) {
-    echo "<script>window.location.href='../login.php';</script>";
-    exit;
+    header('Location: ../login.php');
+    exit();
 }
 
 $objCon = new Connect2();
@@ -32,10 +35,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         if (!empty($password)) {
             $hashed = password_hash($password, PASSWORD_DEFAULT);
-            $update = $conn->prepare("UPDATE users SET name = ?, email = ?, password = ?,role=? WHERE id = ?");
+            $update = $conn->prepare("UPDATE users SET name = ?, email = ?, password = ?, role = ? WHERE id = ?");
             $update->bind_param("ssssi", $name, $email, $hashed, $role, $_SESSION['user_id']);
         } else {
-            $update = $conn->prepare("UPDATE users SET name = ?, email = ?,role=? WHERE id = ?");
+            $update = $conn->prepare("UPDATE users SET name = ?, email = ?, role = ? WHERE id = ?");
             $update->bind_param("sssi", $name, $email, $role, $_SESSION['user_id']);
         }
 
@@ -52,6 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $update->close();
     }
 }
+
+include "../header.php";
 ?>
 <section class="py-5" style="background-color: #f7f7f7; min-height: 70vh;">
     <div class="container">
